@@ -312,7 +312,21 @@ console.log(cycles)
 Copiez ce code dans JSFidle et remplissez-le.
 
 ```{.js .custom-js}
-xxx
+// On va chercher un ficher js directement en ligne. Nous expliquerons fetch et then plus tard.
+fetch("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/cities.json")
+  .then(response => response.json())
+  .then(data => {
+    // Commencez à travailler ici
+    console.log(data)
+
+    // Filtrez pour le conserver que les villes de plus de 500 millions 
+
+    //Parmi celles-ci, combien y en a t-il dans l'hémisphère Nord ? 
+
+
+
+    // Fin
+});
 ```
 
 :::
