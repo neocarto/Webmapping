@@ -65,7 +65,7 @@ A l’origine, le projet, baptisé « World Wide Web », a été conçu et déve
 
 ![](img/premierweb.png)
 
-::: {.callout-tip collapse="true"}
+::: {.callout-tip collapse="false"}
 ## Web ou Internet ?
 
 Internet est une plateforme qui permet de faire parvenir des informations d’un ordinateur à un autre. Le web, lui, est un moyen de visiter des pages de sites à partir de navigateurs via des ordinateurs, des tablettes ou des smartphones.

@@ -39,6 +39,36 @@ Le **HyperText Markup Language**, généralement abrégé HTML est ce qui corres
 </html>
 ```
 
+En HTML, on peut créer des formulaires.
+
+```{.html .custom-html}
+<form>
+  Nom : <input type="text"><br>
+  Mot de passe : <input type="password"><br>
+  Email : <input type="email"><br>
+  Age : <input type="number" min="0"><br>
+  Sexe : 
+    <input type="radio" name="sexe" value="homme"> Homme
+    <input type="radio" name="sexe" value="femme"> Femme<br>
+  Abonnement : <input type="checkbox"><br>
+  Date de naissance : <input type="date"><br>
+  Couleur préférée : <input type="color"><br>
+  Fichier : <input type="file"><br>
+  <input type="submit" value="Envoyer">
+</form>
+```
+
+Grace à la balise `svg`, on peut même dessiner directement.
+```{.html .custom-html}
+<h1>Un cercle SVG</h1>
+<svg width="200" height="200">
+  <circle cx="100" cy="100" r="50" fill="green" />
+</svg>
+````
+
+
+
+
 # Le CSS
 
 Les feuilles de style en cascade, généralement appelées CSS de l'anglais Cascading Style Sheets, forment un langage informatique qui décrit la présentation des documents HTML. Le CSS définit le **style** et le **positionnement** des éléments sur la page.
@@ -262,7 +292,7 @@ books.unshift(newBooks2)
 console.log(books)
 ```
 
-Trier(`sort`)
+Trier (`sort`)
 
 ```{.js .custom-js}
 console.log(books.sort((a, b) => a.annee - b.annee))
@@ -312,27 +342,30 @@ console.log(cycles)
 Copiez ce code dans JSFidle et remplissez-le.
 
 ```{.js .custom-js}
-// On va chercher un ficher js directement en ligne. Nous expliquerons fetch et then plus tard.
+// On va chercher un ficher JSON directement en ligne. Nous expliquerons fetch et then plus tard.
 fetch("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/cities.json")
   .then(response => response.json())
   .then(data => {
+    // --------------------------
     // Commencez à travailler ici
     console.log(data)
+    
+    // Combien y a t-il de villes ?
+    
+    // Filtrez pour le conserver que les villes de plus de 500 000 habitants 
 
-    // Filtrez pour le conserver que les villes de plus de 500 millions 
+    // Combien y en a t'il ?
 
-    //Parmi celles-ci, combien y en a t-il dans l'hémisphère Nord ? 
+    // Combien y en a t-il dans l'hémisphère Sud ? 
 
+    // Combien y en a t-il de villes de plus de 500 000 habitants en France ?
 
+    // Affichez la liste
 
     // Fin
+    // ------------------
 });
 ```
-
-:::
-
-
-
 
 ### Les bibliothèques
 
@@ -341,6 +374,8 @@ Une bibliothèque JavaScript est un ensemble de fonctions ou d’objets prêts �
 ![](img/npm.png){width="100%"}
 
 Il y a plusieurs façons d'importer une bibliothèque. Ici, on utilise un **CDN** (Content Delivery Network, ou réseau de diffusion de contenu). C’est la méthode la plus simple pour les projets HTML statiques.
+
+**La bibliothèque confetti** 
 
 
 ```{.html .custom-html}
@@ -356,14 +391,229 @@ confetti({
     });
 ```
 
+**La bibliothèque leafet** 
+
+Leaflet est une bibliothèque JavaScript open source créée en 2010 par Vladimir Agafonkin, un développeur ukrainien. Elle permet de créer facilement des cartes interactives pour le web. C'ets une des plus connues et des plus ancvienne.
+
+```{.html .custom-html}
+<!-- Import de la bibliothèque et du css-->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<div id="map"></div>
+```  
+
+```{.js .custom-js}
+    const map = L.map('map').setView([46.8, 2.5], 6);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+```
+
+```{.css .custom-css}
+#map {
+    height: 500px;
+}
+```
+
+**La bibliothèque maplibre-gl** 
+
+MapLibre est une bibliothèque JavaScript open source permettant d'afficher des cartes interactives vectorielles sur le web, en 2D ou en 3D (vue "globe"). Elle est née en 2020 suite à la décision de Mapbox de fermer le code source de Mapbox GL JS à partir de la version 2. MapLibre constitue donc une alternative libre, soutenue par une communauté active. 
+
+```{.html .custom-html}
+<!-- Import de la bibliothèque et du css-->
+<script src="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js"></script>
+<link href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css" rel="stylesheet" />
+<div id="map"></div>
+```  
+
+```{.js .custom-js}
+const map = new maplibregl.Map({
+  container: 'map',
+  style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
+  center: [2.5, 46.8], // [lon, lat]
+  zoom: 6,
+});;
+```
+
+```{.css .custom-css}
+#map {
+    height: 500px;
+}
+```
 
 # Le DOM
 
-document.querySelector("button").addEventListener("click", () => {
-  alert("Bouton cliqué !");
-});
+Nous avons dit que le HTML était le squelette de la page, constitué des balises, des classes et d'identifiants. Une autre façon de voir ce squelette est de l'imaginer comme un arbre avec des noeuds et des ramifications. 
 
-document.getElementById("titre").textContent = "Bonjour !";
+![](img/DOM.png)
+
+Le DOM (**Document Object Model**) est une représentation en mémoire de la page web, que JavaScript est capable de manipuler.
+
+```
+<html>
+  <body>
+    <p>Bonjour</p>
+  </body>
+</html>
+```
+
+devient
+
+```
+document
+ └─ html
+     └─ body
+         └─ p
+```
+
+Pour acceder à un élement en JavaScript, on utilise `document.querySelector()`. Cela premet de récupérer le contenu d'un élément de la page web.
+
+- `document.querySelector("#monid")` permet d'acceder à un noeud défini par un identifiant
+
+- `document.querySelector(".maclasse")` permet d'acceder au premier élement d'une classe
+
+- `document.querySelector("tag")` permet d'acceder au premier tag. Par exemple, `document.querySelector("p")` permet d'acceder au premier `<p>`.
+
+Voici un squelete HTML : 
+
+
+```{.html .custom-html}
+<div id = "monid">Alea jacta est</div>
+``` 
+
+Et voici comment on peut interagir avec en JavaScript
+ 
+
+```{.js .custom-js}
+const montext = console.log(document.querySelector("#monid").textContent)
+console.log(montext)
+```
+
+Et ca permet aussi de le changer.
+
+
+```{.js .custom-js}
+document.querySelector("#monid").textContent = "coucou"
+```
+
+Et si je veux ajouter un ppint d'exclamation dans le div et le mettre en gras. 
+
+```{.js .custom-js}
+let mondiv = document.querySelector("#monid")
+let baliseB = document.createElement("b");
+baliseB.textContent = " !"
+mondiv.appendChild(baliseB);
+```
+
+J'aurais aussi pu utiliser innerHTML : 
+
+
+```{.js .custom-js}
+v.innerHTML = document.querySelector("#monid").textContent + "<b> !</>"
+```
+
+Du coup, vous pouvez rendre des calculs JavaScript dans le navigateur. 
+
+```{.html .custom-html}
+<div>Dans ma mibliothèque, il y a <span id = "count"></span> livres.</div>
+``` 
+
+```{.js .custom-js}
+const books = [
+{"titre":"Le Petit Prince","auteur":"Antoine de Saint-Exupéry","cycle":"jeunesse","annee":1943},
+{"titre":"Harry Potter à l'école des sorciers","auteur":"J.K. Rowling","cycle":"jeunesse","annee":1997},
+{"titre":"Les Misérables","auteur":"Victor Hugo","cycle":"classique","annee":1862},
+{"titre":"Dune","auteur":"Frank Herbert","cycle":"science-fiction","annee":1965},
+{"titre":"Indignez-vous !","auteur":"Stéphane Hessel","cycle":"essai","annee":2010},
+{"titre":"Madame Bovary","auteur":"Gustave Flaubert","cycle":"classique","annee":1857},
+{"titre":"1984","auteur":"George Orwell","cycle":"science-fiction","annee":1949},
+{"titre":"Le Capital","auteur":"Karl Marx","cycle":"essai","annee":1867},
+{"titre":"Fahrenheit 451","auteur":"Ray Bradbury","cycle":"science-fiction","annee":1953},
+{"titre":"Surveiller et punir","auteur":"Michel Foucault","cycle":"essai","annee":1975},
+]
+
+document.querySelector("#count").textContent = books.length
+```
+
+On peut aussi déclencher du code JavaScript en inetergissant sur la page.
+
+```{.html .custom-html}
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<button onclick="launchConfetti()">🎉 Clique ici !</button>
+```
+
+```{.js .custom-js}
+    function launchConfetti() {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+```
+
+# Les écouteurs
+
+Avec un écouteur `addEventListener` (recommandé), on aurait pu faire comme ca. Cette méthode a l'avantage de bien séparer le comportement (géré en JS) et la structure (squelette HTML).
+
+
+```{.html .custom-html}
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<button id="confettiBtn">🎉 Clique ici !</button>
+```
+
+```{.js .custom-js}
+    function launchConfetti() {
+      confetti({
+        particleCount: 1000,
+        spread: 500,
+        origin: { y: 0.6 }
+      });
+    }
+document.querySelector("#confettiBtn").addEventListener("click", launchConfetti)
+```
+
+Ici, on a utilisé `click`, mais il existe plein d'autres types dévenements, comme `dblclick`, `mouseover`, `mouseout`, `submit`, `change`, etc. Voir : [https://developer.mozilla.org/fr/docs/Web/Events](https://developer.mozilla.org/fr/docs/Web/Events).
+
+Avec tout ce qu'on a appris, on peut désormais construire des applications web réactives. Reprenons notre SVG de tout à l'heure.
+
+```{.html .custom-html}
+<h1>Un cercle SVG réactif</h1>
+
+<div>
+  <label for="rayon">Rayon : </label>
+  <input type="range" id="position" min="50" max="600" value="100">
+  <span id="valeur">100</span>
+</div>
+
+<svg width="650" height="200">
+  <circle id="monCercle" cx="100" cy="100" r="50" fill="green" />
+</svg>
+```
+
+
+```{.js .custom-js}
+const slider = document.querySelector("#position");
+const valeur = document.querySelector("#valeur");
+const cercle = document.querySelector("#monCercle");
+
+slider.addEventListener("input", function () {
+// Ici, nous avons choisi l'evenement input. Input e déclenche immédiatement à chaque modification de la valeur.
+// Contrairement à change qui se déclenche uniquement quand l'utilisateur a terminé de bouger le curseur (et relâche la souris)
+   const pos = slider.value;
+   cercle.setAttribute("cx", pos);
+   valeur.textContent = pos;
+});
+  ```
+
+  **<ins>Exercice</ins>**
+
+Reprennez l'exemple ci-dessus.
+
+1 - dans un nouveau div, ajoutez un autre slider pour changer le rayon du cercle
+2 - dans un nouveau div, ajoutez un élément de formulaire de type "color" pour changer la couleur du cercle.
+
+A vous de jouer !
 
 
 

@@ -1,9 +1,173 @@
----
-title: "API"
----
+# L'open data
+
+![](img/opendata.jpg)
 
 
-# coucou
+L’idée de l’Open Data naît dans les années 1990, dans le sillage des mouvements pour le logiciel libre et l’accès libre à l’information scientifique. Mais c’est au tournant des années 2000 que le concept prend de l’ampleur.
 
-xxx
+**2005** : le Royaume-Uni lance le portail data.gov.uk, un des premiers sites publics de données ouvertes.
+
+**2007** : à Sebastopol (Californie), une réunion entre militants de la transparence et développeurs formule les principes de l'Open Data : données complètes, primaires, lisibles par machine, libres de droit...
+
+**2009** : les États-Unis créent le portail data.gov sur impulsion d’Obama (Open Government Initiative).
+
+**2011** : la France ouvre son propre portail de données publiques, data.gouv.fr
+
+
+En France, le mouvement est porté par des collectivités locales (comme Paris, Rennes, Nantes) et l’État. La loi pour une République numérique (2016) renforce l’obligation d’ouverture des données publiques.
+
+::: {.callout-tip collapse="false"}
+## Qu'est ce qu'une API ?
+
+Une API (Application Programming Interface) est un point d'accès mis à disposition par un service (site web, administration, application) pour permettre à d'autres programmes de demander et recevoir des données ou le résultat d'une requete. 
+
+Dit autrement, une API permet à ton programme de poser des questions à une base de données à distance, d'effectuer des traitements ou des opérations à distance, et d’en recevoir les réponses automatiquement.
+
+Le résultat est souvent renvoyé au  format JSON.
+:::
+
+### data.gouv
+
+Sur le site data.gouv, de nombreux jeux de données sont disponibles. On peut les télécharger gratuitement.
+
+https://www.data.gouv.fr/datasets/paris-2024-sites-olympiques-et-paralympiques-franciliens/reuses_and_dataservices
+
+Mais on peut aussi utiliser directement une URL. 
+
+Tapez `https://www.data.gouv.fr/api/1/datasets/r/758b76ef-7624-4a02-b2a1-0d5aed98097f` dans la barre de votre navigateur web.
+
+En javaScript, on récupère ces données avec l'instruction `fetch`
+
+
+```{.js .custom-js}
+const result = fetch('https://www.data.gouv.fr/api/1/datasets/r/758b76ef-7624-4a02-b2a1-0d5aed98097f')
+console.log(result)
+```
+
+Problème : la fonction JavaScript fetch() est une **fonction asynchrone**. Une fonction asynchrone sert à gérer des opérations longues ou incertaines (comme appeler une API, lire un fichier, attendre une réponse du serveur, etc.) sans bloquer le reste du programme. Une fonction async permet de faire des choses en arrière-plan, tout en gardant un code clair et fluide, sans bloquer l'exécution.
+
+On doit donc procéder comme ceci.
+
+
+```{.js .custom-js}
+fetch('https://www.data.gouv.fr/api/1/datasets/r/758b76ef-7624-4a02-b2a1-0d5aed98097f')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+  })
+```
+
+ou 
+
+```{.js .custom-js}
+async function fetchJSON() {
+  const response = await fetch('https://www.data.gouv.fr/api/1/datasets/r/758b76ef-7624-4a02-b2a1-0d5aed98097f');
+  const data = await response.json();
+  console.log(data);
+}
+
+fetchJSON();
+
+```
+
+Pouvoir attaquer des jeux de données sans avoir besoin de les télécharger est hyper puissant. Et si on en faisait une carte leaflet ?
+
+
+```{.html .custom-html}
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet/dist/leaflet.css"
+  />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <div id="map"></div>
+```
+
+
+```{.css .custom-css}
+    #map {
+      height: 300px;
+    }
+```
+
+
+
+```{.js .custom-js}
+  async function fetchAndPlot() {
+      const response = await fetch('https://www.data.gouv.fr/api/1/datasets/r/758b76ef-7624-4a02-b2a1-0d5aed98097f');
+      const data = await response.json();
+
+      console.log(data)
+
+      // Crée une carte centrée sur Paris
+      const map = L.map('map').setView([48.8566, 2.3522], 9);
+
+      // Ajoute un fond de carte OpenStreetMap
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+      }).addTo(map);
+
+      // Ajoute un marqueur pour chaque site
+      data.forEach(site => {
+        const lat = site.geo_point.lat;
+        const lon = site.geo_point.lon;
+        const name = site.nom;
+
+        L.marker([lat, lon])
+          .addTo(map)
+          .bindPopup(`<strong>${name}</strong>`);
+      });
+    }
+
+fetchAndPlot();
+```
+
+
+### opendata.paris.fr
+
+Sur le site de la mairie de Paris, de nombreux jeux de données sont également disponibles à travers une API qui permet de requeter toute sles dounnées ouvertes de la ville.
+
+Par exemple, regardons la localisation des stations de Vélib. Il y en a 1459.
+
+https://opendata.paris.fr/explore/dataset/velib-emplacement-des-stations/information/
+
+Tapez cette URL dans la barre de votre navigateur :
+
+```
+https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-emplacement-des-stations/records
+```
+On obtient le résultat de la requete au format JSON. Malheureusemeent, **le nombre de résultat est limité à 100**. Heureusement, il y a le parametre offset. On fait une boucle et hop. 
+
+```{.js .custom-js}
+async function getAllStations() {
+  const allStations = [];
+  let offset = 0;
+  const limit = 100;
+  let totalCount = Infinity;
+
+  while (offset < totalCount) {
+    const url = `https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-emplacement-des-stations/records?limit=${limit}&offset=${offset}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    allStations.push(...data.results);
+    totalCount = data.total_count || allStations.length; // total_count est fourni par l'API
+    offset += limit;
+  }
+  return allStations;
+}
+```
+
+
+
+
+# Insee
+
+https://api.insee.fr/geo/communes?codeRegion=11
+
+# Géocodage
+
+# Météo
+
+# Altimétrie
+
+# Osrm
 
