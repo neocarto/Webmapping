@@ -1,0 +1,30 @@
+project:
+  type: website
+
+website:
+  title: "Support de cours Webmapping 2<br/><span style='font-size: 0.6em; color: #999'>Master 2 TGAE (2025–2026)</span>"
+  description: "Un site de test pour le cours de Webmapping 2"
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - text: "Introduction"
+        file: index.qmd
+      - text: "Les langages du web"
+        file: langages.qmd
+      - text: "SIG"
+        file: gis.qmd
+      - text: "Les API"
+        file: api.qmd
+      - text: "Dataviz et geoviz"
+        file: dataviz.qmd
+      - text: "Les dashboards"
+        file: dashboard.qmd
+format:
+  html:
+    toc: true         
+    toc-depth: 2
+    css: style.css
+    theme: cosmo     
+    
+

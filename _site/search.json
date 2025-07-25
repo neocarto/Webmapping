@@ -1,0 +1,176 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Support de cours Webmapping 2<br/><span style='font-size: 0.6em; color: #999'>Master 2 TGAE (2025–2026)</span>",
+    "section": "",
+    "text": "chart = { \n  const k = width / 80;\n  const r = d3.randomUniform(k, k * 4);\n  const n = 4;\n  const data = Array.from({length: 100}, (_, i) =&gt; ({r: r(), group: i && (i % n + 1)}));\n  const height = width / 3;\n  const color = d3.scaleOrdinal(d3.schemeTableau10);\n  const context = DOM.context2d(width, height);\n  const nodes = data.map(Object.create);\n\n  const simulation = d3.forceSimulation(nodes)\n    .alphaTarget(0.3)\n    .velocityDecay(0.1)\n    .force(\"x\", d3.forceX().strength(0.01))\n    .force(\"y\", d3.forceY().strength(0.01))\n    .force(\"collide\", d3.forceCollide().radius(d =&gt; d.r + 1).iterations(3))\n    .force(\"charge\", d3.forceManyBody().strength((d, i) =&gt; i ? 0 : -width * 2 / 3))\n    .on(\"tick\", ticked);\n\n  d3.select(context.canvas)\n    .on(\"touchmove\", event =&gt; event.preventDefault())\n    .on(\"pointermove\", pointermoved);\n\n  invalidation.then(() =&gt; simulation.stop());\n\n  function pointermoved(event) {\n    const [x, y] = d3.pointer(event);\n    nodes[0].fx = x - width / 2;\n    nodes[0].fy = y - height / 2;\n  }\n\n  function ticked() {\n    context.clearRect(0, 0, width, height);\n    context.save();\n    context.translate(width / 2, height / 2);\n    for (let i = 1; i &lt; nodes.length; ++i) {\n      const d = nodes[i];\n      context.beginPath();\n      context.moveTo(d.x + d.r, d.y);\n      context.arc(d.x, d.y, d.r, 0, 2 * Math.PI);\n      context.fillStyle = color(d.group);\n      context.fill();\n    }\n    context.restore();\n  }\n\n  return context.canvas;\n}",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "api.html",
+    "href": "api.html",
+    "title": "API",
+    "section": "",
+    "text": "coucou\nxxx",
+    "crumbs": [
+      "Les API"
+    ]
+  },
+  {
+    "objectID": "index.html#introduction",
+    "href": "index.html#introduction",
+    "title": "Webmapping 2",
+    "section": "Introduction",
+    "text": "Introduction\nTest\nconst a = 10;\nconst b = 20;\nconsole.log(a + b);\n&lt;div&gt;Hello world&lt;/div&gt;\nbody {\n  background-color: white;\n}",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "gis.html",
+    "href": "gis.html",
+    "title": "GIS",
+    "section": "",
+    "text": "GIS\nxxx",
+    "crumbs": [
+      "SIG"
+    ]
+  },
+  {
+    "objectID": "dashboard.html",
+    "href": "dashboard.html",
+    "title": "Dashboard",
+    "section": "",
+    "text": "Dashboard\nxxx"
+  },
+  {
+    "objectID": "dataviz.html",
+    "href": "dataviz.html",
+    "title": "Dataviz",
+    "section": "",
+    "text": "Dataviz\nxxx"
+  },
+  {
+    "objectID": "langages.html",
+    "href": "langages.html",
+    "title": "Les langages du web",
+    "section": "",
+    "text": "Les langages du web\nLes langages du web sont les technologies qui permettent de créer, structurer, styliser, et faire fonctionner des sites et applications web. On peut les classer en trois grandes catégories : langages de structure, de style, et de comportement, auxquels s’ajoutent les langages côté serveur et les technologies associées.\n\n\n\n\n\n\nComment écrire et tester du code ?\n\n\n\nPour écrire du code, on utilise génralement une IDE (environnements de développement). Il en existe de nombreux sur la marché et un certains npmbreu d’entre eux sont gratuits. Mais on peut utiliser un simple éditeur de texte type notepad ou notepadd++. Ensuite, il suffit d’ouvrir les fichiers avec votre navigateur web préféré.  Vous pouvez aussi utiliser des environnement de développement en ligne spécialement conçu pour tester, partager et déboguer du code. On peut citer JSFiddle, CodePen, JSBin, PlayCode, StackBlitz ou Observable. Pour ce cours, je vous propose d’utiliser JSFiddle.\n  \n\n\n\n\nLe HTML\nLe HyperText Markup Language, généralement abrégé HTML est ce qui correspond au squelette d’une page web. C’est la structuration du document. Le HTML est structuré par des balises emboitées les unes dans les autres.\n&lt;!DOCTYPE html&gt;\n&lt;html&gt;\n  &lt;head&gt;\n    &lt;title&gt;Page Title&lt;/title&gt;\n  &lt;/head&gt;\n  &lt;body&gt;\n    &lt;h1&gt;This is a Heading&lt;/h1&gt;\n    &lt;div id=\"mondiv\"&gt;something here&lt;/div&gt;\n    &lt;p&gt;This is a paragraph.&lt;/p&gt;\n    &lt;!-- commentaire --&gt;\n    &lt;ul&gt;\n        &lt;li&gt;Pomme&lt;/li&gt;\n        &lt;li&gt;Banane&lt;/li&gt;\n        &lt;li class= \"highlight\"&gt;Orange&lt;/li&gt;\n    &lt;/ul&gt;\n\n  &lt;/body&gt;\n&lt;/html&gt;\n\n\nLe CSS\nLes feuilles de style en cascade, généralement appelées CSS de l’anglais Cascading Style Sheets, forment un langage informatique qui décrit la présentation des documents HTML. Le CSS définit le style et le positionnement des éléments sur la page.\nbody {\n  background-color: lightblue;\n}\n\nh1 {\n  color: white;\n  text-align: center;\n}\n\np {\n  font-family: verdana;\n  font-size: 20px;\n}\n\nul {\n  list-style-type: disc;   /* Puces rondes par défaut */\n  padding-left: 1em;       /* Légère indentation */\n  font-family: sans-serif;\n}\n\nli {\n  margin: 0.3em 0;         /* Petit espace entre les lignes */\n}\nOn peut modifier le styles l’éléments spécifiques qu’on identifie par une classe ou un identifiant.\n#mondiv {\n  background-color: #f0f8ff;   /* Bleu très clair */\n  border-left: 4px solid #007acc; /* Liseré bleu */\n  padding: 0.5em 1em;\n  margin: 1em 0;\n  font-family: sans-serif;\n  font-size: 1rem;\n}\n\n.highlight {\n  color: #c62828;               /* Rouge profond */\n  font-weight: bold;\n  background-color: #fff3e0;    /* Fond crème doux */\n  padding: 0.2em 0.5em;\n  border-radius: 4px;\n}\nEn plus de définir les styles, le CSS permet de positionner les éléments dans la page web de différentes façons.\nLe positionnement classique utilise la propriété position (static, relative, absolute, fixed, sticky) pour placer un élément de manière plus ou moins indépendante du flux normal. Pour des mises en page plus complexes, le système CSS Grid offre une grille en deux dimensions (lignes et colonnes) permettant d’organiser les éléments de façon souple et précise. Avec display: grid, on contrôle la structure, l’alignement, les espacements et la répartition des contenus, ce qui en fait une solution moderne et puissante pour le web design.\n&lt;div id=\"div1\"&gt;mon div1&lt;/div&gt;\n&lt;div id=\"div2\"&gt;mon div2&lt;/div&gt;\n#div1 {\n  position: absolute;\n  left: 10px;\n  top: 10px;\n}\n\n#div2 {\n  position: absolute;\n  left: 120px;\n  top: 10px;\n}\n\n\nLe JavaScript\nLe JavaScript est le langage de script du navigateur. Il fonctionne sur tous les navigateurs web sans avoir besoin d’installer quoi que ce soit.\n\n1995\n Le langage Javascript a été créé en dix jours en mai 1995 pour la Netscape Communications Corporation par Brendan Eich. Au départ, l’idée était de construire un petit langage pour faire des interactions sur les pages web. Attention, Javascript n’est pas JAVA !\n\n\n1997\n Le langage Javascript est normalisé depuis 1997 par la commission TC39 de l’organisation ECMA International.\n\n\n2008\nLes navigateurs web ont travaillé à de nouveaux moteurs pour améliorer les performances. V8 est un moteur JavaScript open-source développé par le projet Chromium pour les navigateurs Web Google Chrome et Chromium (dernière version 31 janvier 2022). Il y a aussi SpiderMonkey pour Firefox, Chakra pour Microsoft Edge et JavaScriptCore pour Safari.\n\n\n2009\n Création de Node.js par Ryan Dahl, qui permet d’utiliser le JavaScript comme langage de programmation côté serveur (back-End).\n\n\n2015\nDepuis 2015 (ES6 ou ES2015), le langage JavaScript est mature. Performant. Et est implémenté de manière harmonisée dans tous les navigateurs. On parle de modern JavaScript\n\n\ndemain ?\nDe nouvelles fonctionnalitées sont ajoutées au langage chaque année.\n\n\nUne grande communauté\nC’est un langage ancien qui dispose d’une très grande communauté.\n\n\nLes principes de base\nLes variables permettent de stocker des donnes.\nlet age = 30;\nconst name = \"Lakshmi\";\nIl existe plusieurs types de données : number, string, boolean, objets, tableaux, etc.\nlet fruits = [\"pomme\", \"banane\"]; // Array\nlet person = { name: \"Alice\", age: 30 }; // Objet avec clés et valeurs\nJavaScript est un langage fonctionnel. On ecrit beaucoup de fonctions. Par exemple :\nfunction sayHello(name) {\n  return \"Hello \" + name;\n}\nOu, avec l’écriture flechée (arrow functions)\nconst sayHello = (name) =&gt; {\n  return \"Hello \" + name;\n};\nPour visualiser les résultats, on peut utiliser la console.\nconsole.log(sayHello(\"dude\"))\nExécuter du code selon une condition.\nconst age = 20;\nif (age &gt; 18) {\n  console.log(\"Majeur\");\n} else {\n  console.log(\"Mineur\");\n}\nRépéter une action avec une boucle for\nfor (let i = 0; i &lt; 5; i++) {\n  console.log(i);\n}\n\n\nLe format JSON\nLe JSON (JavaScript Object Notation) est un format léger de données créé en 2001 par Douglas Crockford. Il sert à représenter des informations sous forme de paires clé-valeur dans un texte lisible, facile à échanger entre applications. Très simple et universel, JSON est largement utilisé grâce à sa compatibilité avec de nombreux langages de programmation.\nVoici à quoi ca ressemble. En fait, il s’agit d’un Array dont chaque élément est un objet. C’ets la façon qu’on a en JavaScrit de formaliser un tableau.\nconst books = [\n{\"titre\":\"Le Petit Prince\",\"auteur\":\"Antoine de Saint-Exupéry\",\"cycle\":\"jeunesse\",\"annee\":1943},\n{\"titre\":\"Harry Potter à l'école des sorciers\",\"auteur\":\"J.K. Rowling\",\"cycle\":\"jeunesse\",\"annee\":1997},\n{\"titre\":\"Les Misérables\",\"auteur\":\"Victor Hugo\",\"cycle\":\"classique\",\"annee\":1862},\n{\"titre\":\"Dune\",\"auteur\":\"Frank Herbert\",\"cycle\":\"science-fiction\",\"annee\":1965},\n{\"titre\":\"Indignez-vous !\",\"auteur\":\"Stéphane Hessel\",\"cycle\":\"essai\",\"annee\":2010},\n{\"titre\":\"Madame Bovary\",\"auteur\":\"Gustave Flaubert\",\"cycle\":\"classique\",\"annee\":1857},\n{\"titre\":\"1984\",\"auteur\":\"George Orwell\",\"cycle\":\"science-fiction\",\"annee\":1949},\n{\"titre\":\"Le Capital\",\"auteur\":\"Karl Marx\",\"cycle\":\"essai\",\"annee\":1867},\n{\"titre\":\"Fahrenheit 451\",\"auteur\":\"Ray Bradbury\",\"cycle\":\"science-fiction\",\"annee\":1953},\n{\"titre\":\"Surveiller et punir\",\"auteur\":\"Michel Foucault\",\"cycle\":\"essai\",\"annee\":1975},\n]\nConnaitre le nombre d’éléments\nconsole.log(books.length)\nRécupérer l’auteur de la 2e ligne\nconsole.log(books[1]) // 1 car la première ligne a l'index 0.\nRécupérer la 2e ligne\nconsole.log(books[1].titre) \nAjouter un élément en fin de tableau (push)\nconst newBooks = {\"titre\":\"Harry Potter à l'école des sorciers\",\"auteur\":\"J.K. Rowling\",\"cycle\":\"jeunesse\",\"annee\":1997}\nbooks.push(newBooks)\nconsole.log(books)\nAjouter un élément au début du tableau (unshift)\nconst newBooks2 = {\"titre\":\"Le Deuxième Sexe\",\"auteur\":\"Simone de Beauvoir\",\"cycle\":\"essai\",\"annee\":1949}\nbooks.unshift(newBooks2)\nconsole.log(books)\nTrier(sort)\nconsole.log(books.sort((a, b) =&gt; a.annee - b.annee))\nFiltrer (filter)\nconsole.log(books.filter(d =&gt; d.cycle == \"classique\"))\nItérer avec map et forEach\nconsole.log(books.map(d =&gt; d.auteur))\nlet auteurs = [];\nbooks.forEach(d =&gt; {\n  auteurs.push(d.auteur);\n});\nconsole.log(auteurs);\nRécupérer des modalités uniques (Set)\nconsole.log(books.filter(d =&gt; d.cycle == \"classique\"))\nconsole.log(books[1]) // 1 car la première ligne a l'index 0.\nLes filtres permettent de récupérer\nlet cycles = books.map(d =&gt; d.cycle)\ncycles = new Set(cycles)\ncycles = Array.from(cycles)\nconsole.log(cycles)\nExercice\nCopiez ce code dans JSFidle et remplissez-le.\nxxx\n:::\n\n\nLes bibliothèques\nUne bibliothèque JavaScript est un ensemble de fonctions ou d’objets prêts à l’emploi, écrits en JavaScript, que tu peux réutiliser dans tes projets pour éviter de tout coder à la main. Les bibioltèques JavaScript sont disponibles dans npm (abréviation de Node Package Manager).\n\nIl y a plusieurs façons d’importer une bibliothèque. Ici, on utilise un CDN (Content Delivery Network, ou réseau de diffusion de contenu). C’est la méthode la plus simple pour les projets HTML statiques.\n&lt;!-- Import de la bibliothèque--&gt;\n&lt;script src=\"https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js\"&gt;&lt;/script&gt;\nconfetti({\n      particleCount: 150,\n      spread: 70,\n      origin: { y: 0.6 }\n    });\n\n\n\nLe DOM\ndocument.querySelector(“button”).addEventListener(“click”, () =&gt; { alert(“Bouton cliqué !”); });\ndocument.getElementById(“titre”).textContent = “Bonjour !”;",
+    "crumbs": [
+      "Les langages du web"
+    ]
+  },
+  {
+    "objectID": "langages.html#le-web-cest-qupoi",
+    "href": "langages.html#le-web-cest-qupoi",
+    "title": "Les langages du web",
+    "section": "",
+    "text": "Les langages du web sont les technologies qui permettent de créer, structurer, styliser, et faire fonctionner des sites et applications web. On peut les classer en trois grandes catégories : langages de structure, de style, et de comportement, auxquels s’ajoutent les langages côté serveur et les technologies associées.",
+    "crumbs": [
+      "Les langages du web"
+    ]
+  },
+  {
+    "objectID": "langages.html#le-web-cest-quoi",
+    "href": "langages.html#le-web-cest-quoi",
+    "title": "Webmapping 2",
+    "section": "",
+    "text": "Les langages du web sont les technologies qui permettent de créer, structurer, styliser, et faire fonctionner des sites et applications web. On peut les classer en trois grandes catégories : langages de structure, de style, et de comportement, auxquels s’ajoutent les langages côté serveur et les technologies associées.",
+    "crumbs": [
+      "Les langages du web"
+    ]
+  },
+  {
+    "objectID": "langages.html#le-web-cest-quoinn",
+    "href": "langages.html#le-web-cest-quoinn",
+    "title": "Les langages du web",
+    "section": "",
+    "text": "Les langages du web sont les technologies qui permettent de créer, structurer, styliser, et faire fonctionner des sites et applications web. On peut les classer en trois grandes catégories : langages de structure, de style, et de comportement, auxquels s’ajoutent les langages côté serveur et les technologies associées.",
+    "crumbs": [
+      "Les langages du web"
+    ]
+  },
+  {
+    "objectID": "langages.html#internet-et-www",
+    "href": "langages.html#internet-et-www",
+    "title": "Le html",
+    "section": "Internet et WWW",
+    "text": "Internet et WWW\nInternet est né d’une initiative militaire américaine. Le premier nœud du réseau ARPANET (Advanced Research Project Agency Network) à l’origine d’Internet a été mis en place en 1969.\n\n12 Mars 1989 : première version du Web - Tim Berners-Lee, chercheur britannique au CERN, a inventé le WWW.\n\nA l’origine, le projet, baptisé « World Wide Web », a été conçu et développé pour que des scientifiques travaillant dans des universités et instituts du monde entier puissent s’échanger des informations instantanément.\n\n\n\n\n\n\n\nWeb ou Internet ?\n\n\n\n\n\nInternet est une plateforme qui permet de faire parvenir des informations d’un ordinateur à un autre. Le web, lui, est un moyen de visiter des pages de sites à partir de navigateurs via des ordinateurs, des tablettes ou des smartphones.\n\n\n\n1991 - le Web s’ouvre à tous.\nEn 1993, la technologie devient publique. Le Web voit très vite son usage exploser sur Internet.\nfin 1994, le nombre de serveurs web atteint les 10 000 !\nLe lancement de Netscape, le premier navigateur réellement grand public, participera aussi largement à sa démocratisation.\n\nJanvier 1994 : Yahoo !\nLe nombre de sites explose, à tel point qu’il devient très difficile pour l’internaute béotien de s’y retrouver. Deux étudiants de Stanford, Jerry Yang et David Filo, décident de créer un gigantesque annuaire de sites, classés de façon thématique. Il va vite devenir le portail numéro 1 de la Toile.\n\n1998 Google lance son moteur de recherche\n\n2010 : l’émergence du HTML5, le futur du Web\n\n25 ans après son invention, le HTML fait une douce révolution, toujours sous l’impulsion de Tim Berners-Lee. Grâce à la cinquième version du standard de balisage des pages Web – et de nombreuses technologies associées – de nouveaux services émergent. Objectif de ce standard : transformer les pages Web, encore trop statiques, en véritables programmes informatiques, qui n’auraient rien à envier aux applications pour smartphones ou aux logiciels que vous installez sur votre ordinateur. Et faire du navigateur l’unique appli dont vous aurez besoin.\nAujourd’hui\nPlus de 4 milliard d’utilisateurs",
+    "crumbs": [
+      "Les langages du web"
+    ]
+  },
+  {
+    "objectID": "index.html#internet-et-www",
+    "href": "index.html#internet-et-www",
+    "title": "Webmapping 2",
+    "section": "",
+    "text": "Internet est né d’une initiative militaire américaine. Le premier nœud du réseau ARPANET (Advanced Research Project Agency Network) à l’origine d’Internet a été mis en place en 1969.\n\n12 Mars 1989 : première version du Web - Tim Berners-Lee, chercheur britannique au CERN, a inventé le WWW.\n\nA l’origine, le projet, baptisé « World Wide Web », a été conçu et développé pour que des scientifiques travaillant dans des universités et instituts du monde entier puissent s’échanger des informations instantanément.\n\n\n\n\n\n\n\nWeb ou Internet ?\n\n\n\n\n\nInternet est une plateforme qui permet de faire parvenir des informations d’un ordinateur à un autre. Le web, lui, est un moyen de visiter des pages de sites à partir de navigateurs via des ordinateurs, des tablettes ou des smartphones.\n\n\n\n1991 - le Web s’ouvre à tous.\nEn 1993, la technologie devient publique. Le Web voit très vite son usage exploser sur Internet.\nfin 1994, le nombre de serveurs web atteint les 10 000 !\nLe lancement de Netscape, le premier navigateur réellement grand public, participera aussi largement à sa démocratisation.\n\nJanvier 1994 : Yahoo !\nLe nombre de sites explose, à tel point qu’il devient très difficile pour l’internaute béotien de s’y retrouver. Deux étudiants de Stanford, Jerry Yang et David Filo, décident de créer un gigantesque annuaire de sites, classés de façon thématique. Il va vite devenir le portail numéro 1 de la Toile.\n\n1998 Google lance son moteur de recherche\n\n2010 : l’émergence du HTML5, le futur du Web\n\n25 ans après son invention, le HTML fait une douce révolution, toujours sous l’impulsion de Tim Berners-Lee. Grâce à la cinquième version du standard de balisage des pages Web – et de nombreuses technologies associées – de nouveaux services émergent. Objectif de ce standard : transformer les pages Web, encore trop statiques, en véritables programmes informatiques, qui n’auraient rien à envier aux applications pour smartphones ou aux logiciels que vous installez sur votre ordinateur. Et faire du navigateur l’unique appli dont vous aurez besoin.\nAujourd’hui\nPlus de 4 milliard d’utilisateurs",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#historique",
+    "href": "index.html#historique",
+    "title": "Webmapping 2",
+    "section": "",
+    "text": "Internet est né d’une initiative militaire américaine. Le premier nœud du réseau ARPANET (Advanced Research Project Agency Network) à l’origine d’Internet a été mis en place en 1969.\n\n12 Mars 1989 : première version du Web - Tim Berners-Lee, chercheur britannique au CERN, a inventé le WWW.\n\nA l’origine, le projet, baptisé « World Wide Web », a été conçu et développé pour que des scientifiques travaillant dans des universités et instituts du monde entier puissent s’échanger des informations instantanément.\n\n\n\n\n\n\n\nWeb ou Internet ?\n\n\n\n\n\nInternet est une plateforme qui permet de faire parvenir des informations d’un ordinateur à un autre. Le web, lui, est un moyen de visiter des pages de sites à partir de navigateurs via des ordinateurs, des tablettes ou des smartphones.\n\n\n\n1991 - le Web s’ouvre à tous.\nEn 1993, la technologie devient publique. Le Web voit très vite son usage exploser sur Internet.\nfin 1994, le nombre de serveurs web atteint les 10 000 !\nLe lancement de Netscape, le premier navigateur réellement grand public, participera aussi largement à sa démocratisation.\n\nJanvier 1994 : Yahoo !\nLe nombre de sites explose, à tel point qu’il devient très difficile pour l’internaute béotien de s’y retrouver. Deux étudiants de Stanford, Jerry Yang et David Filo, décident de créer un gigantesque annuaire de sites, classés de façon thématique. Il va vite devenir le portail numéro 1 de la Toile.\n\n1998 Google lance son moteur de recherche\n\n2010 : l’émergence du HTML5, le futur du Web\n\n25 ans après son invention, le HTML fait une douce révolution, toujours sous l’impulsion de Tim Berners-Lee. Grâce à la cinquième version du standard de balisage des pages Web – et de nombreuses technologies associées – de nouveaux services émergent. Objectif de ce standard : transformer les pages Web, encore trop statiques, en véritables programmes informatiques, qui n’auraient rien à envier aux applications pour smartphones ou aux logiciels que vous installez sur votre ordinateur. Et faire du navigateur l’unique appli dont vous aurez besoin.\nAujourd’hui\nPlus de 4 milliard d’utilisateurs",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#quets-ce-que-le-web",
+    "href": "index.html#quets-ce-que-le-web",
+    "title": "Webmapping 2",
+    "section": "",
+    "text": "Internet est né d’une initiative militaire américaine. Le premier nœud du réseau ARPANET (Advanced Research Project Agency Network) à l’origine d’Internet a été mis en place en 1969.\n\n12 Mars 1989 : première version du Web - Tim Berners-Lee, chercheur britannique au CERN, a inventé le WWW.\n\nA l’origine, le projet, baptisé « World Wide Web », a été conçu et développé pour que des scientifiques travaillant dans des universités et instituts du monde entier puissent s’échanger des informations instantanément.\n\n\n\n\n\n\n\nWeb ou Internet ?\n\n\n\n\n\nInternet est une plateforme qui permet de faire parvenir des informations d’un ordinateur à un autre. Le web, lui, est un moyen de visiter des pages de sites à partir de navigateurs via des ordinateurs, des tablettes ou des smartphones.\n\n\n\n1991 - le Web s’ouvre à tous.\nEn 1993, la technologie devient publique. Le Web voit très vite son usage exploser sur Internet.\nfin 1994, le nombre de serveurs web atteint les 10 000 !\nLe lancement de Netscape, le premier navigateur réellement grand public, participera aussi largement à sa démocratisation.\n\nJanvier 1994 : Yahoo !\nLe nombre de sites explose, à tel point qu’il devient très difficile pour l’internaute béotien de s’y retrouver. Deux étudiants de Stanford, Jerry Yang et David Filo, décident de créer un gigantesque annuaire de sites, classés de façon thématique. Il va vite devenir le portail numéro 1 de la Toile.\n\n1998 Google lance son moteur de recherche\n\n2010 : l’émergence du HTML5, le futur du Web\n\n25 ans après son invention, le HTML fait une douce révolution, toujours sous l’impulsion de Tim Berners-Lee. Grâce à la cinquième version du standard de balisage des pages Web – et de nombreuses technologies associées – de nouveaux services émergent. Objectif de ce standard : transformer les pages Web, encore trop statiques, en véritables programmes informatiques, qui n’auraient rien à envier aux applications pour smartphones ou aux logiciels que vous installez sur votre ordinateur. Et faire du navigateur l’unique appli dont vous aurez besoin.\nAujourd’hui\nPlus de 4 milliard d’utilisateurs",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#quest-ce-que-le-web",
+    "href": "index.html#quest-ce-que-le-web",
+    "title": "Support de cours Webmapping 2<br/><span style='font-size: 0.6em; color: #999'>Master 2 TGAE (2025–2026)</span>",
+    "section": "Qu’est ce que le web ?",
+    "text": "Qu’est ce que le web ?\nInternet est né d’une initiative militaire américaine. Le premier nœud du réseau ARPANET (Advanced Research Project Agency Network) à l’origine d’Internet a été mis en place en 1969.\n\n12 Mars 1989 : première version du Web - Tim Berners-Lee, chercheur britannique au CERN, a inventé le WWW.\n\nA l’origine, le projet, baptisé « World Wide Web », a été conçu et développé pour que des scientifiques travaillant dans des universités et instituts du monde entier puissent s’échanger des informations instantanément.\n\n\n\n\n\n\n\nWeb ou Internet ?\n\n\n\n\n\nInternet est une plateforme qui permet de faire parvenir des informations d’un ordinateur à un autre. Le web, lui, est un moyen de visiter des pages de sites à partir de navigateurs via des ordinateurs, des tablettes ou des smartphones.\n\n\n\n1991 - le Web s’ouvre à tous.\nEn 1993, la technologie devient publique. Le Web voit très vite son usage exploser sur Internet.\nfin 1994, le nombre de serveurs web atteint les 10 000 !\nLe lancement de Netscape, le premier navigateur réellement grand public, participera aussi largement à sa démocratisation.\n\nJanvier 1994 : Yahoo !\nLe nombre de sites explose, à tel point qu’il devient très difficile pour l’internaute béotien de s’y retrouver. Deux étudiants de Stanford, Jerry Yang et David Filo, décident de créer un gigantesque annuaire de sites, classés de façon thématique. Il va vite devenir le portail numéro 1 de la Toile.\n\n1998 Google lance son moteur de recherche\n\n2010 : l’émergence du HTML5, le futur du Web\n\n25 ans après son invention, le HTML fait une douce révolution, toujours sous l’impulsion de Tim Berners-Lee. Grâce à la cinquième version du standard de balisage des pages Web – et de nombreuses technologies associées – de nouveaux services émergent. Objectif de ce standard : transformer les pages Web, encore trop statiques, en véritables programmes informatiques, qui n’auraient rien à envier aux applications pour smartphones ou aux logiciels que vous installez sur votre ordinateur. Et faire du navigateur l’unique appli dont vous aurez besoin.\nAujourd’hui\nPlus de 4 milliard d’utilisateurs",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "langages.html#comment-tester-les-codes-présentés-en-dessous",
+    "href": "langages.html#comment-tester-les-codes-présentés-en-dessous",
+    "title": "Le HTML",
+    "section": "Comment tester les codes présentés en dessous ?",
+    "text": "Comment tester les codes présentés en dessous ?\nThis is an example of a callout with a title.",
+    "crumbs": [
+      "Les langages du web"
+    ]
+  },
+  {
+    "objectID": "langages.html#section",
+    "href": "langages.html#section",
+    "title": "Le HTML",
+    "section": "",
+    "text": "This is an example of a callout with a title.",
+    "crumbs": [
+      "Les langages du web"
+    ]
+  },
+  {
+    "objectID": "langages.html#le-dom",
+    "href": "langages.html#le-dom",
+    "title": "Les langages du web",
+    "section": "Le DOM",
+    "text": "Le DOM\ndocument.querySelector(“button”).addEventListener(“click”, () =&gt; { alert(“Bouton cliqué !”); });\ndocument.getElementById(“titre”).textContent = “Bonjour !”;\n\nLes bibliothèques",
+    "crumbs": [
+      "Les langages du web"
+    ]
+  }
+]

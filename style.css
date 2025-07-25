@@ -1,0 +1,120 @@
+img {
+  max-width: 100%;
+  width: 400px;
+  display: block;
+  margin: 1em auto;
+}
+
+/* === JavaScript: Jaune === */
+pre.custom-js {
+  position: relative;
+  background-color: #fffbe6;
+  border-left: 5px solid #f7df1e;
+  padding: 1em;
+  border-radius: 8px;
+  font-family: "Fira Code", monospace;
+  font-size: 0.95em;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+pre.custom-js::before {
+  content: "JavaScript";
+  background-color: #000;
+  color: #f7df1e;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.8em;
+  margin-bottom: 0.5em;
+  display: inline-block;
+}
+
+pre.custom-js::after {
+  content: "";
+  /* background-image: url("img/js-icon.png"); */
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  width: 24px;
+  height: 24px;
+  opacity: 0.9;
+}
+
+/* === HTML: Bleu === */
+pre.custom-html {
+  position: relative;
+  background-color: #e6f3ff;
+  border-left: 5px solid #005f99;
+  padding: 1em;
+  border-radius: 8px;
+  font-family: "Fira Code", monospace;
+  font-size: 0.95em;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+pre.custom-html::before {
+  content: "HTML";
+  background-color: #005f99;
+  color: #fff;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.8em;
+  margin-bottom: 0.5em;
+  display: inline-block;
+}
+
+pre.custom-html::after {
+  content: "";
+  /* background-image: url("img/html-icon.png"); */
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  width: 24px;
+  height: 24px;
+  opacity: 0.9;
+}
+
+/* === CSS: Rose Violet === */
+pre.custom-css {
+  position: relative;
+  background-color: #fce4ec; /* rose très pâle */
+  border-left: 5px solid #8e24aa; /* violet soutenu */
+  padding: 1em;
+  border-radius: 8px;
+  font-family: "Fira Code", monospace;
+  font-size: 0.95em;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+pre.custom-css::before {
+  content: "CSS";
+  background-color: #8e24aa; /* même violet soutenu */
+  color: #fff;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.8em;
+  margin-bottom: 0.5em;
+  display: inline-block;
+}
+
+pre.custom-css::after {
+  content: "";
+  /* background-image: url("img/css-icon.png"); */
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  width: 24px;
+  height: 24px;
+  opacity: 0.9;
+}
