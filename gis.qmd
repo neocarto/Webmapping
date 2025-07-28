@@ -2,8 +2,21 @@
 
 GeoJSON est un format de données basé sur JSON, conçu pour représenter des objets géographiques simples et leurs propriétés associées. Il est largement utilisé dans les applications de cartographie web et les outils SIG modernes. Un fichier GeoJSON peut contenir des géométries (comme des points, des lignes, des polygones) et des propriétés (données attributaires). Par exemple, un point peut représenter une ville, avec des propriétés comme son nom ou sa population. GeoJSON est lisible par l'humain, facile à manipuler avec JavaScript, et compatible avec de nombreuses bibliothèques comme Leaflet, Maplibre GL ou Turf.js.
 
+```{.js .custom-js}
+fetch("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/world_209.geojson")
+.then(response => response.json())
+.then(data => {
+
+console.log(data)
+
+
+
+
+}) 
+```
 
 # Turf.js
+
 
 Turf.js est une bibliothèque JavaScript puissante et légère dédiée à l’analyse géospatiale (géotraitements). Elle permet de manipuler, transformer et analyser des données géographiques au format GeoJSON directement dans le navigateur ou dans un environnement Node.js. Avec Turf, on peut par exemple calculer des distances, des surfaces, des intersections, des buffers, des centroïdes, ou encore générer des grilles spatiales. Très utilisée dans les projets de cartographie interactive, notamment avec Leaflet ou Mapbox GL JS, Turf.js est précieuse pour effectuer des traitements spatiaux côté client sans avoir besoin d’un serveur SIG.
 
@@ -20,6 +33,6 @@ Demander à ChatGPT
 
 # Geotoolbox
 
-Plus petit projet. En developpement. 
+Geotoolbox est une bibliothèque JavaScript développée pour faciliter la manipulation, l’analyse et la visualisation de données géographiques. Elle propose un ensemble d’outils modulaires destinés aux développeurs et aux cartographes, notamment pour le traitement de géométries en GeoJSON, la généralisation, le calcul d’indicateurs spatiaux, ou encore la mise en forme graphique de cartes. Pensée pour s’intégrer facilement dans des projets web, geotoolbox repose sur des standards ouverts et peut être utilisée en complément de bibliothèques comme D3.js ou MapLibre. 
 
 xxx
