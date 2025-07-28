@@ -124,7 +124,7 @@ fetchAndPlot();
 
 ### opendata.paris.fr
 
-Sur le site de la mairie de Paris, de nombreux jeux de données sont également disponibles à travers une API qui permet de requeter toute sles dounnées ouvertes de la ville.
+Sur le site de la mairie de Paris, de nombreux jeux de données sont également disponibles à travers une API qui permet de requeter toutes les dounnées ouvertes de la ville.
 
 Par exemple, regardons la localisation des stations de Vélib. Il y en a 1459.
 
@@ -159,15 +159,103 @@ async function getAllStations() {
 
 
 
-# Insee
+# Altimétrie
 
-https://api.insee.fr/geo/communes?codeRegion=11
+https://geoservices.ign.fr/documentation/services/services-geoplateforme/altimetrie
+
+Ce service de l'IGN s'appuie sur des ressources altimétriques pour fournir des altitudes. Ainsi, lancer un calcul en sollicitant une ressource altimétrique basée sur la donnée RGE ALTI® donnera un résultat différent du même calcul sollicitant une ressource altimétrique basée sur la donnée BD ALTI®, en raison des différences de résolution et de précision de ces deux produits.
+
+Il est limité à 5 requêtes/s.
+
+Toute la documentation est [ici](https://geoservices.ign.fr/documentation/services/services-geoplateforme/altimetrie)
+
+https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=1.48&lat=43.54&resource=ign_rge_alti_wld
+
+
+```{.js .custom-js}
+fetch(
+  "https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=1.48|1.49&lat=43.54|43.55&resource=ign_rge_alti_wld&delimiter=|&indent=false&measures=false&zonly=false"
+).then((d) => d.json())
+ .then(data => {
+ console.log(data)
+})
+```
+
+Avec une listé déroulante, ca peut donner ca :
+
+```{.html .custom-html}
+  <label for="lieux">Choisis un lieu :</label>
+  <select id="lieux" name="lieux">
+    <option disabled selected>-- Choisis un lieu --</option>
+  </select>
+
+  <p id="resultat"></p>
+```
+
+```{.js .custom-js}
+const lieux = [
+  { "nom": "Montmartre", "coords": [48.88685856740631, 2.3430894611004986] },
+  { "nom": "Tour Eiffel", "coords": [48.8583701, 2.2944813] },
+  { "nom": "Louvre", "coords": [48.8606111, 2.337644] }
+]
+
+const select = document.querySelector('#lieux');
+
+    lieux.forEach(lieu => {
+      const option = document.createElement('option');
+      option.textContent = lieu.nom;
+      option.value = JSON.stringify(lieu.coords); // on encode les coordonnées
+      select.appendChild(option);
+    });
+
+    select.addEventListener('change', () => {
+      const coords = JSON.parse(select.value);
+
+fetch(`https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=${coords[1]}&lat=${coords[0]}&resource=ign_rge_alti_wld`)
+  .then(response => response.json())
+  .then(data => {
+    console.log(coords)
+    const alt = data.elevations[0].z
+    const str = `L'altitude est de ${alt} metres`
+    document.querySelector("#resultat").textContent = str
+  })
+
+    });
+```
+
+Calculer un profil altimétrique
+
+Ce calcul permet d'obtenir un profil en long. Il est accessible via l'URL suivante 
+
+https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevationLine.{format}
+
+https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevationLine.json?lon=1.48|1.49&lat=43.54|43.55&resource=ign_rge_alti_wld&delimiter=|&indent=true&measures=false&profile_mode=simple&sampling=4
+
+--------------------------------------------------
+
+
+
 
 # Géocodage
 
+
+
+https://data.geopf.fr/geocodage/search
+
+
+## BAN
+
+La Base Adresse Nationale propose différents outils et APIs afin de vous permettre soit de travailler sur votre Base Adresse Locale, soit de consulter ou d'utiliser la Base Adresse Nationale. [https://adresse.data.gouv.fr/outils](https://adresse.data.gouv.fr/outils)
+
+
+
+
 # Météo
 
-# Altimétrie
+https://wxs.ign.fr/{cle}/alti/rest/elevation.json
+
+
+https://api.meteo.com/v1/paris
 
 # Osrm
 
