@@ -233,6 +233,10 @@ https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevationLine.json?lon=1.4
 
 --------------------------------------------------
 
+# Sport
+
+
+https://data.sports.gouv.fr/explore/dataset/lics_histo/api/
 
 
 

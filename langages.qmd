@@ -3,8 +3,10 @@
 
 Les langages du web sont les technologies qui permettent de créer, structurer, styliser, et faire fonctionner des sites et applications web. On peut les classer en trois grandes catégories : langages de **structure**, de **style**, et de **comportement**, auxquels s’ajoutent les langages côté serveur et les technologies associées. 
 
+👉 Un site web de référence : [https://developer.mozilla.org/fr/docs/Web](https://developer.mozilla.org/fr/docs/Web)
+
 ::: {.callout-tip title="Comment écrire et tester du code ?"}
-Pour écrire du code, on utilise génralement une IDE (environnements de développement). Il en existe de nombreux sur la marché et un certains npmbreu d'entre eux sont gratuits. Mais on peut utiliser un simple éditeur de texte type **notepad** ou **notepadd++**. Ensuite, il suffit d'ouvrir les fichiers avec votre navigateur web préféré. 
+Pour écrire du code, on utilise génralement une IDE (interface de développement). Il en existe de nombreux sur la marché et un certains nombre d'entre eux sont gratuits. Mais on peut utiliser un simple éditeur de texte type **notepad** ou **notepadd++**. Ensuite, il suffit d'ouvrir les fichiers avec votre navigateur web préféré. 
 ![](img/ide.png){width=70%}
 Vous pouvez aussi utiliser des environnement de développement en ligne spécialement conçu pour tester, partager et déboguer du code.  On peut citer **JSFiddle**, **CodePen**, **JSBin**, **PlayCode**, **StackBlitz** ou **Observable**. Pour ce cours, je vous propose d'utiliser **JSFiddle**.
 
@@ -58,7 +60,7 @@ En HTML, on peut créer des formulaires.
 </form>
 ```
 
-Grace à la balise `svg`, on peut même dessiner directement.
+Grâce à la balise `svg`, on peut même dessiner directement.
 ```{.html .custom-html}
 <h1>Un cercle SVG</h1>
 <svg width="200" height="200">
@@ -125,6 +127,13 @@ En plus de définir les styles, le CSS permet de **positionner les éléments** 
 Le positionnement classique utilise la propriété position (**static**, **relative**, **absolute**, **fixed**, **sticky**) pour placer un élément de manière plus ou moins indépendante du flux normal. Pour des mises en page plus complexes, le système **CSS Grid** offre une grille en deux dimensions (lignes et colonnes) permettant d’organiser les éléments de façon souple et précise. Avec display: grid, on contrôle la structure, l’alignement, les espacements et la répartition des contenus, ce qui en fait une solution moderne et puissante pour le web design.
 
 
+- **static** : position par défaut, l’élément suit le flux normal de la page.
+- **relative** : l’élément reste dans le flux mais peut être décalé par rapport à sa position initiale.
+- **absolute** : l’élément est retiré du flux et positionné par rapport à son ancêtre positionné le plus proche.
+- **fixed** : l’élément est retiré du flux et reste fixé par rapport à la fenêtre du navigateur, même au défilement.
+- **sticky** : l’élément se comporte comme relative mais devient fixé (fixed) lorsqu’on atteint une certaine position de scroll.
+- **grid** : permet de disposer les élément dans une grille à lignes et colonnes pour un agencement précis et flexible.
+
 ```{.html .custom-html}
 <div id="div1">mon div1</div>
 <div id="div2">mon div2</div>
@@ -144,6 +153,9 @@ Le positionnement classique utilise la propriété position (**static**, **relat
 }
 ```
 
+Bien maitriser le CSS n'est pas évident. C'est un métier en soi.
+
+Se référer à la documentation : [https://developer.mozilla.org/fr/docs/Web/CSS/position](https://developer.mozilla.org/fr/docs/Web/CSS/position)
 
 # Le JavaScript
 
@@ -217,6 +229,13 @@ Pour visualiser les résultats, on peut utiliser la console.
 console.log(sayHello("dude"))
 ```
 
+::: {.callout-tip title="Les outils de développement du navigateur"}
+Les outils de développement du navigateur (souvent appelés **DevTools**) sont intégrés dans tous les navigateurs modernes (Chrome, Firefox, Edge, Safari). Ils servent à analyser, tester et déboguer des pages web en temps réel. On ne peut pas faire de développement web sans utiliser ces outils. Vous pouvez y accéder en général avec la touche **F12** ou Ctrl+Shift+I (Cmd+Opt+I sur Mac). L'onglet **console** permet de récupérer les instructions console.log(). 
+
+*NB : jsfiddle dispose d'une console intégrée. Vous pouvez l'afficher en modifiant les paramètres de l'éditeur.* 
+:::
+
+
 Exécuter du code selon une condition.
 
 ```{.js .custom-js}
@@ -239,7 +258,7 @@ for (let i = 0; i < 5; i++) {
 
 ### Le format JSON
 
-Le JSON (JavaScript Object Notation) est un format léger de données créé en 2001 par Douglas Crockford. Il sert à représenter des informations sous forme de paires clé-valeur dans un texte lisible, facile à échanger entre applications. Très simple et universel, JSON est largement utilisé grâce à sa compatibilité avec de nombreux langages de programmation.
+Le JSON (JavaScript Object Notation) est un format léger de données créé en 2001 par **Douglas Crockford**. Il sert à représenter des informations sous forme de **paires clé-valeur** dans un texte lisible, facile à échanger entre applications. Très simple et universel, JSON est largement utilisé grâce à sa compatibilité avec de nombreux langages de programmation.
 
 Voici à quoi ca ressemble. En fait, il s'agit d'un Array dont chaque élément est un objet. C'ets la façon qu'on a en JavaScrit de formaliser un tableau. 
 
@@ -264,13 +283,13 @@ Connaitre le nombre d'éléments
 console.log(books.length)
 ```
 
-Récupérer l'auteur de la 2e ligne
+Récupérer la première ligne
 
 ```{.js .custom-js}
-console.log(books[1]) // 1 car la première ligne a l'index 0.
+console.log(books[0]) // La numérotation des indices commence à 0 !
 ```
 
-Récupérer la 2e ligne
+Récupérer le titre de la 2e ligne
 
 ```{.js .custom-js}
 console.log(books[1].titre) 
@@ -324,11 +343,7 @@ Récupérer des modalités uniques (`Set`)
 console.log(books.filter(d => d.cycle == "classique"))
 ```
 
-```{.js .custom-js}
-console.log(books[1]) // 1 car la première ligne a l'index 0.
-```
-
-Les filtres permettent de récupérer 
+Exemple de code classique.
 
 ```{.js .custom-js}
 let cycles = books.map(d => d.cycle)
@@ -369,7 +384,7 @@ fetch("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/dat
 
 ### Les bibliothèques
 
-Une bibliothèque JavaScript est un ensemble de fonctions ou d’objets prêts à l’emploi, écrits en JavaScript, que tu peux réutiliser dans tes projets pour éviter de tout coder à la main. Les bibioltèques JavaScript sont disponibles dans **npm** (abréviation de Node Package Manager).
+Une bibliothèque JavaScript est un ensemble de fonctions ou d’objets prêts à l’emploi, écrits en JavaScript, que tu peux réutiliser dans tes projets pour éviter de tout coder à la main. Les bibioltèques JavaScript sont disponibles dans [**npm**](https://www.npmjs.com/) (abréviation de Node Package Manager).
 
 ![](img/npm.png){width="100%"}
 
@@ -393,7 +408,7 @@ confetti({
 
 **La bibliothèque leafet** 
 
-Leaflet est une bibliothèque JavaScript open source créée en 2010 par Vladimir Agafonkin, un développeur ukrainien. Elle permet de créer facilement des cartes interactives pour le web. C'ets une des plus connues et des plus ancvienne.
+[Leaflet](https://leafletjs.com/) est une bibliothèque JavaScript open source créée en 2010 par Vladimir Agafonkin, un développeur ukrainien. Elle permet de créer facilement des cartes interactives pour le web. C'ets une des plus connues et des plus ancvienne.
 
 ```{.html .custom-html}
 <!-- Import de la bibliothèque et du css-->
@@ -403,7 +418,8 @@ Leaflet est une bibliothèque JavaScript open source créée en 2010 par Vladimi
 ```  
 
 ```{.js .custom-js}
-    const map = L.map('map').setView([46.8, 2.5], 6);
+    const map = L.map('map').setView([51.505, -0.09], 13);
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap'
     }).addTo(map);
@@ -415,9 +431,17 @@ Leaflet est une bibliothèque JavaScript open source créée en 2010 par Vladimi
 }
 ```
 
+Pour ajouter un marker et une popup :
+
+```{.js .custom-js}
+L.marker([51.5, -0.09]).addTo(map)
+    .bindPopup('Une jolie popup.<br> facilement personnalisable.')
+    .openPopup();
+```
+
 **La bibliothèque maplibre-gl** 
 
-MapLibre est une bibliothèque JavaScript open source permettant d'afficher des cartes interactives vectorielles sur le web, en 2D ou en 3D (vue "globe"). Elle est née en 2020 suite à la décision de Mapbox de fermer le code source de Mapbox GL JS à partir de la version 2. MapLibre constitue donc une alternative libre, soutenue par une communauté active. 
+[MapLibre](https://maplibre.org/) est une bibliothèque JavaScript open source permettant d'afficher des cartes interactives vectorielles sur le web, en 2D ou en 3D (vue "globe"). Elle est née en 2020 suite à la décision de Mapbox de fermer le code source de Mapbox GL JS à partir de la version 2. MapLibre constitue donc une alternative libre, soutenue par une communauté active. 
 
 ```{.html .custom-html}
 <!-- Import de la bibliothèque et du css-->
@@ -432,7 +456,7 @@ const map = new maplibregl.Map({
   style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
   center: [2.5, 46.8], // [lon, lat]
   zoom: 6,
-});;
+});
 ```
 
 ```{.css .custom-css}
@@ -485,7 +509,7 @@ Et voici comment on peut interagir avec en JavaScript
  
 
 ```{.js .custom-js}
-const montext = console.log(document.querySelector("#monid").textContent)
+const montext = document.querySelector("#monid").textContent
 console.log(montext)
 ```
 
@@ -496,7 +520,7 @@ Et ca permet aussi de le changer.
 document.querySelector("#monid").textContent = "coucou"
 ```
 
-Et si je veux ajouter un ppint d'exclamation dans le div et le mettre en gras. 
+Et si je veux ajouter un point d'exclamation dans le div et le mettre en gras. 
 
 ```{.js .custom-js}
 let mondiv = document.querySelector("#monid")
@@ -509,10 +533,10 @@ J'aurais aussi pu utiliser innerHTML :
 
 
 ```{.js .custom-js}
-v.innerHTML = document.querySelector("#monid").textContent + "<b> !</>"
+monid.innerHTML = document.querySelector("#monid").textContent + "<b> !</>"
 ```
 
-Du coup, vous pouvez rendre des calculs JavaScript dans le navigateur. 
+Du coup, vous pouvez rendre des calculs JavaScript dans le navigateur plutôt que dans la console.  
 
 ```{.html .custom-html}
 <div>Dans ma mibliothèque, il y a <span id = "count"></span> livres.</div>
@@ -611,6 +635,7 @@ slider.addEventListener("input", function () {
 Reprennez l'exemple ci-dessus.
 
 1 - dans un nouveau div, ajoutez un autre slider pour changer le rayon du cercle
+
 2 - dans un nouveau div, ajoutez un élément de formulaire de type "color" pour changer la couleur du cercle.
 
 A vous de jouer !

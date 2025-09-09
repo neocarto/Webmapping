@@ -100,6 +100,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="style.css">
@@ -186,6 +188,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul class="collapse">
   <li><a href="#le-format-geojson" id="toc-le-format-geojson" class="nav-link active" data-scroll-target="#le-format-geojson">Le format GeoJSON</a></li>
+  <li><a href="#manipuler-un-fichier-geojson" id="toc-manipuler-un-fichier-geojson" class="nav-link" data-scroll-target="#manipuler-un-fichier-geojson">Manipuler un fichier geoJSON</a></li>
   <li><a href="#turf.js" id="toc-turf.js" class="nav-link" data-scroll-target="#turf.js">Turf.js</a></li>
   <li><a href="#geotoolbox" id="toc-geotoolbox" class="nav-link" data-scroll-target="#geotoolbox">Geotoolbox</a></li>
   </ul>
@@ -200,31 +203,69 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="le-format-geojson" class="level1">
 <h1>Le format GeoJSON</h1>
 <p>GeoJSON est un format de données basé sur JSON, conçu pour représenter des objets géographiques simples et leurs propriétés associées. Il est largement utilisé dans les applications de cartographie web et les outils SIG modernes. Un fichier GeoJSON peut contenir des géométries (comme des points, des lignes, des polygones) et des propriétés (données attributaires). Par exemple, un point peut représenter une ville, avec des propriétés comme son nom ou sa population. GeoJSON est lisible par l’humain, facile à manipuler avec JavaScript, et compatible avec de nombreuses bibliothèques comme Leaflet, Maplibre GL ou Turf.js.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fetch</span>(<span class="st">"https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/world_209.geojson"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">then</span>(response <span class="kw">=&gt;</span> response<span class="op">.</span><span class="fu">json</span>())</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">then</span>(data <span class="kw">=&gt;</span> {</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(data)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>}) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Voici à quoi ca ressemble :</p>
+<div class="cell">
+<div class="sourceCode cell-code hidden" id="cb1" data-startfrom="10" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 9;"><span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"data/world_209.geojson"</span>)<span class="op">.</span><span class="fu">json</span>()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+<p>Dans jsfiddle, copiez le code suivant :</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fetch</span>(<span class="st">"https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/world_209.geojson"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">then</span>(response <span class="kw">=&gt;</span> response<span class="op">.</span><span class="fu">json</span>())</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">.</span><span class="fu">then</span>(data <span class="kw">=&gt;</span> {</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(data)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>}) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="manipuler-un-fichier-geojson" class="level1">
+<h1>Manipuler un fichier geoJSON</h1>
+<p>Pour manipuler un geoJSON, on peut utiliser les fonctions JavaScript vues précédement.</p>
+<p>Récupérer la première “feature”</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data<span class="op">.</span><span class="at">features</span>[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Connaitre le nombre de pays</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data<span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">length</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Par exemple, récupérer tous les codes ISO3</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data<span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">ISO3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ou récupérer toutes les géométries</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>data<span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">geometry</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="turf.js" class="level1">
 <h1>Turf.js</h1>
-<p>Turf.js est une bibliothèque JavaScript puissante et légère dédiée à l’analyse géospatiale (géotraitements). Elle permet de manipuler, transformer et analyser des données géographiques au format GeoJSON directement dans le navigateur ou dans un environnement Node.js. Avec Turf, on peut par exemple calculer des distances, des surfaces, des intersections, des buffers, des centroïdes, ou encore générer des grilles spatiales. Très utilisée dans les projets de cartographie interactive, notamment avec Leaflet ou Mapbox GL JS, Turf.js est précieuse pour effectuer des traitements spatiaux côté client sans avoir besoin d’un serveur SIG.</p>
-<p>Demander à ChatGPT</p>
+<p><a href="https://turfjs.org/">Turf.js</a> est une bibliothèque JavaScript puissante et légère dédiée à l’analyse géospatiale (géotraitements). Elle permet de manipuler, transformer et analyser des données géographiques au format GeoJSON directement dans le navigateur ou dans un environnement Node.js. Avec Turf, on peut par exemple calculer des distances, des surfaces, des intersections, des buffers, des centroïdes, ou encore générer des grilles spatiales. Très utilisée dans les projets de cartographie interactive, notamment avec Leaflet ou Mapbox GL JS, Turf.js est précieuse pour effectuer des traitements spatiaux côté client sans avoir besoin d’un serveur SIG.</p>
+<p>👉 <strong>Documentation</strong> : <a href="https://turfjs.org/">https://turfjs.org</a></p>
 </section>
 <section id="geotoolbox" class="level1">
 <h1>Geotoolbox</h1>
-<p>Plus petit projet. En developpement.</p>
-<p>xxx</p>
+<p><a href="https://riatelab.github.io/geotoolbox/">Geotoolbox</a> est une bibliothèque JavaScript développée pour faciliter la manipulation, l’analyse et la visualisation de données géographiques. Elle propose un ensemble d’outils modulaires destinés aux développeurs et aux cartographes, notamment pour le traitement de géométries en GeoJSON, la généralisation, le calcul d’indicateurs spatiaux, ou encore la mise en forme graphique de cartes. Pensée pour s’intégrer facilement dans des projets web, geotoolbox repose sur des standards ouverts et peut être utilisée en complément de bibliothèques comme D3.js ou MapLibre.</p>
+<p>👉 <strong>Documentation</strong> : <a href="https://riatelab.github.io/geotoolbox//">https://riatelab.github.io/geotoolbox/</a></p>
 
 
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImRhdGEgPSBGaWxlQXR0YWNobWVudChcImRhdGEvd29ybGRfMjA5Lmdlb2pzb25cIikuanNvbigpXG5kYXRhXG4ifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
