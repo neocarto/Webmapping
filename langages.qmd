@@ -352,7 +352,8 @@ cycles = Array.from(cycles)
 console.log(cycles)
 ```
 
-**<ins>Exercice</ins>**
+::: {.callout-note title="Exercice"}
+
 
 Copiez ce code dans JSFidle et remplissez-le.
 
@@ -381,6 +382,7 @@ fetch("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/dat
     // ------------------
 });
 ```
+:::
 
 ### Les bibliothèques
 
@@ -630,7 +632,9 @@ slider.addEventListener("input", function () {
 });
   ```
 
-  **<ins>Exercice</ins>**
+A vous de jouer !
+
+::: {.callout-note title="Exercice"}
 
 Reprennez l'exemple ci-dessus.
 
@@ -638,7 +642,4 @@ Reprennez l'exemple ci-dessus.
 
 2 - dans un nouveau div, ajoutez un élément de formulaire de type "color" pour changer la couleur du cercle.
 
-A vous de jouer !
-
-
-
+:::

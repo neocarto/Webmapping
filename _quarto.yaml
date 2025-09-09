@@ -16,6 +16,8 @@ website:
         file: gis.qmd
       - text: "Les API"
         file: api.qmd
+      - text: "Le format GeoJSON"
+        file: geojson.qmd
       - text: "Dataviz et geoviz"
         file: dataviz.qmd
       - text: "Les dashboards"
