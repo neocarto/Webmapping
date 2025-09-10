@@ -14,14 +14,18 @@ website:
         file: langages.qmd
       - text: "SIG"
         file: gis.qmd
-      - text: "Les API"
-        file: api.qmd
       - text: "Le format GeoJSON"
         file: geojson.qmd
-      - text: "Dataviz et geoviz"
+      - text: "Les API"
+        file: api.qmd
+      - text: "Dataviz"
         file: dataviz.qmd
+      - text: "Geoviz"
+        file: geoviz.qmd
       - text: "Les dashboards"
         file: dashboard.qmd
+      - text: "A rendre"
+        file: eval.qmd
 format:
   html:
     toc: true         

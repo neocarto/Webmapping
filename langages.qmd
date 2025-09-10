@@ -390,7 +390,7 @@ Une bibliothèque JavaScript est un ensemble de fonctions ou d’objets prêts �
 
 ![](img/npm.png){width="100%"}
 
-Il y a plusieurs façons d'importer une bibliothèque. Ici, on utilise un **CDN** (Content Delivery Network, ou réseau de diffusion de contenu). C’est la méthode la plus simple pour les projets HTML statiques.
+Il y a plusieurs façons d'importer une bibliothèque. La documentation d echaque bibliothèque explique comment il faut procéder et dans quel contexte. Voici un exemple. 
 
 **La bibliothèque confetti** 
 
@@ -401,6 +401,17 @@ Il y a plusieurs façons d'importer une bibliothèque. Ici, on utilise un **CDN*
 ```  
 
 ```{.js .custom-js}
+confetti({
+      particleCount: 150,
+      spread: 70,
+      origin: { y: 0.6 }
+    });
+```
+
+Ou 
+
+```{.js .custom-js}
+import confetti from "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/+esm";
 confetti({
       particleCount: 150,
       spread: 70,

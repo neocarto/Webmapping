@@ -1,7 +1,101 @@
-# Dataviz
+# D3js
+
+![](img/d3.png){width="10%"}
+
+d3.js  est une bibliothèque graphique JavaScript développée par Mike Bostock qui permet l'affichage de données numériques sous une forme graphique et dynamique. Elles est conforme aux normes W3C et utilise les technologies courantes **SVG**, **JavaScript** et **CSS** pour la visualisation de données. Cette bibliothèque a 10 ans !!! Nous en sommes à la 7e version. Et le développement continue. 
+
+**d3.js** est une grosse librairie (plus de 1000 fonctions) qui fait beaucoup de choses. Depuis 2015, elle est composée de différents modules spécialisés.
+
+Elle permet de dessiner du SVG directement en JavaScript à grace au DOM.
+
+Elle permet de remplacer ça
+
+```{.html .custom-html}
+<html>
+  <body>
+    <svg viewBox="0 0 500 60" style="background-color:#CCC">
+      <circle cx="50" cy="30" r="25" fill="#e04a28"/>
+      <rect x="100" y="5" height="50" width="50" fill="#5277bf"/>
+    </svg>
+  </body>
+</html>
+```
 
 
+par ça
 
 
+```{.html .custom-html}
+<div id="myDiv"></div>
+```
 
 
+```{.js .custom-js}
+import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+const svg = d3
+  .create("svg")
+  .attr("viewBox", [0, 0, 500, 60])
+  .style("background-color", "#CCC");
+
+svg
+  .append("circle")
+  .attr("cx", 50)
+  .attr("cy", 30)
+  .attr("r", 25)
+  .style("fill", "#e04a28");
+
+svg
+  .append("rect")
+  .attr("x", 100)
+  .attr("y", 5)
+  .attr("height", 50)
+  .attr("width", 50)
+  .style("fill", "#5277bf");
+
+document.querySelector("#myDiv").appendChild(svg.node());
+```
+
+La force de D3 (**Data-Driven Documents**) va être de construire des visualisations à partir de données. Par exemple : 
+
+```{.js .custom-js}
+const myData = [10, 30, 20, 30, 25]
+  const width = 500;
+  const height = 75;
+
+  const svg = d3
+    .create("svg")
+    .attr("viewBox", [0, 0, width, height])
+    .style("background-color", "#CCC");
+
+  svg
+    .append("g")
+    .attr("fill", "#e04a28")
+    .selectAll("circle")
+    .data(myData)
+    .join("circle")
+    .attr("cx", (d, i) => 50 + i * 100)
+    .attr("cy", height / 2)
+    .attr("r", (d) => d);
+    document.querySelector("#myDiv").appendChild(svg.node())
+```
+
+# Chart.js
+
+# Vega
+
+# Plot
+
+```{.js .custom-js}
+import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+
+const chart = Plot.plot({
+  marks: [
+    Plot.barY(
+      [{x: "A", y: 3}, {x: "B", y: 7}, {x: "C", y: 5}],
+      {x: "x", y: "y"}
+    )
+  ]
+});
+
+document.body.append(chart);
+```
