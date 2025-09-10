@@ -1,3 +1,5 @@
+### Un géotraitement (ou geoprocessing en anglais) désigne l’ensemble des opérations qu’on peut appliquer à des données géographiques dans un SIG pour les transformer, les analyser ou les enrichir. Grace à des bibliothèques dédiées, il est possible d'effectuer un certain nombre d'opérations directement dans le navigateur Web.
+
 # Turf.js
 
 
@@ -79,7 +81,21 @@ let buffer = turf.buffer(center, 500)
 let intersection = turf.intersect(turf.featureCollection([cuba, buffer]));
 ```
 
- 👉  Maintenant, calculons la distance entre deux points.
+ 👉 Tester si une ville est à l’intérieur de Cuba
+
+```{.js .custom-js}
+// On ajoute deux points (La Havane et Miami)
+const havane = turf.point([-82.3666, 23.1136]);
+const miami = turf.point([-80.1918, 25.7617]);
+
+// Tester si les villes sont à l'interieur de Cuba
+const testMiami = turf.booleanPointInPolygon(miami, cuba);
+console.log(testMiami)
+const testHavane = turf.booleanPointInPolygon(havane, cuba);
+console.log(testHavane)
+```
+
+👉  Maintenant, calculons la distance entre deux points.
 
 
 ```{.js .custom-js}
@@ -106,22 +122,6 @@ console.log(length)
 ```
 
 Voir à ce sujet : [le paradoxe de l'aviateur](https://www.humanite.fr/monde/regard-de-cartographe/le-paradoxe-de-laviateur)
-
-::: {.callout-note title="Exercice"}
-
-TODO
-
-Calculer la distance entre le centroid de xxx et le centroid de yyyy
-
-
-:::
-
-TODO
-
-Exemple de cartographie interactive.
-
-Compter le nombre de points inclus dans le buffer.
-
 
 
 
