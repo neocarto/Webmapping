@@ -14,8 +14,6 @@ website:
         file: langages.qmd
       - text: "SIG"
         file: gis.qmd
-      - text: "Le format GeoJSON"
-        file: geojson.qmd
       - text: "Les API"
         file: api.qmd
       - text: "Dataviz"
