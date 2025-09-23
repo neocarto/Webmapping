@@ -137,11 +137,6 @@ data = FileAttachment("data/world_209.geojson").json()
 data
 ```
 
-
-::: {.callout-warning title="Importer un geoJSON avec `fetch()`"}
-Pour importer un jeu de données, on utilise la fonction fetch. Problème, il s'agit d'une fonction asynchrone. Nous verrons tout à l'heure de quoi il s'agit. 
-:::
-
 Dans jsfiddle, copiez le code suivant :
 
 ```{.js .custom-js}

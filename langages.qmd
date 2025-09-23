@@ -192,7 +192,7 @@ C'est un langage ancien qui dispose d'une très grande communauté.
 
 ### Les principes de base
 
-Les variables permettent de stocker des donnes. 
+Les variables permettent de stocker des données. 
 
 ```{.js .custom-js}
 let age = 30;
@@ -572,7 +572,7 @@ const books = [
 document.querySelector("#count").textContent = books.length
 ```
 
-On peut aussi déclencher du code JavaScript en inetergissant sur la page.
+On peut aussi déclencher du code JavaScript en interagissant sur la page.
 
 ```{.html .custom-html}
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>

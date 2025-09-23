@@ -152,12 +152,12 @@ async function getAllStations() {
     totalCount = data.total_count || allStations.length; // total_count est fourni par l'API
     offset += limit;
   }
-  return allStations;
+  console.log(allStations);
+  console.log(allStations.length);
 }
+
+getAllStations();
 ```
-
-
-
 
 # Altimétrie
 
