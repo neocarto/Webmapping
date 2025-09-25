@@ -154,6 +154,20 @@ console.log(data)
 
 Ou (autre syntaxe avec une fonction asynchrone anonyme)
 
+
+```{.js .custom-js}
+// On crée une fonction asynchrone
+async function main() {
+const data = await (await fetch("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/world_209.geojson")).json();
+console.log(data);
+}
+// on appelle la fonction asynchrone
+main()
+```
+
+
+ou directement avec une fonction auto exectuée
+
 ```{.js .custom-js}
 (async () => {
   const data = await (await fetch("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/world_209.geojson")).json();
@@ -161,7 +175,7 @@ Ou (autre syntaxe avec une fonction asynchrone anonyme)
 })();
 ```
 
-Ou avel la bibliothèque d3.js (très pratique)
+Ou avec la bibliothèque d3.js (très pratique)
 
 ```{.js .custom-js}
 import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
@@ -170,6 +184,19 @@ json("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data
     console.log(data);
   });
 ```
+
+ou
+
+
+```{.js .custom-js}
+import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+async function main() {
+const data = await json("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/world_209.geojson")
+console.log(data)
+}
+main()
+```
+
 
 # Manipuler un fichier geoJSON
 
@@ -263,8 +290,206 @@ mapDiv.appendChild(svg.render());
 
 👉 **Documentation** : [https://riatelab.github.io/geotoolbox/](https://riatelab.github.io/geotoolbox//)
 
+POur importer la bibliothèque : 
 
-Union
+```{.html .custom-html}
+<script src="https://cdn.jsdelivr.net/npm/geotoolbox@3"></script>
+```
 
+ou 
+
+```{.js .custom-js}
+import { **a function** } from "https://cdn.jsdelivr.net/npm/geotoolbo@3/+esm"
+```
+
+Voici un fond de carte des arrondissements parisiens (affiché avec leaflet)
+
+
+```{.js .custom-js}
+import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+async function DessineParis() {
+const data = await json("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson")
+const map = L.map('map');
+const layer = L.geoJSON(data).addTo(map);
+map.fitBounds(layer.getBounds());
+}
+DessineParis()
+```
+
+- Union
+
+```{.js .custom-js}
+import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm"
+import { union } from "https://cdn.jsdelivr.net/npm/geotoolbox@3/+esm"
+async function DessineParis() {
+  const paris = await json("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson")
+  const merge = await union(paris)
+  const map = L.map('map')
+  const layer = L.geoJSON(merge).addTo(map)
+  map.fitBounds(layer.getBounds())
+}
+DessineParis()
+```
+
+- Centroid
+
+```{.js .custom-js}
+import { centroid } from "https://cdn.jsdelivr.net/npm/geotoolbox@3/+esm"
+const ctr = centroid(paris)
+```
+
+- Buffer
+
+```{.js .custom-js}
+import { buffer } from "https://cdn.jsdelivr.net/npm/geotoolbox@3/+esm"
+const buff = await buffer(paris, {dist:50})
+```
+
+- Border
+
+```{.js .custom-js}
+import { border } from "https://cdn.jsdelivr.net/npm/geotoolbox@3/+esm"
+const frontieres = await border(paris)
+```
+
+- Nodes
+
+
+```{.js .custom-js}
+import { nodes } from "https://cdn.jsdelivr.net/npm/geotoolbox@3/+esm"
+const points = await nodes(paris)
+```
+
+- Concave Hull
+
+```{.js .custom-js}
+import { convexhull } from "https://cdn.jsdelivr.net/npm/geotoolbox@3/+esm"
+const convex = await convexhull(ctr)
+```
+
+- Convex Hull
+
+```{.js .custom-js}
+import { convexhull } from "https://cdn.jsdelivr.net/npm/geotoolbox@3/+esm"
+const convex = await convexhull(ctr)
+```
+
+- Concave Hull
+
+```{.js .custom-js}
+import { concavehull } from "https://cdn.jsdelivr.net/npm/geotoolbox@3/+esm"
+const concave = await concavehull(ctr)
+```
+
+- Simplify
+
+```{.js .custom-js}
+import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm"
+import { simplify } from "https://cdn.jsdelivr.net/npm/geotoolbox@3/+esm"
+async function DessineParis() {
+  const paris = await json("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson")
+  const simpl = simplify(paris, {k:0.001})
+  const map = L.map('map')
+  const layer = L.geoJSON(simpl).addTo(map)
+  map.fitBounds(layer.getBounds())
+}
+DessineParis()
+```
+
+Et si on faisait une simplification interactive ?
+
+```{.html .custom-html}
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<div>
+  <label for="k">k : </label>
+  <input type="range" id="k" min="0.0001" max="0.1" value="0.05" step="0.0001">
+  <span id="valeur">0.2</span>
+</div>
+<div id="map"></div>
+```
+
+```{.css .custom-css}
+#map {
+    height: 500px;
+}
+```
+
+
+```{.js .custom-js}
+import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm"
+import { simplify } from "https://cdn.jsdelivr.net/npm/geotoolbox@3/+esm"
+
+const map = L.map('map')
+let layer; // pour stocker la couche
+
+async function DessineParis(k) {
+  const paris = await json("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson")
+  const simpl = simplify(paris, { k })
+  
+  // supprimer la couche précédente si elle existe
+  if (layer) {
+    map.removeLayer(layer)
+  }
+  
+  layer = L.geoJSON(simpl).addTo(map)
+  map.fitBounds(layer.getBounds())
+}
+
+// slider
+const slider = document.querySelector("#k")
+const valeur = document.querySelector("#valeur")
+
+slider.addEventListener("input", () => {
+  const k = parseFloat(slider.value)
+  valeur.textContent = k.toFixed(3)
+  DessineParis(k)
+})
+
+// initialisation
+DessineParis(parseFloat(slider.value))
+```
+
+Problème de ce code : on télécharger le fond de carte à chaque fois qu'on bouge le slider.
+Ce n'est pas très écolo.
+
+Une solution possible :
+
+```{.js .custom-js}
+import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm"
+import { simplify } from "https://cdn.jsdelivr.net/npm/geotoolbox@3/+esm"
+
+const map = L.map('map')
+let layer
+let original // stockera le GeoJSON original
+
+async function init() {
+  // charger une seule fois
+  original = await json("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson")
+  DessineParis(parseFloat(slider.value))
+}
+
+function DessineParis(k) {
+  const simpl = simplify(original, { k })
+  
+  if (layer) {
+    map.removeLayer(layer)
+  }
+  
+  layer = L.geoJSON(simpl).addTo(map)
+  map.fitBounds(layer.getBounds())
+}
+
+const slider = document.querySelector("#k")
+const valeur = document.querySelector("#valeur")
+
+slider.addEventListener("input", () => {
+  const k = parseFloat(slider.value)
+  valeur.textContent = k.toFixed(3)
+  DessineParis(k)
+})
+
+init()
+```
 
 

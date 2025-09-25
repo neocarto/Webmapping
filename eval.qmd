@@ -1,27 +1,25 @@
 # A rendre ! 
 
-### Réaliser une carte/un graphique sur les médailles aux jeux olympiques
+???
 
-![](img/Olympic_flag.png)
+- Faire une carte sur les equipements sportifs ou les licences.
+- Expliquez vos choix techniques
+- Commentez la carte.
+- Envoyer le fichier jsfiddle + doc de commentaire.
 
-Ce [jeu de données](https://github.com/KeithGalli/Olympics-Dataset?tab=readme-ov-file) contient un jeu de données complet sur les athlètes olympiques d'été et d'hiver et leurs résultats entre 1896 et 2022. Les données ont été *scrappées* depuis le site [olympedia.org](http://olympedia.org/)
+### Equipements sportifs
 
-```{ojs}
-//| echo: false
-data = d3.csv(
-  "https://raw.githubusercontent.com/KeithGalli/Olympics-Dataset/refs/heads/master/clean-data/results.csv",
-  d3.autoType
-)
+<!-- https://data.sports.gouv.fr/explore/dataset/equipements-sportifs/table/
+https://data.sports.gouv.fr/api/explore/v2.1/catalog/datasets/equipements-sportifs/records?limit=20&refine=equip_type_name%3A%22Salle%20d%27escrime%22 -->
 
-x = [...new Set(data.map((d) => d.discipline))]
-```
+### Licences
 
-- **Importez le jeu de données**
+TODO
 
-- **Choisissez un sport parmi les suivants**
 
-```{ojs}
-//| echo: false
-md`${x.slice(0, -1).join(", ")} et ${x[x.length - 1]}.`
-```
+
+### Quelques trucs pour vous aider
+
+
+
 

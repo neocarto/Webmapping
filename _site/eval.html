@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -100,8 +66,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
-<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="style.css">
@@ -211,61 +175,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="a-rendre" class="level1">
 <h1>A rendre !</h1>
-<section id="réaliser-une-carteun-graphique-sur-les-médailles-aux-jeux-olympiques" class="level3">
-<h3 class="anchored" data-anchor-id="réaliser-une-carteun-graphique-sur-les-médailles-aux-jeux-olympiques">Réaliser une carte/un graphique sur les médailles aux jeux olympiques</h3>
-<p><img src="img/Olympic_flag.png" class="img-fluid"></p>
-<p>Ce <a href="https://github.com/KeithGalli/Olympics-Dataset?tab=readme-ov-file">jeu de données</a> contient un jeu de données complet sur les athlètes olympiques d’été et d’hiver et leurs résultats entre 1896 et 2022. Les données ont été <em>scrappées</em> depuis le site <a href="http://olympedia.org/">olympedia.org</a></p>
-<div class="cell">
-<div class="sourceCode cell-code hidden" id="cb1" data-startfrom="11" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 10;"><span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> d3<span class="op">.</span><span class="fu">csv</span>(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://raw.githubusercontent.com/KeithGalli/Olympics-Dataset/refs/heads/master/clean-data/results.csv"</span><span class="op">,</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  d3<span class="op">.</span><span class="at">autoType</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="op">...</span><span class="kw">new</span> <span class="bu">Set</span>(data<span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">discipline</span>))]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<div id="ojs-cell-1-1" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<div id="ojs-cell-1-2" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
-</div>
+<p>???</p>
 <ul>
-<li><p><strong>Importez le jeu de données</strong></p></li>
-<li><p><strong>Choisissez un sport parmi les suivants</strong></p></li>
+<li>Faire une carte sur les equipements sportifs ou les licences.</li>
+<li>Expliquez vos choix techniques</li>
+<li>Commentez la carte.</li>
+<li>Envoyer le fichier jsfiddle + doc de commentaire.</li>
 </ul>
-<div class="cell">
-<div class="sourceCode cell-code hidden" id="cb2" data-startfrom="24" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 23;"><span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">md</span><span class="vs">`</span><span class="sc">${</span>x<span class="op">.</span><span class="fu">slice</span>(<span class="dv">0</span><span class="op">,</span> <span class="op">-</span><span class="dv">1</span>)<span class="op">.</span><span class="fu">join</span>(<span class="st">", "</span>)<span class="sc">}</span><span class="vs"> et </span><span class="sc">${</span>x[x<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span>]<span class="sc">}</span><span class="vs">.`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div id="ojs-cell-2" data-nodetype="expression">
-
-</div>
-</div>
-</div>
+<section id="equipements-sportifs" class="level3">
+<h3 class="anchored" data-anchor-id="equipements-sportifs">Equipements sportifs</h3>
+<!-- https://data.sports.gouv.fr/explore/dataset/equipements-sportifs/table/
+https://data.sports.gouv.fr/api/explore/v2.1/catalog/datasets/equipements-sportifs/records?limit=20&refine=equip_type_name%3A%22Salle%20d%27escrime%22 -->
+</section>
+<section id="licences" class="level3">
+<h3 class="anchored" data-anchor-id="licences">Licences</h3>
+<p>TODO</p>
+</section>
+<section id="quelques-trucs-pour-vous-aider" class="level3">
+<h3 class="anchored" data-anchor-id="quelques-trucs-pour-vous-aider">Quelques trucs pour vous aider</h3>
 
 
 </section>
 </section>
 
 </main> <!-- /main -->
-<script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImRhdGEgPSBkMy5jc3YoXG4gIFwiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL0tlaXRoR2FsbGkvT2x5bXBpY3MtRGF0YXNldC9yZWZzL2hlYWRzL21hc3Rlci9jbGVhbi1kYXRhL3Jlc3VsdHMuY3N2XCIsXG4gIGQzLmF1dG9UeXBlXG4pXG5cbnggPSBbLi4ubmV3IFNldChkYXRhLm1hcCgoZCkgPT4gZC5kaXNjaXBsaW5lKSldXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJtZGAke3guc2xpY2UoMCwgLTEpLmpvaW4oXCIsIFwiKX0gZXQgJHt4W3gubGVuZ3RoIC0gMV19LmBcbiJ9XX0=
-</script>
-<script type="module">
-if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
-window._ojs.paths.runtimeToDoc = "../..";
-window._ojs.paths.runtimeToRoot = "../..";
-window._ojs.paths.docToRoot = "";
-window._ojs.selfContained = false;
-window._ojs.runtime.interpretFromScriptTags();
-</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
