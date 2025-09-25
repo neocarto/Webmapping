@@ -478,6 +478,24 @@ const map = new maplibregl.Map({
 }
 ```
 
+**Soyez précis et concis avec les ESM**
+
+Aujourd'hui, les ESM (ECMAScript Modules), il est possible d'importer uniquement les fonctions dont vous avez besoin. Pas besoin d'importer dans votre page toute une librairie qui peut être lourde, mais uniquement la fonction dont vous avez besoin.
+
+Par exemple :
+
+```{.js .custom-js}
+import { csv } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+```
+
+ou 
+
+```{.js .custom-js}
+import { join, togeojson } from "https://cdn.jsdelivr.net/npm/geotoolbox@3/+esm";
+```
+
+Nous verrons ces bibliothèques plus tard.
+
 # Le DOM
 
 Nous avons dit que le HTML était le squelette de la page, constitué des balises, des classes et d'identifiants. Une autre façon de voir ce squelette est de l'imaginer comme un arbre avec des noeuds et des ramifications. 

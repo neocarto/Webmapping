@@ -161,6 +161,16 @@ Ou (autre syntaxe avec une fonction asynchrone anonyme)
 })();
 ```
 
+Ou avel la bibliothèque d3.js (très pratique)
+
+```{.js .custom-js}
+import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+json("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/world_209.geojson")
+  .then(data => {
+    console.log(data);
+  });
+```
+
 # Manipuler un fichier geoJSON
 
 Pour manipuler un geoJSON, on peut utiliser les fonctions JavaScript vues précédement.
@@ -252,3 +262,9 @@ mapDiv.appendChild(svg.render());
 [Geotoolbox](https://riatelab.github.io/geotoolbox/) est une bibliothèque JavaScript développée pour faciliter la manipulation, l’analyse et la visualisation de données géographiques. Elle propose un ensemble d’outils modulaires destinés aux développeurs et aux cartographes, notamment pour le traitement de géométries en GeoJSON, la généralisation, le calcul d’indicateurs spatiaux, ou encore la mise en forme graphique de cartes. Pensée pour s’intégrer facilement dans des projets web, geotoolbox repose sur des standards ouverts et peut être utilisée en complément de bibliothèques comme D3.js ou MapLibre. 
 
 👉 **Documentation** : [https://riatelab.github.io/geotoolbox/](https://riatelab.github.io/geotoolbox//)
+
+
+Union
+
+
+
