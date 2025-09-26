@@ -1,0 +1,441 @@
+![](img/leaflet.svg)
+
+[Leaflet](https://leafletjs.com/) est une bibliothèque JavaScript open source créée en 2010 par Vladimir Agafonkin, un développeur ukrainien. Elle permet de créer facilement des cartes interactives pour le web. C’ets une des plus connues et des plus ancienne.
+
+Toute la documention est ici : [https://leafletjs.com/reference.html](https://leafletjs.com/reference.html)
+
+
+Pour fonctionner, il faut du **HTML**, du **CSS** et bien évidemment du **JS**.
+
+Voici un exemple minimal :
+
+```{.html .custom-html}
+<!-- Import de la bibliothèque et du css-->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<div id="map"></div>
+```  
+
+```{.js .custom-js}
+    // Création de la carte dans le div #map
+    const map = L.map('map') // L designe la bibliothèque leaflet. La fonction map crée une carte vide
+
+    // Position et zoom
+    map.setView([51.505, -0.09], 13); 
+
+    // Ajout d'une couche de tuiles raster
+    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    })
+
+    // On ajoute la couche à la carte
+    tiles.addTo(map);
+```
+
+```{.css .custom-css}
+#map {
+    height: 500px;
+}
+```
+
+#### - Couches de tuiles raster
+
+Dans Leaflet, le fond de carte est généralement fourni par des tuiles raster, c’est-à-dire de petites images carrées qui s’assemblent comme un puzzle pour recouvrir toute la surface de la carte aux différents niveaux de zoom. Ces tuiles proviennent de serveurs externes. Certains fournisseurs, comme OpenStreetMap, Carto ou Stamen, proposent des fonds libres d’accès (souvent avec attribution obligatoire), tandis que d’autres, comme Esri, Mapbox ou Google Maps, nécessitent une clé d’API et peuvent être soumis à des quotas ou des restrictions d’usage. Pour changer de fond de carte dans Leaflet, il suffit de remplacer l’URL des tuiles par celle du fournisseur souhaité, ou bien d’ajouter un menu permettant à l’utilisateur de choisir entre plusieurs options.
+
+Par exemple, essayez ceci :
+
+```{.js .custom-js}
+const tiles = L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_background/{z}/{x}/{y}{r}.{ext}', {
+	minZoom: 0,
+	maxZoom: 20,
+	attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	ext: 'png'
+});
+```
+
+::: {.callout-tip title="Essayez d'autres fond de carte"}
+
+Essayez d'autres fonds de carte en vous appuyant sur cette page : [leaflet-providers/preview](https://leaflet-extras.github.io/leaflet-providers/preview/)
+:::
+
+
+#### - Ajouter une épingle (marker)
+
+```{.js .custom-js}
+L.marker([51.5, -0.09]).addTo(map)
+```
+
+#### - Ajouter une popup
+
+```{.js .custom-js}
+L.marker([51.5, -0.09]).addTo(map)
+    .bindPopup('Une jolie popup.<br> facilement personnalisable.') // popup en html
+    .openPopup(); // Ouvre la popup
+```
+
+#### - Ajouter plusieurs markeurs
+
+Pour ajouter plusieurs épingles, il suffit de stocker les données dans un tableau d'objets.
+
+```{.js .custom-js}
+const points = [
+  { lat: 51.5, lng: -0.09, name: "Marker 1" },
+  { lat: 51.51, lng: -0.1,  name: "Marker 2" },
+  { lat: 51.49, lng: -0.08, name: "Marker 3" }
+];
+```
+
+Puis, de faire une boucle poyr parcourir chaque élément.
+
+```{.js .custom-js}
+points.forEach(p => {
+  L.marker([p.lat, p.lng]) // keys lat et lng dans le tableau de données
+    .addTo(map)
+});
+```
+
+Et si on veut ajouter les popups, ils suffet d'ajouter ceci : 
+
+```{.js .custom-js}
+points.forEach(p => {
+  L.marker([p.lat, p.lng])
+    .addTo(map)
+    .bindPopup(p.name); // popup avec le nom
+});
+```
+
+#### - Regrouper les markers
+
+le clustering n’est pas inclus dans Leaflet par défaut. Il faut charger le plugin `Leaflet.markercluster` en ajoutant les lignes suivantes :
+
+```{.html .custom-html}
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+```
+
+Puis
+
+```{.js .custom-js}
+// Fond de carte
+const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap'
+}).addTo(map);
+
+// Tableau de points
+const points = [
+  { lat: 51.5, lng: -0.09, name: "Marker 1" },
+  { lat: 51.51, lng: -0.1,  name: "Marker 2" },
+  { lat: 51.49, lng: -0.08, name: "Marker 3" },
+  { lat: 51.52, lng: -0.12, name: "Marker 4" },
+  { lat: 51.53, lng: -0.13, name: "Marker 5" }
+];
+
+// Création d’un groupe de clusters
+const markers = L.markerClusterGroup();
+
+// Ajout des marqueurs au cluster
+points.forEach(p => {
+  const marker = L.marker([p.lat, p.lng]).bindPopup(p.name);
+  markers.addLayer(marker);
+});
+
+// Ajout du cluster à la carte
+map.addLayer(markers);
+```
+
+#### - Personnaliser les markeurs
+
+Dans Leaflet, il existe plusieurs moyens de changer le style des épingles
+
+- Changer l'image de l'épingle avec `L.icon`
+
+Voir https://leafletjs.com/examples/custom-icons/
+
+```{.js .custom-js}
+const myIcon = L.icon({
+  iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png', // image du marker
+  iconSize: [32, 32],       // taille de l’icône [largeur, hauteur]
+  iconAnchor: [16, 32],     // point de l’icône qui correspond à la position sur la carte
+  popupAnchor: [0, -32]     // point d’attache du popup par rapport à l’icône
+});
+
+// Ajout du marker avec icône personnalisée
+L.marker([51.5, -0.09], { icon: myIcon })
+  .addTo(map)
+  .bindPopup("Marker personnalisé !");
+```
+
+- Utiliser un dessin SVG
+
+```{.js .custom-js}
+const svgIcon = L.divIcon({
+  html: `<svg width="24" height="24">
+           <circle cx="12" cy="12" r="10" fill="purple" />
+         </svg>`,
+  className: '',  // supprime le style par défaut
+  iconSize: [24, 24]
+});
+
+L.marker([51.5, -0.09], { icon: svgIcon }).addTo(map);
+```
+
+
+#### - Les contrôles
+
+Dans Leaflet, presque tous les éléments de contrôle de la carte sont regroupés sous le concept de contrôles (`L.Control`). Il en existe plusieurs types : 
+
+- Zoom (L.control.zoom)
+
+On peut supprimer ou déplacer le bouton de zoom
+
+```{.js .custom-js}
+const map = L.map('map', { zoomControl: false }).setView([51.505, -0.09], 13); 
+L.control.zoom({ position: 'bottomright' }).addTo(map);
+```
+
+- Échelle (L.control.scale)
+
+On peut ajouter une barre d'échelle
+
+```{.js .custom-js}
+L.control.scale().addTo(map);
+```
+
+- Panneau de couches (L.control.layers)
+
+Sur une carte leaflet, il est courant d'avoir un panneau pour contrôler les différentes couches
+
+
+```{.js .custom-js}
+// Création de la carte
+const map = L.map('map').setView([51.505, -0.09], 13);
+
+// Fonds de carte
+
+const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap'
+});
+
+const watercolor = L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.{ext}', {
+	minZoom: 1,
+	maxZoom: 16,
+	attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://www.stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	ext: 'jpg'
+});
+
+// Par défaut, ajouter OSM
+osm.addTo(map);
+
+// Tableau de points
+const points = [
+  { lat: 51.5, lng: -0.09, name: "Marker 1" },
+  { lat: 51.51, lng: -0.1,  name: "Marker 2" },
+  { lat: 51.49, lng: -0.08, name: "Marker 3" },
+  { lat: 51.52, lng: -0.12, name: "Marker 4" },
+  { lat: 51.53, lng: -0.13, name: "Marker 5" }
+];
+
+// Création d'un groupe de marqueurs (couche)
+const markersLayer = L.layerGroup();
+points.forEach(p => {
+  L.marker([p.lat, p.lng])
+    .bindPopup(p.name)
+    .addTo(markersLayer);
+});
+
+// Ajouter la couche de marqueurs à la carte
+markersLayer.addTo(map);
+
+// Définition des fonds de carte et des couches superposables
+const baseMaps = {
+  "OpenStreetMap": osm,
+  "Stamen watercolor": watercolor
+};
+
+const overlayMaps = {
+  "Markers": markersLayer
+};
+
+// Ajouter le contrôle des couches (menu en haut à droite)
+L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
+```
+
+
+#### - Evénements
+
+Dans leaflet, on peut ajouter des evenements sur tous les élements. Ici par exemple, un clic sur la carte.
+
+```{.js .custom-js}
+map.on('click', function(e) {
+  alert("Clic à " + e.latlng.toString());
+});
+```
+
+
+#### - Polylignes, polygones, etc.
+
+On peut dessiner des lignes et des polygones
+
+```{.js .custom-js}
+const line = L.polyline([
+  [51.5, -0.09],
+  [51.51, -0.1],
+  [51.52, -0.12]
+], { color: 'red' }).addTo(map);
+
+
+const polygon = L.polygon([
+  [51.5, -0.09],
+  [51.52, -0.1],
+  [51.48, -0.06]
+], {
+  color: 'blue',       // bordure
+  fillColor: 'lightblue', // intérieur
+  fillOpacity: 0.5
+}).addTo(map);
+```
+
+#### - Couches geoJSON
+
+
+La fonction `L.geoJSON` permet d'ajouter à leaflet n'importe quel geoJSON. Cela permet d'ajouter n'importe quel fond de carte. Voici un exemple.
+
+```{.js .custom-js}
+// Création de la carte
+const map = L.map('map').setView([51.505, -0.09], 13);
+
+// Fond de carte
+const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap'
+}).addTo(map);
+
+// Données GeoJSON avec deux polygones
+const geojsonPolygons = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Zone 1" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-0.1, 51.5],
+          [-0.12, 51.52],
+          [-0.08, 51.52],
+          [-0.1, 51.5]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Zone 2" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-0.09, 51.48],
+          [-0.11, 51.49],
+          [-0.07, 51.49],
+          [-0.09, 51.48]
+        ]]
+      }
+    }
+  ]
+};
+
+// Ajouter les polygones à la carte
+L.geoJSON(geojsonPolygons, {
+  style: function(feature) {
+    return {
+      color: 'green',
+      fillColor: 'lightgreen',
+      fillOpacity: 0.4
+    };
+  },
+  onEachFeature: function(feature, layer) {
+    if (feature.properties && feature.properties.name) {
+      layer.bindPopup(feature.properties.name);
+    }
+  }
+}).addTo(map);
+
+```
+
+Bien sur, dans la pratique, on n'écrit pas le geoJSON directement dans le code. Mais on l'importe. Nous verrons cela un petit peu plus tard. 
+
+#### - Minimap
+
+Le plugin MiniMap permet d'ajouer une carte de localisation.
+
+On le charge en ajoutant ces lignes dans le HTML
+
+```{.html .custom-html}
+<link rel="stylesheet" href="https://unpkg.com/leaflet-minimap/dist/Control.MiniMap.min.css" />
+<script src="https://unpkg.com/leaflet-minimap/dist/Control.MiniMap.min.js"></script>
+```
+
+Puis : 
+
+
+```{.js .custom-js}
+// Création de la carte principale
+const map = L.map('map').setView([51.505, -0.09], 13);
+
+// Fond de carte principal
+const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap'
+}).addTo(map);
+
+// Ajouter un marker pour tester
+L.marker([51.5, -0.09]).addTo(map).bindPopup("Marker principal");
+
+// Création d’un fond pour la MiniMap (souvent une version plus simple)
+const miniLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+
+// Ajouter la MiniMap
+const miniMap = new L.Control.MiniMap(miniLayer, { 
+  toggleDisplay: true,   // bouton pour ouvrir/fermer
+  minimized: false,      // démarrer affiché ou réduit
+  position: 'bottomright'
+}).addTo(map);
+```
+
+#### - Measure
+
+On charge le plugin `leaflet-measure` en ajoutant fans le HTML
+
+```{.html .custom-html}
+<link rel="stylesheet" href="https://unpkg.com/leaflet-measure/dist/leaflet-measure.css" />
+<script src="https://unpkg.com/leaflet-measure/dist/leaflet-measure.js"></script>
+```
+
+Puis
+
+
+```{.js .custom-js}
+// Création de la carte
+const map = L.map('map').setView([51.505, -0.09], 13);
+
+// Fond de carte
+const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap'
+}).addTo(map);
+
+// Ajouter un marker pour tester
+L.marker([51.5, -0.09]).addTo(map).bindPopup("Marker principal");
+
+// Ajouter le contrôle de mesure
+L.control.measure({
+    primaryLengthUnit: 'meters',    // unité de distance
+    secondaryLengthUnit: 'kilometers',
+    primaryAreaUnit: 'sqmeters',    // unité de surface
+    secondaryAreaUnit: 'hectares',
+    activeColor: '#db4a29',         // couleur pour les segments actifs
+    completedColor: '#9b2d14',      // couleur pour les segments terminés
+    position: 'topright'
+}).addTo(map);
+```
+
+## Quelles alternatives ?
+
+Maplibre....

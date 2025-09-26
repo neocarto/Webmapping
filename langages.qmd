@@ -493,6 +493,7 @@ ou
 ```{.js .custom-js}
 import { join, togeojson } from "https://cdn.jsdelivr.net/npm/geotoolbox@3/+esm";
 ```
+Le navigateur doit charger le script avec type="module"
 
 Nous verrons ces bibliothèques plus tard.
 
