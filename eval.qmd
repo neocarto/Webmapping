@@ -1,5 +1,23 @@
 # A rendre ! 
 
+## Exercice 1
+
+Realiser une carte de vos 10 lieux préférés à Paris
+
+- préparer les données
+- Créez une carte (leaflet ?)
+- Calculer le centroide et affichez-le
+- Personnalisez-là
+- Ajoutez un titre
+- AJoutez un petit paragraphe de commentaire en dessous
+
+## Exercice 2
+
+Avec une API, récupérez l'altitude des points. Quel est le point le plus haut ?
+
+## 
+
+
 ???
 
 - Faire une carte sur les equipements sportifs ou les licences.

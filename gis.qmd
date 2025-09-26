@@ -124,6 +124,111 @@ console.log(length)
 Voir à ce sujet : [le paradoxe de l'aviateur](https://www.humanite.fr/monde/regard-de-cartographe/le-paradoxe-de-laviateur)
 
 
+::: {.callout-note title="Exercice"}
+
+Un club de randonneurs veut savoir où se retrouver pour une marche. On leur donne deux points de départ (coordonnées GPS de deux villes). On veut :
+
+- **Calculer la distance entre ces deux villes.**
+- **Créer une zone tampon (buffer) de 30 km autour de chaque ville.**
+- **Trouver l’intersection des deux zones tampons** (= la zone où les randonneurs peuvent se retrouver).
+
+Code à compléter :
+
+```{.html .custom-html}
+  <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+  <h2>Exercice Turf.js : zone de rencontre</h2>
+  <div id="output"></div>
+```
+
+```{.js .custom-js}
+// Deux villes
+const pointA = [2.3522, 48.8566] // Paris
+const pointB = [3.0573, 50.6292] // Lille
+
+// 1. Convertier en geoJSON
+
+const cityA = turf.point(pointA);
+const cityB = turf.point(pointB);
+
+// 2. Calculer la distance (en km)
+const distance = /* compléter ici */
+
+// 3. Créer deux buffers de 30 km autour de chaque ville
+const bufferA = /* compléter ici */
+const bufferB = /* compléter ici */
+
+// 4. Trouver l’intersection entre bufferA et bufferB
+const intersection = /* compléter ici */
+
+
+
+// 4. Afficher le resultat
+document.getElementById("output").textContent =
+"Distance entre Paris et Lille : " + distance.toFixed(2) + " km\n" +
+      "Intersection trouvée ? " + (intersection ? "Oui ✅" : "Non ❌");
+
+```
+
+Fonctions à utiliser : 
+
+`turf.distance(point1, point2, {units: 'kilometers'})`, `turf.buffer(point, radius, {units: 'kilometers'})`, `turf.intersect(bufferA, bufferB)`
+
+Maintenant, on souhaite ajouter une visualisation avec leaflet.
+
+Dans le html, on peut ajouter : 
+
+```{.html .custom-html}
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+```
+
+et 
+
+```{.html .custom-html}
+<div id="map"></div>
+```
+
+N'oubliez pas le css
+
+```{.css .custom-css}
+#map {
+    height: 500px;
+}
+```
+
+Et dans la patrtie Javascript, ajoutez après les calculs turf.js : 
+
+```{.js .custom-js}
+ // 1. Initialiser la carte
+    const map = L.map('map').setView([49.5, 2.7], 6);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+
+ // Ajout des markers
+L.marker([pointA[1], pointA[0]]).bindPopup("Paris").addTo(map);
+L.marker([pointB[1], pointB[0]]).bindPopup("Lille").addTo(map);   
+
+// Ajout des buffers
+L.geoJSON(bufferA, {color: "blue", weight: 2, fillOpacity: 0.1}).addTo(map);
+L.geoJSON(bufferB, {color: "green", weight: 2, fillOpacity: 0.1}).addTo(map);
+    if (intersection) {
+
+// Ajout de la zone d'intersection avec une coloration conditionnnelle
+L.geoJSON(intersection, {color: "red", weight: 2, fillOpacity: 0.3}).addTo(map);}
+```
+Le resultat devrait ressembler à quelque chose comme ça
+
+![](img/rencontre.png)
+
+:::
+
+
+
+
+
+
 # Le format GeoJSON
 
 GeoJSON est un format de données basé sur JSON, conçu pour représenter des objets géographiques simples et leurs propriétés associées. Il est largement utilisé dans les applications de cartographie web et les outils SIG modernes. Un fichier GeoJSON peut contenir des géométries (comme des points, des lignes, des polygones) et des propriétés (données attributaires). Par exemple, un point peut représenter une ville, avec des propriétés comme son nom ou sa population. GeoJSON est lisible par l'humain, facile à manipuler avec JavaScript, et compatible avec de nombreuses bibliothèques comme Leaflet, Maplibre GL ou Turf.js.

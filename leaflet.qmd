@@ -438,4 +438,68 @@ L.control.measure({
 
 ## Quelles alternatives ?
 
-Maplibre....
+
+
+**La bibliothèque maplibre-gl** 
+
+[MapLibre](https://maplibre.org/) est une bibliothèque JavaScript open source permettant d'afficher des cartes interactives vectorielles sur le web, en 2D ou en 3D (vue "globe"). Elle est née en 2020 suite à la décision de Mapbox de fermer le code source de Mapbox GL JS à partir de la version 2. MapLibre constitue donc une alternative libre, soutenue par une communauté active. 
+
+```{.html .custom-html}
+<!-- Import de la bibliothèque et du css-->
+<script src="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js"></script>
+<link href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css" rel="stylesheet" />
+<div id="map"></div>
+```  
+
+Comme pour leaflet, on a besoin du css
+
+```{.css .custom-css}
+#map {
+    height: 500px;
+}
+```
+
+Puis, on crée une carte
+
+```{.js .custom-js}
+const map = new maplibregl.Map({
+  container: 'map',
+  style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
+  center: [2.5, 46.8], // [lon, lat]
+  zoom: 6,
+});
+
+```
+
+Vue globe 
+
+```{.js .custom-js}
+const map = new maplibregl.Map({
+  container: 'map',
+  style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
+  center: [2.5, 46.8], // [lon, lat]
+  zoom: 6
+});
+
+    map.on('style.load', () => {
+        map.setProjection({
+            type: 'globe', // Set projection to globe
+        });
+    });
+```
+
+Ajout d'un marker
+
+```{.js .custom-js}
+    const marker = new maplibregl.Marker()
+        .setLngLat([12.550343, 55.665957])
+        .addTo(map);
+```
+
+Voir la documentation et les exemples [ici](https://maplibre.org/maplibre-gl-js/docs/examples/)
+
+
+
+
+
+

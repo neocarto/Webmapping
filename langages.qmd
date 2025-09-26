@@ -418,66 +418,6 @@ confetti({
       origin: { y: 0.6 }
     });
 ```
-
-**La bibliothèque leafet** 
-
-[Leaflet](https://leafletjs.com/) est une bibliothèque JavaScript open source créée en 2010 par Vladimir Agafonkin, un développeur ukrainien. Elle permet de créer facilement des cartes interactives pour le web. C'ets une des plus connues et des plus ancvienne.
-
-```{.html .custom-html}
-<!-- Import de la bibliothèque et du css-->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-<div id="map"></div>
-```  
-
-```{.js .custom-js}
-    const map = L.map('map').setView([51.505, -0.09], 13);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap'
-    }).addTo(map);
-```
-
-```{.css .custom-css}
-#map {
-    height: 500px;
-}
-```
-
-Pour ajouter un marker et une popup :
-
-```{.js .custom-js}
-L.marker([51.5, -0.09]).addTo(map)
-    .bindPopup('Une jolie popup.<br> facilement personnalisable.')
-    .openPopup();
-```
-
-**La bibliothèque maplibre-gl** 
-
-[MapLibre](https://maplibre.org/) est une bibliothèque JavaScript open source permettant d'afficher des cartes interactives vectorielles sur le web, en 2D ou en 3D (vue "globe"). Elle est née en 2020 suite à la décision de Mapbox de fermer le code source de Mapbox GL JS à partir de la version 2. MapLibre constitue donc une alternative libre, soutenue par une communauté active. 
-
-```{.html .custom-html}
-<!-- Import de la bibliothèque et du css-->
-<script src="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js"></script>
-<link href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css" rel="stylesheet" />
-<div id="map"></div>
-```  
-
-```{.js .custom-js}
-const map = new maplibregl.Map({
-  container: 'map',
-  style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
-  center: [2.5, 46.8], // [lon, lat]
-  zoom: 6,
-});
-```
-
-```{.css .custom-css}
-#map {
-    height: 500px;
-}
-```
-
 **Soyez précis et concis avec les ESM**
 
 Aujourd'hui, les ESM (ECMAScript Modules), il est possible d'importer uniquement les fonctions dont vous avez besoin. Pas besoin d'importer dans votre page toute une librairie qui peut être lourde, mais uniquement la fonction dont vous avez besoin.
@@ -493,7 +433,7 @@ ou
 ```{.js .custom-js}
 import { join, togeojson } from "https://cdn.jsdelivr.net/npm/geotoolbox@3/+esm";
 ```
-Le navigateur doit charger le script avec type="module"
+Pour utiliser la syntaxe avec `impprt`, le navigateur doit charger le script avec `type="module"`
 
 Nous verrons ces bibliothèques plus tard.
 
