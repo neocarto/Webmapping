@@ -233,10 +233,36 @@ https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevationLine.json?lon=1.4
 
 --------------------------------------------------
 
-# Sport
+# Eurostat
 
 
-https://data.sports.gouv.fr/explore/dataset/lics_histo/api/
+https://observablehq.com/@eurostat-ws/eurostat-statistics-api
+
+
+Tapez ca dans le navigateur web
+
+https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/reg_area3?format=JSON&unit=KM2&landuse=TOTAL&lang=EN&TIME=2025
+
+
+```{.js .custom-js}
+import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm"
+async function fromEurostat(query) {
+  const result = await json(query);
+  const category = result.dimension.geo.category;
+  const data =  Object.keys(category.index).map((key) => ({
+    id: key,
+    label: category.label[key],
+    value: result.value[category.index[key]]
+  }));
+  console.log(data)
+}
+
+fromEurostat(
+  "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/reg_area3?format=JSON&unit=KM2&landuse=TOTAL&lang=EN&TIME=2025"
+  )
+```
+
+
 
 
 
