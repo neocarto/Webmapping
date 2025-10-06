@@ -1,6 +1,11 @@
+# Les SIG
+
 #### Un géotraitement (ou geoprocessing en anglais) désigne l’ensemble des opérations qu’on peut appliquer à des données géographiques dans un SIG pour les transformer, les analyser ou les enrichir. Grace à des bibliothèques dédiées, il est possible d'effectuer un certain nombre d'opérations directement dans le navigateur Web.
 
 # Turf.js
+
+<img src="img/turf.png" class="small"/>
+
 
 
 [Turf.js](https://turfjs.org/) est une bibliothèque JavaScript puissante et légère dédiée à l’analyse géospatiale (géotraitements). Elle permet de manipuler, transformer et analyser des données géographiques au format GeoJSON directement dans le navigateur ou dans un environnement Node.js. Avec Turf, on peut par exemple calculer des distances, des surfaces, des intersections, des buffers, des centroïdes, ou encore générer des grilles spatiales. Très utilisée dans les projets de cartographie interactive, notamment avec Leaflet ou Mapbox GL JS, Turf.js est précieuse pour effectuer des traitements spatiaux côté client sans avoir besoin d’un serveur SIG.
@@ -9,7 +14,7 @@
 
 Pour démarrer, commençons avec le code suivant : 
 
-Copiez-le et exuctez-le dans jsfiddle.
+Copiez-le et executez-le dans jsfiddle.
 
 ```{.html .custom-html}
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -161,7 +166,6 @@ const bufferB = /* compléter ici */
 const intersection = /* compléter ici */
 
 
-
 // 4. Afficher le resultat
 document.getElementById("output").textContent =
 "Distance entre Paris et Lille : " + distance.toFixed(2) + " km\n" +
@@ -225,10 +229,6 @@ Le resultat devrait ressembler à quelque chose comme ça
 :::
 
 
-
-
-
-
 # Le format GeoJSON
 
 GeoJSON est un format de données basé sur JSON, conçu pour représenter des objets géographiques simples et leurs propriétés associées. Il est largement utilisé dans les applications de cartographie web et les outils SIG modernes. Un fichier GeoJSON peut contenir des géométries (comme des points, des lignes, des polygones) et des propriétés (données attributaires). Par exemple, un point peut représenter une ville, avec des propriétés comme son nom ou sa population. GeoJSON est lisible par l'humain, facile à manipuler avec JavaScript, et compatible avec de nombreuses bibliothèques comme Leaflet, Maplibre GL ou Turf.js.
@@ -238,54 +238,67 @@ Voici à quoi ca ressemble :
 
 ```{ojs}
 //| echo: false
-data = FileAttachment("data/world_209.geojson").json()
+data = FileAttachment("data/paris.geojson").json()
 data
 ```
 
+Tapez `https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson` dans votre navigateur web.
 
-::: {.callout-warning title="Importer un geoJSON avec `fetch()`"}
-Pour importer un jeu de données, on utilise la fonction fetch. Problème, il s'agit d'une fonction asynchrone. Nous verrons tout à l'heure de quoi il s'agit. 
-:::
+
+Pour importer un jeu de données, on utilise la fonction `fetch()` ! 
+
+Dans jsfiddle, executez le code suivant. 
+
+
+```{.js .custom-js}
+const data = fetch("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson")
+console.log(data)
+```
+Quel est le résultat affiché dans la console ? Que constatez-vous ?
+
+<ins><b>Gestion des opérations asynchrones</b></ins><br/>
+
+`fetch()` envoie une requête HTTP vers l’URL donnée. Cette requête prend un certain temps (millisecondes à secondes) pour obtenir une réponse. JavaScript **ne bloque pas** l’exécution en attendant la réponse. Il continue directement à la ligne suivante (console.log(data)). Donc fetch() ne renvoie pas le contenu directement, mais un objet **Promise**, qui représente une valeur qui sera disponible plus tard. 
+
+`fetch()` est un fonction asynchrone. Une fonction asynchrone sert à gérer des opérations longues ou incertaines (comme appeler une API, lire un fichier, attendre une réponse du serveur, etc.) sans bloquer le reste du programme. Une fonction async permet de faire des choses en arrière-plan, tout en gardant un code clair et fluide, sans bloquer l’exécution.
+
+Pour séoudre les prmoesses (promises) en JavaScript, il y a deux solution.
+
+- `then()`
+
+En JavaScript, `.then()` est une méthode qui sert à travailler avec les Promises. Quand une fonction asynchrone (comme fetch) retourne une Promise, cette Promise représente une valeur qui sera disponible plus tard. .then() permet de spécifier une action à exécuter une fois que la Promise est résolue (c’est-à-dire quand la valeur est disponible).
 
 Dans jsfiddle, copiez le code suivant :
 
 ```{.js .custom-js}
-fetch("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/world_209.geojson")
+fetch("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson")
 .then(response => response.json())
 .then(data => {
 console.log(data)
 }) 
 ```
 
-Ou (autre syntaxe avec une fonction asynchrone anonyme)
+- `async` et `await`
 
+`async` et `await` sont une autre façon de travailler avec les Promises, mais qui rend le code plus lisible, presque comme s’il était synchrone. On ne peut utiliser cette syntaxe que dans une fonction. On met le mot-clé `async` avant une fonction pour spécifier qu'il s'agit d'un fonction asynchrone. Puis, la fonction await permet de résoudre la promesse. Le code est bloque jusqu'à ce que la promesse est résolue.
 
 ```{.js .custom-js}
-// On crée une fonction asynchrone
 async function main() {
-const data = await (await fetch("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/world_209.geojson")).json();
-console.log(data);
+    const response = await fetch("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson");
+    const data = await response.json();
+    console.log(data);
 }
-// on appelle la fonction asynchrone
-main()
+
+main();
 ```
 
-
-ou directement avec une fonction auto exectuée
-
-```{.js .custom-js}
-(async () => {
-  const data = await (await fetch("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/world_209.geojson")).json();
-  console.log(data);
-})();
-```
-
-Ou avec la bibliothèque d3.js (très pratique)
+Une solution très pratique est également d'utiliser la bibliothèque JavaScript **d3.js** (cous en reparlerons) plutot que fetch. L'avantage est quelle permet d'importer et interpreter d'autres formats de données, comme les fichiers csv par exemple. 
 
 ```{.js .custom-js}
 import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
-json("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/world_209.geojson")
+json("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson")
   .then(data => {
+    // Suite de votre code ici
     console.log(data);
   });
 ```
@@ -296,7 +309,8 @@ ou
 ```{.js .custom-js}
 import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
 async function main() {
-const data = await json("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/world_209.geojson")
+const data = await json("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson")
+// Suite de votre code ici
 console.log(data)
 }
 main()
@@ -331,12 +345,23 @@ Ou récupérer toutes les géométries
 data.features.map(d => d.geometry)
 ```
 
-Extraire un pays
+Extraire le 6e arrondissement arrondissement
 
 
 ```{.js .custom-js}
-data.features.filter(d => d.properties.NAMEfr == "Cuba")
+data.features.filter(d => d.properties.c_ar == 6)
 ```
+
+La plupart des fonctions de turf sont concues pour s'appluquer à une seule géométrie. Si on veut, par exemple, récupérer tous les centroides des arrondissements parisiens, il va falloir faire une boucle. 
+
+```{.js .custom-js}
+centroids = paris.features.map((feature) => {
+  const center = turf.centroid(feature);
+  center.properties = { ...feature.properties };
+  return center;
+})
+```
+
 
 
 # Afficher un geoJSON
@@ -352,42 +377,40 @@ Pour afficher un geoJSON, on a besoin d'une bibliothèque JavaScript dédiée. P
 ```
 
 ```{.js .custom-js}
-fetch("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/world_209.geojson")
-.then(response => response.json())
-.then(data => {
-    const map = L.map('map');
+import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+async function main() {
+const data = await json("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson")
+  const map = L.map('map');
+//   const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//   attribution: '© OpenStreetMap'
+// }).addTo(map);
     const layer = L.geoJSON(data).addTo(map);
-    map.fitBounds(layer.getBounds(), { maxZoom: 9 });
-}) 
+    map.fitBounds(layer.getBounds(), { maxZoom: 18});
+}
+main()
 
 ```
 
 ```{.css .custom-css}
 #map {
-    height: 500px;
+    height: 350px;
 }
 ```
 
+# A vous de jouer
 
-👉 **Avec geoviz**
+::: {.callout-note title="Exercice"}
 
-```{.html .custom-html}
-<script src="https://cdn.jsdelivr.net/npm/geoviz" charset="utf-8"></script>
-<div id="map"></div>
-```
-
-```{.js .custom-js}
-fetch("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/world_209.geojson")
-.then(response => response.json())
-.then(data => {
-const mapDiv = document.querySelector("#map");
-let svg = geoviz.create({projection:"Mercator", width:500})
-svg.path({data:data})
-mapDiv.appendChild(svg.render());
-})
-
-```
-
+- Charger le fond de carte des arrondissements parisiens
+- Récupérez le 1er arrondissement (premiere feature. Indice zero)
+- Calculer la surface ([https://turfjs.org/docs/api/area](https://turfjs.org/docs/api/area))
+- Calculer le centre ([https://turfjs.org/docs/api/center](https://turfjs.org/docs/api/center))
+- Créer une zone tampon de 500 mètres autour de ce point ([https://turfjs.org/docs/api/buffer](https://turfjs.org/docs/api/buffer))
+- Faire la même chose pour le 2nd arrondissement.
+- Calculer l'intersection ([https://turfjs.org/docs/api/intersect](https://turfjs.org/docs/api/intersect))
+- Afficher la carte (avec leaflet)
+- Changer la taille de la zone tampon si besoin
+:::
 
 # Geotoolbox
 
@@ -407,7 +430,7 @@ ou
 import { **a function** } from "https://cdn.jsdelivr.net/npm/geotoolbo@3/+esm"
 ```
 
-Voici un fond de carte des arrondissements parisiens (affiché avec leaflet)
+Voici le fond de carte des arrondissements parisiens (affiché avec leaflet)
 
 
 ```{.js .custom-js}
@@ -463,13 +486,6 @@ const frontieres = await border(paris)
 ```{.js .custom-js}
 import { nodes } from "https://cdn.jsdelivr.net/npm/geotoolbox@3/+esm"
 const points = await nodes(paris)
-```
-
-- Concave Hull
-
-```{.js .custom-js}
-import { convexhull } from "https://cdn.jsdelivr.net/npm/geotoolbox@3/+esm"
-const convex = await convexhull(ctr)
 ```
 
 - Convex Hull

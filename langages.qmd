@@ -68,7 +68,7 @@ Grâce à la balise `svg`, on peut même dessiner directement.
 </svg>
 ````
 
-
+En savoir plus sur le SVG : [observablehq.com/@neocartocnrs/le-format-svg](https://observablehq.com/@neocartocnrs/le-format-svg?collection=@neocartocnrs/observable-cest-quoi)
 
 
 # Le CSS
@@ -159,7 +159,7 @@ Se référer à la documentation : [https://developer.mozilla.org/fr/docs/Web/CS
 
 # Le JavaScript
 
-Le JavaScript est le langage de script du navigateur. Il fonctionne sur tous les navigateurs web sans avoir besoin d'installer quoi que ce soit. 
+Le JavaScript est le langage de script du navigateur. Contrairement au HTML qui structure le contenu et au CSS qui le met en forme, JavaScript permet de créer des comportements dynamiques et interactifs : changer du texte ou des images, gérer des formulaires, créer des animations, ou encore communiquer avec des serveurs pour récupérer des données en temps réel. Il s’exécute directement dans le navigateur de l’utilisateur. Il fonctionne sur tous les navigateurs web sans avoir besoin d'installer quoi que ce soit. 
 
 ### 1995
 <img src="img/javascript.png" style="display: block; margin-left: 0; width: 10%;">
@@ -186,9 +186,13 @@ Depuis 2015 (ES6 ou ES2015), le langage JavaScript est mature. Performant. Et es
 
 De nouvelles fonctionnalitées sont ajoutées au langage chaque année.
 
+ECMAScript 2025 : les nouveautés JavaScript à connaître : [voir](https://mink-agency.com/ecmascript-2025-les-nouveautes-javascript-a-connaitre/#:~:text=ECMAScript%20%C3%A9volue%2C%20et%20avec%20la,plus%20intelligents%2C%20expressions%20r%C3%A9guli%C3%A8res%20am%C3%A9lior%C3%A9es%E2%80%A6)
+
 ### Une grande communauté
 
 C'est un langage ancien qui dispose d'une très grande communauté.
+
+<img src="img/js_chart.png" class="wide"/>
 
 ### Les principes de base
 
@@ -433,9 +437,86 @@ ou
 ```{.js .custom-js}
 import { join, togeojson } from "https://cdn.jsdelivr.net/npm/geotoolbox@3/+esm";
 ```
-Pour utiliser la syntaxe avec `impprt`, le navigateur doit charger le script avec `type="module"`
+Pour utiliser la syntaxe avec `import`, le navigateur doit charger le script avec `type="module"`
 
-Nous verrons ces bibliothèques plus tard.
+Nous verrons la bibliothèques `geotoolbox` plus tard.
+
+
+# La structure d'un document web
+
+Dans `jsfiddle`, le code est réparti dans 3 cadrants (html, css et js). Mais lorsque vous téléchargez le fiddle, l'ensemble du code est regroupé dans un seul ficher html qui est organisé comme ceci.
+
+```{.html .custom-html}
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Exemple de page web</title>
+
+  <!-- CSS -->
+  <style>
+  div {
+    color: red;
+    text-align: center;
+  }
+  </style>
+</head>
+
+<body>
+  <div>Hello world !</div>
+
+  <!-- JavaScript -->
+  <script type = "module">
+    let a = 10
+    console.log(a)
+  </script>
+
+</body>
+</html>
+```
+
+On peut aussi répartir le code en fichiers distincts. 
+
+
+- index.html
+
+```{.html .custom-html}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Exemple de page web</title>
+
+  <!-- Lien vers le fichier CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div>Hello world !</div>
+
+  <!-- Lien vers le fichier JavaScript -->
+  <script type="module" src="script.js"></script>
+</body>
+</html>
+```
+
+- style.css
+
+```{.css .custom-css}
+div {
+  color: red;
+  text-align: center;
+}
+```
+
+- script.js
+
+
+```{.js .custom-js}
+let a = 10
+console.log(a)
+```
+
+Pour visialiser la page, il faut juste l'ouvrir dans un navigateur web (ou directement dans votre IDE).
 
 # Le DOM
 
@@ -577,7 +658,7 @@ Avec tout ce qu'on a appris, on peut désormais construire des applications web 
 <h1>Un cercle SVG réactif</h1>
 
 <div>
-  <label for="rayon">Rayon : </label>
+  <label for="position">Position : </label>
   <input type="range" id="position" min="50" max="600" value="100">
   <span id="valeur">100</span>
 </div>
@@ -586,7 +667,6 @@ Avec tout ce qu'on a appris, on peut désormais construire des applications web 
   <circle id="monCercle" cx="100" cy="100" r="50" fill="green" />
 </svg>
 ```
-
 
 ```{.js .custom-js}
 const slider = document.querySelector("#position");

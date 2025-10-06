@@ -1,8 +1,14 @@
+### La dataviz (ou data visualization, en anglais) désigne l’ensemble des méthodes et techniques permettant de représenter visuellement des données pour les rendre plus compréhensibles et accessibles.
+
+👉 L’idée est simple : plutôt que de parcourir de longs tableaux de chiffres, on traduit l’information en graphiques, cartes, diagrammes, infographies ou animations interactives.
+
+D3.js est une des bibliothèques les plus importantes dans l’histoire de la dataviz web. C'ets donc par là que nous allons commencer. 
+
 # D3js
 
 ![](img/d3.png){width="10%"}
 
-d3.js  est une bibliothèque graphique JavaScript développée par Mike Bostock qui permet l'affichage de données numériques sous une forme graphique et dynamique. Elles est conforme aux normes W3C et utilise les technologies courantes **SVG**, **JavaScript** et **CSS** pour la visualisation de données. Cette bibliothèque a 10 ans !!! Nous en sommes à la 7e version. Et le développement continue. 
+d3.js  est une bibliothèque graphique JavaScript développée par **Mike Bostock** qui permet l'affichage de données numériques sous une forme graphique et dynamique. Elles est conforme aux normes W3C et utilise les technologies courantes **SVG**, **JavaScript** et **CSS** pour la visualisation de données. Cette bibliothèque a 10 ans !!! Nous en sommes à la 7e version. Et le développement continue. 
 
 **d3.js** est une grosse librairie (plus de 1000 fonctions) qui fait beaucoup de choses. Depuis 2015, elle est composée de différents modules spécialisés.
 
@@ -79,7 +85,17 @@ const myData = [10, 30, 20, 30, 25]
     document.querySelector("#myDiv").appendChild(svg.node())
 ```
 
+En résumé : D3.js est une boîte à outils ultra-puissante qui a marqué un tournant dans la visualisation de données sur le Web, en exploitant directement les standards ouverts et en mettant les données au cœur du code. D3 n’impose pas de type de graphique et a été massivement été adopté par la communauté. **Mais attention, la courbe d’apprentissage est raide : il faut bien connaître JavaScript, le DOM, SVG.**
+
+[![](img/d3view.png)](https://d3js.org/)
+
 # Chart.js
+
+Créée en 2013 par Nick Downie, **Chart.js** est une bibliothèque JavaScript open source qui permet de créer facilement des graphiques interactifs dans une page web. Elle est particulièrement appréciée car simple à utiliser, tout en proposant une grande variété de graphiques. Elle est responsive (s’adapte automatiquement à la taille de l’écran). Très légère comparée à d’autres bibliothèques.
+
+Exemple : 
+
+*NB : Le <canvas> en HTML est un élément qui sert de surface de dessin dans une page web.*
 
 # Vega
 

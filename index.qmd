@@ -53,11 +53,16 @@ chart = {
 
 ## Qu'est ce que le web ?
 
-Internet est né d'une initiative militaire américaine. Le premier nœud du réseau ARPANET (Advanced Research Project Agency Network) à l'origine d'Internet a été mis en place en **1969**.
+**1940 - ** Le premier ordinateur Le mathématicien Alan Turing pose les bases théoriques de ce que pourrait être un ordinateur.
+
+![](img/Turing.png)
+
+
+**1969 - ** Internet est né d'une initiative militaire américaine. Le premier nœud du réseau ARPANET (Advanced Research Project Agency Network) à l'origine d'Internet a été mis en place en 1969.
 
 ![](img/arpanet.webp)
 
-**12 Mars 1989 : première version du Web** - Tim Berners-Lee, chercheur britannique au CERN, a inventé le WWW.
+**12 Mars 1989 - première version du Web** - Tim Berners-Lee, chercheur britannique au CERN, a inventé le WWW.
 
 ![](img/9407011_31-A4-at-144-dpi.jpg)
 
@@ -71,7 +76,7 @@ A l’origine, le projet, baptisé « World Wide Web », a été conçu et déve
 Internet est une plateforme qui permet de faire parvenir des informations d’un ordinateur à un autre. Le web, lui, est un moyen de visiter des pages de sites à partir de navigateurs via des ordinateurs, des tablettes ou des smartphones.
 :::
 
-**1991** - le Web s’ouvre à tous.
+**1991 - ** le Web s’ouvre à tous.
 
 En **1993**, la technologie devient publique. Le Web voit très vite son usage exploser sur Internet.
 
@@ -81,18 +86,18 @@ Le lancement de **Netscape**, le premier navigateur réellement grand public, pa
 
 ![](img/netscape.webp)
 
-**Janvier 1994** : Yahoo !
+**Janvier 1994 - ** Yahoo !
 
 Le nombre de sites explose, à tel point qu’il devient très difficile pour l’internaute béotien de s’y retrouver. Deux étudiants de Stanford, Jerry Yang et David Filo, décident de créer un gigantesque annuaire de sites, classés de façon thématique. Il va vite devenir le portail numéro 1 de la Toile.
 
 ![](img/yahoo.webp)
 
-**1998** Google lance son moteur de recherche
+**1998 - ** Google lance son moteur de recherche
 
 ![](img/google.webp)
 
 
-**2010** : l’émergence du HTML5, le futur du Web
+**2010 - ** l’émergence du HTML5, le futur du Web
 
 ![](img/html5.png)
 
@@ -100,9 +105,34 @@ Le nombre de sites explose, à tel point qu’il devient très difficile pour l�
 
 **Aujourd'hui**
 
-Plus de 4 milliard d’utilisateurs
+Plus de 4 milliard d’utilisateurs 
 
-<img src="img/foule.jpg" style="border:none" width="100%"/></img>
+<img src="img/foule.jpg"/></img>
+
+
+## Qu'est ce que le webmapping ?
+
+
+**Années 60**. Révolution quantitative en géographie et premier SIG Inspirée par les possibilités offertes par les mathématiques et l’informatique, la géographie tente de se redéfinir comme une science à part entière. L’année 1960 est aussi marquée par la mise en place, au Canada, du premier système d’information géographique (SIG).
+
+![](img/tobler.png)
+
+Le webmapping (ou cartographie en ligne) désigne l’ensemble des techniques, outils et pratiques permettant de créer, publier et consulter des cartes interactives via Internet. 
+En d’autres termes, c’est la rencontre entre la **cartographie** et le **Web**. le webmapping = la cartographie + l’interactivité + l’accessibilité via le Web.
+
+## Webmapping ou géovisualisation ?
+
+Ces deux notions sont souvent confondues. 
+
+- Le webmapping désigne avant tout la mise en ligne de cartes interactives accessibles au plus grand nombre, avec des fonctions de navigation simples (zoom, déplacement, affichage de couches, recherche).
+
+- La géovisualisation se concentre sur l’exploration et l’analyse visuelle de données géographiques, en proposant des outils plus avancés (filtres, symbolisation dynamique, animations temporelles) pour aider à comprendre des phénomènes spatiaux complexes. 
+
+<img src="img/histoire.png" class="wide"/>
+
+Autrement dit, le webmapping vise surtout la diffusion et l’accessibilité, alors que la géovisualisation met l’accent sur l’analyse et l’interprétation.
+
+Dans ce cours, nous aborderons les deux aspects. Nous regarderons ce qui se passe **sous le capot**. Nous nous concentrerons sur les technologies **côté client**. 
 
 
 

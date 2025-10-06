@@ -85,7 +85,7 @@ const points = [
 ];
 ```
 
-Puis, de faire une boucle poyr parcourir chaque élément.
+Puis, de faire une boucle pour parcourir chaque élément.
 
 ```{.js .custom-js}
 points.forEach(p => {

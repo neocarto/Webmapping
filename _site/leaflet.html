@@ -183,7 +183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dashboard.html" class="sidebar-item-text sidebar-link">
+  <a href="./dashboard.qmd" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Les dashboards</span></a>
   </div>
 </li>
@@ -280,7 +280,7 @@ Essayez d’autres fond de carte
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">lat</span><span class="op">:</span> <span class="fl">51.51</span><span class="op">,</span> <span class="dt">lng</span><span class="op">:</span> <span class="op">-</span><span class="fl">0.1</span><span class="op">,</span>  <span class="dt">name</span><span class="op">:</span> <span class="st">"Marker 2"</span> }<span class="op">,</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">lat</span><span class="op">:</span> <span class="fl">51.49</span><span class="op">,</span> <span class="dt">lng</span><span class="op">:</span> <span class="op">-</span><span class="fl">0.08</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span> <span class="st">"Marker 3"</span> }</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>]<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Puis, de faire une boucle poyr parcourir chaque élément.</p>
+<p>Puis, de faire une boucle pour parcourir chaque élément.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>points<span class="op">.</span><span class="fu">forEach</span>(p <span class="kw">=&gt;</span> {</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  L<span class="op">.</span><span class="fu">marker</span>([p<span class="op">.</span><span class="at">lat</span><span class="op">,</span> p<span class="op">.</span><span class="at">lng</span>]) <span class="co">// keys lat et lng dans le tableau de données</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">addTo</span>(map)</span>

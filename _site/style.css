@@ -1,8 +1,16 @@
 img {
   max-width: 100%;
-  width: 400px;
+  width: 500px;
   display: block;
   margin: 1em auto;
+}
+
+img.wide {
+  width: 100%; 
+}
+
+img.small {
+  width: 145px; 
 }
 
 /* === JavaScript: Jaune === */

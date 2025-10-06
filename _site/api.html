@@ -183,7 +183,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dashboard.html" class="sidebar-item-text sidebar-link">
+  <a href="./dashboard.qmd" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Les dashboards</span></a>
   </div>
 </li>
@@ -205,7 +205,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#lopen-data" id="toc-lopen-data" class="nav-link active" data-scroll-target="#lopen-data">L’open data</a></li>
   <li><a href="#altimétrie" id="toc-altimétrie" class="nav-link" data-scroll-target="#altimétrie">Altimétrie</a></li>
-  <li><a href="#sport" id="toc-sport" class="nav-link" data-scroll-target="#sport">Sport</a></li>
+  <li><a href="#eurostat" id="toc-eurostat" class="nav-link" data-scroll-target="#eurostat">Eurostat</a></li>
   <li><a href="#géocodage" id="toc-géocodage" class="nav-link" data-scroll-target="#géocodage">Géocodage</a>
   <ul class="collapse">
   <li><a href="#ban" id="toc-ban" class="nav-link" data-scroll-target="#ban">BAN</a></li>
@@ -393,9 +393,26 @@ Qu’est ce qu’une API ?
 <p>https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevationLine.json?lon=1.48|1.49&amp;lat=43.54|43.55&amp;resource=ign_rge_alti_wld&amp;delimiter=|&amp;indent=true&amp;measures=false&amp;profile_mode=simple&amp;sampling=4</p>
 <hr>
 </section>
-<section id="sport" class="level1">
-<h1>Sport</h1>
-<p>https://data.sports.gouv.fr/explore/dataset/lics_histo/api/</p>
+<section id="eurostat" class="level1">
+<h1>Eurostat</h1>
+<p>https://observablehq.com/<span class="citation" data-cites="eurostat-ws/eurostat-statistics-api">@eurostat-ws/eurostat-statistics-api</span></p>
+<p>Tapez ca dans le navigateur web</p>
+<p>https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/reg_area3?format=JSON&amp;unit=KM2&amp;landuse=TOTAL&amp;lang=EN&amp;TIME=2025</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { json } <span class="im">from</span> <span class="st">"https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm"</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">fromEurostat</span>(query) {</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> result <span class="op">=</span> <span class="cf">await</span> <span class="fu">json</span>(query)<span class="op">;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> category <span class="op">=</span> result<span class="op">.</span><span class="at">dimension</span><span class="op">.</span><span class="at">geo</span><span class="op">.</span><span class="at">category</span><span class="op">;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> data <span class="op">=</span>  <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(category<span class="op">.</span><span class="at">index</span>)<span class="op">.</span><span class="fu">map</span>((key) <span class="kw">=&gt;</span> ({</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">id</span><span class="op">:</span> key<span class="op">,</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">label</span><span class="op">:</span> category<span class="op">.</span><span class="at">label</span>[key]<span class="op">,</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">value</span><span class="op">:</span> result<span class="op">.</span><span class="at">value</span>[category<span class="op">.</span><span class="at">index</span>[key]]</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  }))<span class="op">;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(data)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="fu">fromEurostat</span>(</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/reg_area3?format=JSON&amp;unit=KM2&amp;landuse=TOTAL&amp;lang=EN&amp;TIME=2025"</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="géocodage" class="level1">
 <h1>Géocodage</h1>

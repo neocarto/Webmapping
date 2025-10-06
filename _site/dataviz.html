@@ -183,12 +183,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dashboard.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Les dashboards</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./eval.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">A rendre</span></a>
   </div>
@@ -216,10 +210,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<section id="la-dataviz-ou-data-visualization-en-anglais-désigne-lensemble-des-méthodes-et-techniques-permettant-de-représenter-visuellement-des-données-pour-les-rendre-plus-compréhensibles-et-accessibles." class="level3">
+<h3 class="anchored" data-anchor-id="la-dataviz-ou-data-visualization-en-anglais-désigne-lensemble-des-méthodes-et-techniques-permettant-de-représenter-visuellement-des-données-pour-les-rendre-plus-compréhensibles-et-accessibles.">La dataviz (ou data visualization, en anglais) désigne l’ensemble des méthodes et techniques permettant de représenter visuellement des données pour les rendre plus compréhensibles et accessibles.</h3>
+<p>👉 L’idée est simple : plutôt que de parcourir de longs tableaux de chiffres, on traduit l’information en graphiques, cartes, diagrammes, infographies ou animations interactives.</p>
+<p>D3.js est une des bibliothèques les plus importantes dans l’histoire de la dataviz web. C’ets donc par là que nous allons commencer.</p>
+</section>
 <section id="d3js" class="level1">
 <h1>D3js</h1>
 <p><img src="img/d3.png" class="img-fluid" style="width:10.0%"></p>
-<p>d3.js est une bibliothèque graphique JavaScript développée par Mike Bostock qui permet l’affichage de données numériques sous une forme graphique et dynamique. Elles est conforme aux normes W3C et utilise les technologies courantes <strong>SVG</strong>, <strong>JavaScript</strong> et <strong>CSS</strong> pour la visualisation de données. Cette bibliothèque a 10 ans !!! Nous en sommes à la 7e version. Et le développement continue.</p>
+<p>d3.js est une bibliothèque graphique JavaScript développée par <strong>Mike Bostock</strong> qui permet l’affichage de données numériques sous une forme graphique et dynamique. Elles est conforme aux normes W3C et utilise les technologies courantes <strong>SVG</strong>, <strong>JavaScript</strong> et <strong>CSS</strong> pour la visualisation de données. Cette bibliothèque a 10 ans !!! Nous en sommes à la 7e version. Et le développement continue.</p>
 <p><strong>d3.js</strong> est une grosse librairie (plus de 1000 fonctions) qui fait beaucoup de choses. Depuis 2015, elle est composée de différents modules spécialisés.</p>
 <p>Elle permet de dessiner du SVG directement en JavaScript à grace au DOM.</p>
 <p>Elle permet de remplacer ça</p>
@@ -275,10 +274,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"cy"</span><span class="op">,</span> height <span class="op">/</span> <span class="dv">2</span>)</span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"r"</span><span class="op">,</span> (d) <span class="kw">=&gt;</span> d)<span class="op">;</span></span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">"#myDiv"</span>)<span class="op">.</span><span class="fu">appendChild</span>(svg<span class="op">.</span><span class="fu">node</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En résumé : D3.js est une boîte à outils ultra-puissante qui a marqué un tournant dans la visualisation de données sur le Web, en exploitant directement les standards ouverts et en mettant les données au cœur du code. D3 n’impose pas de type de graphique et a été massivement été adopté par la communauté. <strong>Mais attention, la courbe d’apprentissage est raide : il faut bien connaître JavaScript, le DOM, SVG.</strong></p>
+<p><a href="https://d3js.org/"><img src="img/d3view.png" class="img-fluid"></a></p>
 </section>
 <section id="chart.js" class="level1">
 <h1>Chart.js</h1>
-</section>
+<p>Créée en 2013 par Nick Downie, <strong>Chart.js</strong> est une bibliothèque JavaScript open source qui permet de créer facilement des graphiques interactifs dans une page web. Elle est particulièrement appréciée car simple à utiliser, tout en proposant une grande variété de graphiques. Elle est responsive (s’adapte automatiquement à la taille de l’écran). Très légère comparée à d’autres bibliothèques.</p>
+<p>Exemple :</p>
+*NB : Le
+<canvas>
+<p>en HTML est un élément qui sert de surface de dessin dans une page web.*</p>
+</canvas></section>
 <section id="vega" class="level1">
 <h1>Vega</h1>
 </section>

@@ -22,8 +22,6 @@ website:
         file: dataviz.qmd
       - text: "Geoviz"
         file: geoviz.qmd
-      - text: "Les dashboards"
-        file: dashboard.qmd
       - text: "A rendre"
         file: eval.qmd
 format:
