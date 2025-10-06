@@ -293,3 +293,34 @@ Documentation : [https://observablehq.com/plot/](https://observablehq.com/plot/)
 
 Vous l'aurez compris, il y a 1000 façons de dessiner des graphiques en JavaScript. Chaque bibliothèque a sa logique et sa façon de fonctionner. Il faut donc en choisir une et essayer d'en saisir la logique. 
 
+
+
+
+```{.js .custom-js}
+import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+import { rollup } from "https://cdn.jsdelivr.net/npm/d3-array@3/+esm";
+
+async function main() {
+  const data = await d3.csv(
+    "https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/stats_countries.csv",
+  );
+
+  const popByRegion = Array.from(
+    d3.rollup(
+      data,
+      (v) => d3.sum(v, (d) => d.pop),
+      (d) => d.region,
+    ),
+    ([region, pop]) => ({ region, pop }),
+  );
+
+  console.log(popByRegion);
+
+// A vous de jouer
+
+
+}
+
+
+```{.js .custom-js}
