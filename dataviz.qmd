@@ -95,23 +95,201 @@ Créée en 2013 par Nick Downie, **Chart.js** est une bibliothèque JavaScript o
 
 Exemple : 
 
-*NB : Le <canvas> en HTML est un élément qui sert de surface de dessin dans une page web.*
+
+```{.html .custom-html}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<canvas id="chart" width="600" height="400"></canvas>
+```
+
+```{.js .custom-js}
+// Import des données
+import { csv } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+async function main() {
+  const data = await csv(
+    "https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/elec.csv",
+  );
+
+  // Les labels
+  const labels = data.map((d) => d.year);
+  // Les valeurs
+  const values = data.map((d) => parseFloat(d.elec));
+  // Fichier de configuration
+  const params = {
+    type: "line",
+    data: { labels: labels, datasets: [{ data: values }] },
+  };
+  // Affichage du graphique
+  new Chart(document.querySelector("#chart"), params);
+}
+main();
+```
+
+*NB : Le canvas en HTML est un élément qui sert de surface de dessin dans une page web.*
+
+- Essayez de changer `"line"` par `"bar"` ou `"scatter"`.
+
+- Améliorez le graphique grace aux options
+
+
+```{.js .custom-js}
+      const params = {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Taux d’électrification',
+            data: values,
+            borderColor: 'blue',
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: { beginAtZero: false }
+          }
+        }
+      };
+
+```
+
+Documentation : [https://www.chartjs.org/](https://www.chartjs.org/)
 
 # Vega
 
-# Plot
+Vega est une bibliothèque JavaScript pour créer des visualisations de données. Comme avec chart.js, il suffit d'écrire des spécifications dans un JSON. 
+
+Par exemple : 
+
+```{.html .custom-html}
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+  <div id="vis" style="width: 600px; height: 400px;"></div>
+```
 
 ```{.js .custom-js}
-import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+   import { csv } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
 
-const chart = Plot.plot({
-  marks: [
-    Plot.barY(
-      [{x: "A", y: 3}, {x: "B", y: 7}, {x: "C", y: 5}],
-      {x: "x", y: "y"}
-    )
-  ]
-});
+    async function main() {
+      // Charger les données CSV
+      const data = await csv("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/elec.csv");
 
-document.body.append(chart);
+      // Transformer les valeurs en nombres
+      const parsedData = data.map(d => ({ year: d.year, elec: parseFloat(d.elec) }));
+
+      // Vega-Lite spec
+      const spec = {
+        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+        "description": "Électricité sur les années",
+        "data": { "values": parsedData },
+        "mark": "line",
+        "encoding": {
+          "x": { "field": "year", "type": "ordinal", "title": "Année" },
+          "y": { "field": "elec", "type": "quantitative", "title": "Électricité (%)" },
+          "tooltip": [
+            { "field": "year", "type": "ordinal" },
+            { "field": "elec", "type": "quantitative" }
+          ]
+        }
+      };
+
+      // Affichage
+      vegaEmbed('#vis', spec);
+    }
+
+    main();
 ```
+
+On peut télacharger le graphique. Et il y a un éditeur en ligne : [https://vega.github.io/editor](https://vega.github.io/editor/)
+
+Documentation : [https://vega.github.io/](https://vega.github.io/)
+
+
+# Plotly.js
+
+Plotly.js est une bibliothèque JavaScript open source pour créer des graphiques interactifs et complexes dans le navigateur.
+
+```{.html .custom-html}
+  <script src="https://cdn.plot.ly/plotly-2.34.0.min.js"></script>
+    <div id="plotly-chart" style="width: 600px; height: 400px;"></div>
+```
+
+```{.js .custom-js}
+import { csv } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+
+    async function main() {
+      // Charger les données CSV
+      const data = await csv("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/elec.csv");
+      const years = data.map(d => d.year);
+      const elec = data.map(d => parseFloat(d.elec));
+
+      // Définir la trace
+      const trace = {
+        x: years,
+        y: elec,
+        mode: 'lines+markers', // ligne + points
+        type: 'scatter',
+        name: 'Électricité (%)',
+        line: { color: 'blue' }
+      };
+
+      // Layout
+      const layout = {
+        title: 'Électricité sur les années',
+        xaxis: { title: 'Année' },
+        yaxis: { title: 'Électricité (%)' },
+        margin: { t: 50, r: 30, l: 50, b: 50 }
+      };
+
+      // Affichage
+      Plotly.newPlot('plotly-chart', [trace], layout, {responsive: true});
+    }
+
+    main();
+```
+
+Documentation : [https://plotly.com/javascript/](https://plotly.com/javascript/)
+
+
+# Observable Plot
+
+Observable Plot est une bibliothèque JavaScript pour créer des graphiques simples ou interactifs. Elle a été développée par l’équipe d’Observable (Mike Bostock, et Philippe Rivière).
+
+```{.html .custom-html}
+<div id="chart"></div>
+```
+
+
+```{.js .custom-js}
+    import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+    import { csv } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+
+    async function main() {
+      const data = await csv("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/elec.csv");
+      const parsed = data.map(d => ({ year: +d.year, elec: +d.elec }));
+
+      const chart = Plot.plot({
+        width: 600,
+        height: 400,
+        x: { label: "Année" },
+        y: { label: "Électricité (%)" },
+        marks: [
+          Plot.line(parsed, { x: "year", y: "elec", stroke: "steelblue" }), // ligne
+          Plot.dot(parsed, { x: "year", y: "elec", fill: "steelblue" })    // points
+        ]
+      });
+
+      document.querySelector("#chart").append(chart);
+    }
+
+    main();
+```
+
+Documentation : [https://observablehq.com/plot/](https://observablehq.com/plot/)
+
+
+## A vous de jouer
+
+Vous l'aurez compris, il y a 1000 façons de dessiner des graphiques en JavaScript. Chaque bibliothèque a sa logique et sa façon de fonctionner. Il faut donc en choisir une et essayer d'en saisir la logique. 
+
