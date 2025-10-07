@@ -197,13 +197,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#les-apis" id="toc-les-apis" class="nav-link active" data-scroll-target="#les-apis">Les APIs</a>
-  <ul class="collapse">
+  <li><a href="#les-apis" id="toc-les-apis" class="nav-link active" data-scroll-target="#les-apis">Les APIs</a></li>
   <li><a href="#altimétrie" id="toc-altimétrie" class="nav-link" data-scroll-target="#altimétrie">Altimétrie</a></li>
-  </ul></li>
   <li><a href="#géocodage" id="toc-géocodage" class="nav-link" data-scroll-target="#géocodage">Géocodage</a></li>
   <li><a href="#météo" id="toc-météo" class="nav-link" data-scroll-target="#météo">Météo</a></li>
   <li><a href="#osrm" id="toc-osrm" class="nav-link" data-scroll-target="#osrm">Osrm</a></li>
+  <li><a href="#combinaisons" id="toc-combinaisons" class="nav-link" data-scroll-target="#combinaisons">Combinaisons</a></li>
   <li><a href="#lopen-data" id="toc-lopen-data" class="nav-link" data-scroll-target="#lopen-data">L’open data</a></li>
   <li><a href="#eurostat" id="toc-eurostat" class="nav-link" data-scroll-target="#eurostat">Eurostat</a></li>
   </ul>
@@ -221,8 +220,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Dit autrement, une API permet de poser des questions à une base de données à distance, d’effectuer des traitements ou des opérations à distance, et d’en recevoir les réponses automatiquement.</p>
 <p>Le résultat est généralement renvoyé au format JSON.</p>
 <p>Voyons quelques exemples.</p>
-<section id="altimétrie" class="level2">
-<h2 class="anchored" data-anchor-id="altimétrie">Altimétrie</h2>
+</section>
+<section id="altimétrie" class="level1">
+<h1>Altimétrie</h1>
 <p>Le service Géoplateforme de calcul altimétrique de l’<strong>IGN</strong> est disponible à l’adresse suivante : <a href="https://geoservices.ign.fr/documentation/services/services-geoplateforme/altimetrie">https://geoservices.ign.fr/documentation/services/services-geoplateforme/altimetrie</a>. Il s’appuie sur des ressources altimétriques pour fournir des altitudes. l’API permet de d’obtenir :</p>
 <ul>
 <li>l’altitude d’un ou de plusieurs points ;</li>
@@ -438,7 +438,6 @@ Exercice
 </div>
 </div>
 </section>
-</section>
 <section id="géocodage" class="level1">
 <h1>Géocodage</h1>
 <p>Le géocodage est le processus de transformation d’informations localisables en coordonnées géographiques (latitude et longitude). Il existe différents services. EN France, on utilisera L’API de géocodage de la Géoplateforme.</p>
@@ -529,14 +528,198 @@ Exercice
 <span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>  L<span class="op">.</span><span class="fu">marker</span>(coords)<span class="op">.</span><span class="fu">addTo</span>(map)<span class="op">;</span></span>
 <span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Il existe d’autres API de géocodage.</p>
+<p>TODO : Nominatim</p>
 </section>
 <section id="météo" class="level1">
 <h1>Météo</h1>
-<p>https://wxs.ign.fr/{cle}/alti/rest/elevation.json</p>
-<p>https://api.meteo.com/v1/paris</p>
+<p>Il existe pluseurs API permetant de récupérer la météo. La pluport nécéssitent une clé d’utilisation.</p>
+<p><strong>Open-Meteo</strong> est une API météo open source qui offre un accès gratuit pour un usage non commercial (sous licence CC BY 4.0)). Aucune clé API n’est requise. Open-Meteo utilise les prévisions météorologiques open data fournies par les services météorologiques nationaux. Comme beaucoup d’autres API météorologiques, Open-Meteo intègre des modèles météorologiques locaux et mondiaux à haute résolution. Contrairement à d’autres API météorologiques, Open-Meteo offre un accès complet à son code source, et toutes les sources de données sont répertoriées ouvertement, en créditant les services météorologiques nationaux pour leur travail.</p>
+<p>L’API est accessible ici : <a href="https://open-meteo.com/">https://open-meteo.com/</a>. La documentation est ici <a href="https://open-meteo.com/en/docs">https://open-meteo.com/en/docs</a>.</p>
+<p>Commençons par taper cette requete dans le navigateur web pour connaitre la meteo actuelle.</p>
+<pre class="url custom-url"><code>https://api.open-meteo.com/v1/forecast?latitude=48.8566&amp;longitude=2.3522&amp;current_weather=true&amp;timezone=Europe/Paris</code></pre>
+<p>Ou la prévision quotidienne sur 16 jours</p>
+<pre class="url custom-url"><code>https://api.open-meteo.com/v1/forecast?latitude=52.52&amp;longitude=13.41&amp;hourly=temperature_2m&amp;forecast_days=16</code></pre>
+<p>Tous les parametres sont expliqués ici : <a href="https://open-meteo.com/en/docs">https://open-meteo.com/en/docs</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercice">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercice
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Créez une requete pour récupérer les prévisions de précipitation heure par heure</p>
+</div>
+</div>
+<p>En JavaSCript, on peut donc s’ammuser à faire ceci :</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode html custom-html code-with-copy"><code class="sourceCode html"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">"chart"</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="op">*</span> <span class="im">as</span> Plot <span class="im">from</span> <span class="st">"https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm"</span><span class="op">;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> paris <span class="op">=</span> [<span class="fl">48.8534</span><span class="op">,</span> <span class="fl">2.3488</span>]<span class="op">;</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> url <span class="op">=</span> <span class="vs">`https://api.open-meteo.com/v1/forecast?latitude=</span><span class="sc">${</span>paris[<span class="dv">0</span>]<span class="sc">}</span><span class="vs">&amp;longitude=</span><span class="sc">${</span>paris[<span class="dv">1</span>]<span class="sc">}</span><span class="vs">&amp;hourly=rain&amp;timezone=Europe%2FLondon&amp;forecast_days=16`</span><span class="op">;</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">meteo</span>() {</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Execution de la requete</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(url)<span class="op">;</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Mise en forme des données</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> rain <span class="op">=</span> data<span class="op">.</span><span class="at">hourly</span><span class="op">.</span><span class="at">time</span><span class="op">.</span><span class="fu">map</span>((d<span class="op">,</span> i) <span class="kw">=&gt;</span> ({</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">time</span><span class="op">:</span> <span class="kw">new</span> <span class="bu">Date</span>(d)<span class="op">,</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">rain</span><span class="op">:</span> data<span class="op">.</span><span class="at">hourly</span><span class="op">.</span><span class="at">rain</span>[i]<span class="op">,</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  }))<span class="op">;</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Création du diagramme en barres</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> myPlot <span class="op">=</span> Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">width</span><span class="op">:</span> <span class="dv">600</span><span class="op">,</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">height</span><span class="op">:</span> <span class="dv">400</span><span class="op">,</span></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">x</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"Jours"</span> }<span class="op">,</span></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">y</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"Précipitations (mm)"</span> }<span class="op">,</span></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>    <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>      Plot<span class="op">.</span><span class="fu">rectY</span>(rain<span class="op">,</span> {</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>        <span class="dt">x</span><span class="op">:</span> <span class="st">"time"</span><span class="op">,</span></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>        <span class="dt">y</span><span class="op">:</span> <span class="st">"rain"</span><span class="op">,</span></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>        <span class="dt">interval</span><span class="op">:</span> <span class="st">"hour"</span><span class="op">,</span></span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>        <span class="dt">fill</span><span class="op">:</span> <span class="st">"steelblue"</span><span class="op">,</span></span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>      })<span class="op">,</span></span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>      Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])<span class="op">,</span></span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>    ]<span class="op">,</span></span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>  <span class="co">// On ajoute le plot dans la page</span></span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">"#chart"</span>)<span class="op">.</span><span class="fu">append</span>(myPlot)<span class="op">;</span></span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a><span class="fu">meteo</span>()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="osrm" class="level1">
 <h1>Osrm</h1>
+<p>OSRM (pour Open Source Routing Machine) est un moteur de calcul d’itinéraires open source, très performant, basé sur les données d’OpenStreetMap. Il permet de calculer des trajets, des distances et des durées de parcours pour différents modes de transport (voiture, vélo, piéton, etc.), un peu comme Google Maps, mais en local ou sur un serveur privé. OSRM ets dosponible à l’adresse suivante : <a href="https://project-osrm.org/">https://project-osrm.org</a>.</p>
+<p>La documentation est accessible ici : <a href="https://project-osrm.org/docs/v5.24.0/api/#">https://project-osrm.org/docs/v5.24.0/api/#</a></p>
+<p>Pour commencer, Essayons de calculer le temps de trajet en voiture entre Fontainebleau et Provins. Tapez ceci dans votre navigateur.</p>
+<pre class="url custom-url"><code>https://router.project-osrm.org/route/v1/car/3.2993092939773567,48.559461541790554;2.7013120786972142,48.40457231624569</code></pre>
+<ul>
+<li>les coordonnées sont au format <code>longitude,latitude</code> ⚠️</li>
+<li><code>route</code> correspond au service</li>
+<li><code>car</code> correspond au moyen de transport. On peut aussi utiliser <code>bike</code> et <code>foot</code>.</li>
+</ul>
+<p>❓ Quelle est la distance ?</p>
+<p>❓ Quelle est le temps de trajet ?</p>
+<p>On peut également ajouter d’autres points. Par exemple, aller de Fontainebleau à Sens en passant par Provins.</p>
+<pre class="url custom-url"><code>  "https://router.project-osrm.org/route/v1/car/2.7013120786972142,48.40457231624569;3.2993092939773567,48.559461541790554;3.2830220159456815,48.198749084774064"
+</code></pre>
+<p>En ajoutant les paramètres <code>?geometries=geojson&amp;overview=full</code>, on peut récupérer les géométries</p>
+<pre class="url custom-url"><code>https://router.project-osrm.org/route/v1/car/3.2993092939773567,48.559461541790554;2.7013120786972142,48.40457231624569?geometries=geojson&amp;overview=full</code></pre>
+<p>Ce qui permet de visualiser le trajeyt sur une carte.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode html custom-html code-with-copy"><code class="sourceCode html"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Import de la bibliothèque et du css--&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">"https://unpkg.com/leaflet/dist/leaflet.js"</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">"stylesheet"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://unpkg.com/leaflet/dist/leaflet.css"</span><span class="ot"> </span><span class="dt">/&gt;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">"map"</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode css custom-css code-with-copy"><code class="sourceCode css"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#map</span> {</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">height</span><span class="ch">:</span> <span class="dv">500</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> url <span class="op">=</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://router.project-osrm.org/route/v1/car/3.2993092939773567,48.559461541790554;2.7013120786972142,48.40457231624569?geometries=geojson&amp;overview=full"</span><span class="op">;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">main</span>() {</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Execution de la requete</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(url)<span class="op">;</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> trace <span class="op">=</span> data<span class="op">.</span><span class="at">routes</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">geometry</span><span class="op">;</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Création de la carte dans le div #map</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> map <span class="op">=</span> L<span class="op">.</span><span class="fu">map</span>(<span class="st">"map"</span>)<span class="op">;</span> <span class="co">// L designe la bibliothèque leaflet. La fonction map crée une carte vide</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Position et zoom</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  map<span class="op">.</span><span class="fu">setView</span>([<span class="fl">51.505</span><span class="op">,</span> <span class="op">-</span><span class="fl">0.09</span>]<span class="op">,</span> <span class="dv">13</span>)<span class="op">;</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Ajout d'une couche de tuiles raster</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> tiles <span class="op">=</span> L<span class="op">.</span><span class="fu">tileLayer</span>(</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"</span><span class="op">,</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>      <span class="dt">attribution</span><span class="op">:</span> <span class="st">"© OpenStreetMap"</span><span class="op">,</span></span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>  <span class="co">// On ajoute la couche à la carte</span></span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>  tiles<span class="op">.</span><span class="fu">addTo</span>(map)<span class="op">;</span></span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> layer <span class="op">=</span> L<span class="op">.</span><span class="fu">geoJSON</span>(trace)<span class="op">.</span><span class="fu">addTo</span>(map)<span class="op">;</span></span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>  map<span class="op">.</span><span class="fu">fitBounds</span>(layer<span class="op">.</span><span class="fu">getBounds</span>()<span class="op">,</span> { <span class="dt">maxZoom</span><span class="op">:</span> <span class="dv">18</span> })<span class="op">;</span></span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a><span class="fu">main</span>()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-note callout-titled" title="Exercice">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercice
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Calculer le temps de parcours à velo entre le batiment Olympe de Gouges et l’institut de geographie. Et affivchez la carte.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> odg <span class="op">=</span> [<span class="fl">48.82675288249501</span><span class="op">,</span> <span class="fl">2.382689386585041</span>] <span class="co">// ⚠️ lat, long </span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> igeo <span class="op">=</span> [<span class="fl">48.844837368476384</span><span class="op">,</span> <span class="fl">2.3426324055721186</span>]  <span class="co">// ⚠️ lat, long </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="combinaisons" class="level1">
+<h1>Combinaisons</h1>
+<p>En combinant les API, on peut faire des choses interessantes.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode html custom-html code-with-copy"><code class="sourceCode html"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id </span><span class="op">=</span><span class="st">"temps"</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id </span><span class="op">=</span><span class="st">"meteo"</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">"chart"</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="op">*</span> <span class="im">as</span> Plot <span class="im">from</span> <span class="st">"https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm"</span><span class="op">;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co">// Points de départ et arrivée</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> bourgdoisans <span class="op">=</span> [<span class="fl">45.06330084181238</span><span class="op">,</span> <span class="fl">6.024127804909032</span>]<span class="op">;</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> alpeshuez <span class="op">=</span> [<span class="fl">45.09033628569288</span><span class="op">,</span> <span class="fl">6.0704267327131936</span>]<span class="op">;</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">main</span>() {</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Calcul du tracé de la route avec OSRM</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> url <span class="op">=</span> <span class="vs">`https://router.project-osrm.org/route/v1/driving/</span><span class="sc">${</span>bourgdoisans[<span class="dv">1</span>]<span class="sc">}</span><span class="vs">,</span><span class="sc">${</span>bourgdoisans[<span class="dv">0</span>]<span class="sc">}</span><span class="vs">;</span><span class="sc">${</span>alpeshuez[<span class="dv">1</span>]<span class="sc">}</span><span class="vs">,</span><span class="sc">${</span>alpeshuez[<span class="dv">0</span>]<span class="sc">}</span><span class="vs">?geometries=geojson&amp;overview=full`</span><span class="op">;</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(url)<span class="op">;</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">"temps"</span>)<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Temps de parcours"</span> <span class="op">+</span> data<span class="op">.</span><span class="at">routes</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">duration</span> <span class="op">+</span> <span class="st">" minutes"</span><span class="op">;</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Récupération du tracé et des coordonnées</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> trace <span class="op">=</span> data<span class="op">.</span><span class="at">routes</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">geometry</span><span class="op">;</span></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> coords <span class="op">=</span> trace<span class="op">.</span><span class="at">coordinates</span><span class="op">.</span><span class="fu">filter</span>((_<span class="op">,</span> i) <span class="kw">=&gt;</span> i <span class="op">%</span> <span class="dv">3</span> <span class="op">===</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> lon <span class="op">=</span> coords<span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d[<span class="dv">0</span>])<span class="op">.</span><span class="fu">join</span>(<span class="st">"|"</span>)<span class="op">;</span></span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> lat <span class="op">=</span> coords<span class="op">.</span><span class="fu">map</span>((d) <span class="kw">=&gt;</span> d[<span class="dv">1</span>])<span class="op">.</span><span class="fu">join</span>(<span class="st">"|"</span>)<span class="op">;</span></span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Calcul du profil altimétrique</span></span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> req <span class="op">=</span> <span class="vs">`https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=</span><span class="sc">${</span>lon<span class="sc">}</span><span class="vs">&amp;lat=</span><span class="sc">${</span>lat<span class="sc">}</span><span class="vs">&amp;resource=ign_rge_alti_wld&amp;delimiter=|&amp;indent=false&amp;measures=false&amp;zonly=false`</span><span class="op">;</span></span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> response2 <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(req)<span class="op">;</span></span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> data2 <span class="op">=</span> <span class="cf">await</span> response2<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Création du graphique</span></span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> altitudes <span class="op">=</span> data2<span class="op">.</span><span class="at">elevations</span><span class="op">.</span><span class="fu">map</span>((d<span class="op">,</span> i) <span class="kw">=&gt;</span> ({ <span class="dt">x</span><span class="op">:</span> i<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> d<span class="op">.</span><span class="at">z</span> }))<span class="op">;</span></span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> chart <span class="op">=</span> Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a>    <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb36-30"><a href="#cb36-30" aria-hidden="true" tabindex="-1"></a>      Plot<span class="op">.</span><span class="fu">line</span>(altitudes<span class="op">,</span> { <span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span> })<span class="op">,</span> <span class="co">// ligne</span></span>
+<span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a>      Plot<span class="op">.</span><span class="fu">dot</span>(altitudes<span class="op">,</span> { <span class="dt">x</span><span class="op">:</span> <span class="st">"x"</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="st">"y"</span> })<span class="op">,</span> <span class="co">// points</span></span>
+<span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a>    ]<span class="op">,</span></span>
+<span id="cb36-33"><a href="#cb36-33" aria-hidden="true" tabindex="-1"></a>    <span class="dt">x</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"Point le long du profil"</span> }<span class="op">,</span></span>
+<span id="cb36-34"><a href="#cb36-34" aria-hidden="true" tabindex="-1"></a>    <span class="dt">y</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"Altitude (m)"</span> }<span class="op">,</span></span>
+<span id="cb36-35"><a href="#cb36-35" aria-hidden="true" tabindex="-1"></a>    <span class="dt">width</span><span class="op">:</span> <span class="dv">600</span><span class="op">,</span></span>
+<span id="cb36-36"><a href="#cb36-36" aria-hidden="true" tabindex="-1"></a>    <span class="dt">height</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span></span>
+<span id="cb36-37"><a href="#cb36-37" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb36-38"><a href="#cb36-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-39"><a href="#cb36-39" aria-hidden="true" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">"chart"</span>)<span class="op">.</span><span class="fu">appendChild</span>(chart)<span class="op">;</span></span>
+<span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-41"><a href="#cb36-41" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Récupération de la météo au sommet</span></span>
+<span id="cb36-42"><a href="#cb36-42" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> url_meteo <span class="op">=</span> <span class="vs">`https://api.open-meteo.com/v1/forecast?latitude=</span><span class="sc">${</span>alpeshuez[<span class="dv">0</span>]<span class="sc">}</span><span class="vs">&amp;longitude=</span><span class="sc">${</span>alpeshuez[<span class="dv">1</span>]<span class="sc">}</span><span class="vs">&amp;&amp;current_weather=true&amp;timezone=Europe%2FLondon`</span><span class="op">;</span></span>
+<span id="cb36-43"><a href="#cb36-43" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> response3 <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(url_meteo)<span class="op">;</span></span>
+<span id="cb36-44"><a href="#cb36-44" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> data3 <span class="op">=</span> <span class="cf">await</span> response3<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb36-45"><a href="#cb36-45" aria-hidden="true" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">getElementById</span>(<span class="st">"meteo"</span>)<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span></span>
+<span id="cb36-46"><a href="#cb36-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Il fait "</span> <span class="op">+</span> data3<span class="op">.</span><span class="at">current_weather</span><span class="op">.</span><span class="at">temperature</span> <span class="op">+</span> <span class="st">" °C au sommet"</span><span class="op">;</span></span>
+<span id="cb36-47"><a href="#cb36-47" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-48"><a href="#cb36-48" aria-hidden="true" tabindex="-1"></a><span class="co">// Appel de la fonction</span></span>
+<span id="cb36-49"><a href="#cb36-49" aria-hidden="true" tabindex="-1"></a><span class="fu">main</span>()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 </section>
 <section id="lopen-data" class="level1">
@@ -554,21 +737,21 @@ Exercice
 <p>https://observablehq.com/<span class="citation" data-cites="eurostat-ws/eurostat-statistics-api">@eurostat-ws/eurostat-statistics-api</span></p>
 <p>Tapez ca dans le navigateur web</p>
 <p>https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/reg_area3?format=JSON&amp;unit=KM2&amp;landuse=TOTAL&amp;lang=EN&amp;TIME=2025</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { json } <span class="im">from</span> <span class="st">"https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm"</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">fromEurostat</span>(query) {</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> result <span class="op">=</span> <span class="cf">await</span> <span class="fu">json</span>(query)<span class="op">;</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> category <span class="op">=</span> result<span class="op">.</span><span class="at">dimension</span><span class="op">.</span><span class="at">geo</span><span class="op">.</span><span class="at">category</span><span class="op">;</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> data <span class="op">=</span>  <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(category<span class="op">.</span><span class="at">index</span>)<span class="op">.</span><span class="fu">map</span>((key) <span class="kw">=&gt;</span> ({</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">id</span><span class="op">:</span> key<span class="op">,</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">label</span><span class="op">:</span> category<span class="op">.</span><span class="at">label</span>[key]<span class="op">,</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">value</span><span class="op">:</span> result<span class="op">.</span><span class="at">value</span>[category<span class="op">.</span><span class="at">index</span>[key]]</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  }))<span class="op">;</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(data)</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="fu">fromEurostat</span>(</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/reg_area3?format=JSON&amp;unit=KM2&amp;landuse=TOTAL&amp;lang=EN&amp;TIME=2025"</span></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { json } <span class="im">from</span> <span class="st">"https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm"</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">fromEurostat</span>(query) {</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> result <span class="op">=</span> <span class="cf">await</span> <span class="fu">json</span>(query)<span class="op">;</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> category <span class="op">=</span> result<span class="op">.</span><span class="at">dimension</span><span class="op">.</span><span class="at">geo</span><span class="op">.</span><span class="at">category</span><span class="op">;</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> data <span class="op">=</span>  <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(category<span class="op">.</span><span class="at">index</span>)<span class="op">.</span><span class="fu">map</span>((key) <span class="kw">=&gt;</span> ({</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">id</span><span class="op">:</span> key<span class="op">,</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">label</span><span class="op">:</span> category<span class="op">.</span><span class="at">label</span>[key]<span class="op">,</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">value</span><span class="op">:</span> result<span class="op">.</span><span class="at">value</span>[category<span class="op">.</span><span class="at">index</span>[key]]</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  }))<span class="op">;</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(data)</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="fu">fromEurostat</span>(</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/reg_area3?format=JSON&amp;unit=KM2&amp;landuse=TOTAL&amp;lang=EN&amp;TIME=2025"</span></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="opendata.paris.fr" class="level3">
 <h3 class="anchored" data-anchor-id="opendata.paris.fr">opendata.paris.fr</h3>
 <p>Sur le site de la mairie de Paris, de nombreux jeux de données sont également disponibles à travers une API qui permet de requeter toutes les dounnées ouvertes de la ville.</p>
@@ -578,25 +761,25 @@ Exercice
 <p>Tapez cette URL dans la barre de votre navigateur :</p>
 <pre><code>https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-emplacement-des-stations/records</code></pre>
 <p>On obtient le résultat de la requete au format JSON. Malheureusemeent, <strong>le nombre de résultat est limité à 100</strong>. Heureusement, il y a le parametre offset. On fait une boucle et hop.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">getAllStations</span>() {</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> allStations <span class="op">=</span> []<span class="op">;</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> offset <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> limit <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> totalCount <span class="op">=</span> <span class="kw">Infinity</span><span class="op">;</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (offset <span class="op">&lt;</span> totalCount) {</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> url <span class="op">=</span> <span class="vs">`https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-emplacement-des-stations/records?limit=</span><span class="sc">${</span>limit<span class="sc">}</span><span class="vs">&amp;offset=</span><span class="sc">${</span>offset<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(url)<span class="op">;</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    allStations<span class="op">.</span><span class="fu">push</span>(<span class="op">...</span>data<span class="op">.</span><span class="at">results</span>)<span class="op">;</span></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    totalCount <span class="op">=</span> data<span class="op">.</span><span class="at">total_count</span> <span class="op">||</span> allStations<span class="op">.</span><span class="at">length</span><span class="op">;</span> <span class="co">// total_count est fourni par l'API</span></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    offset <span class="op">+=</span> limit<span class="op">;</span></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(allStations)<span class="op">;</span></span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(allStations<span class="op">.</span><span class="at">length</span>)<span class="op">;</span></span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="fu">getAllStations</span>()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">getAllStations</span>() {</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> allStations <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> offset <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> limit <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> totalCount <span class="op">=</span> <span class="kw">Infinity</span><span class="op">;</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (offset <span class="op">&lt;</span> totalCount) {</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> url <span class="op">=</span> <span class="vs">`https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-emplacement-des-stations/records?limit=</span><span class="sc">${</span>limit<span class="sc">}</span><span class="vs">&amp;offset=</span><span class="sc">${</span>offset<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(url)<span class="op">;</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    allStations<span class="op">.</span><span class="fu">push</span>(<span class="op">...</span>data<span class="op">.</span><span class="at">results</span>)<span class="op">;</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    totalCount <span class="op">=</span> data<span class="op">.</span><span class="at">total_count</span> <span class="op">||</span> allStations<span class="op">.</span><span class="at">length</span><span class="op">;</span> <span class="co">// total_count est fourni par l'API</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>    offset <span class="op">+=</span> limit<span class="op">;</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(allStations)<span class="op">;</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(allStations<span class="op">.</span><span class="at">length</span>)<span class="op">;</span></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a><span class="fu">getAllStations</span>()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="data.gouv" class="level3">
 <h3 class="anchored" data-anchor-id="data.gouv">data.gouv</h3>

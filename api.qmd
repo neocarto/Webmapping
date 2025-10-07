@@ -8,7 +8,7 @@ Le résultat est généralement renvoyé au  format JSON.
 
 Voyons quelques exemples.
 
-## Altimétrie
+# Altimétrie
 
 Le service Géoplateforme de calcul altimétrique de l'**IGN** est disponible à l'adresse suivante : [https://geoservices.ign.fr/documentation/services/services-geoplateforme/altimetrie](https://geoservices.ign.fr/documentation/services/services-geoplateforme/altimetrie). Il s'appuie sur des ressources altimétriques pour fournir des altitudes. l'API permet de d'obtenir :
 
@@ -403,15 +403,239 @@ async function drawmap(q) {
 }
 ```
 
+Il existe d'autres API de géocodage.
+
+TODO : Nominatim
+
 
 # Météo
 
-https://wxs.ign.fr/{cle}/alti/rest/elevation.json
+Il existe pluseurs API permetant de récupérer la météo. La pluport nécéssitent une clé d'utilisation.
 
+**Open-Meteo** est une API météo open source qui offre un accès gratuit pour un usage non commercial (sous licence CC BY 4.0)). Aucune clé API n'est requise. Open-Meteo utilise les prévisions météorologiques open data fournies par les services météorologiques nationaux. Comme beaucoup d'autres API météorologiques, Open-Meteo intègre des modèles météorologiques locaux et mondiaux à haute résolution. Contrairement à d'autres API météorologiques, Open-Meteo offre un accès complet à son code source, et toutes les sources de données sont répertoriées ouvertement, en créditant les services météorologiques nationaux pour leur travail. 
 
-https://api.meteo.com/v1/paris
+L'API est accessible ici : [https://open-meteo.com/](https://open-meteo.com/). La documentation est ici [https://open-meteo.com/en/docs](https://open-meteo.com/en/docs).
+
+Commençons par taper cette requete dans le navigateur web pour connaitre la meteo actuelle.
+
+```{.url .custom-url}
+https://api.open-meteo.com/v1/forecast?latitude=48.8566&longitude=2.3522&current_weather=true&timezone=Europe/Paris
+```
+Ou la prévision  quotidienne sur 16 jours
+
+```{.url .custom-url}
+https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m&forecast_days=16
+```
+Tous les parametres sont expliqués ici : [https://open-meteo.com/en/docs](https://open-meteo.com/en/docs).
+
+::: {.callout-note title="Exercice"}
+Créez une requete pour récupérer les prévisions de précipitation heure par heure
+:::
+
+En JavaSCript, on peut donc s'ammuser à faire ceci :
+
+```{.html .custom-html}
+<div id="chart"></div>
+```
+
+```{.js .custom-js}
+import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+
+const paris = [48.8534, 2.3488];
+const url = `https://api.open-meteo.com/v1/forecast?latitude=${paris[0]}&longitude=${paris[1]}&hourly=rain&timezone=Europe%2FLondon&forecast_days=16`;
+
+async function meteo() {
+  // Execution de la requete
+  const response = await fetch(url);
+  const data = await response.json();
+
+  // Mise en forme des données
+  const rain = data.hourly.time.map((d, i) => ({
+    time: new Date(d),
+    rain: data.hourly.rain[i],
+  }));
+  // Création du diagramme en barres
+  const myPlot = Plot.plot({
+    width: 600,
+    height: 400,
+    x: { label: "Jours" },
+    y: { label: "Précipitations (mm)" },
+    marks: [
+      Plot.rectY(rain, {
+        x: "time",
+        y: "rain",
+        interval: "hour",
+        fill: "steelblue",
+      }),
+      Plot.ruleY([0]),
+    ],
+  });
+  // On ajoute le plot dans la page
+  document.querySelector("#chart").append(myPlot);
+}
+
+meteo();
+```
 
 # Osrm
+
+OSRM (pour Open Source Routing Machine) est un moteur de calcul d’itinéraires open source, très performant, basé sur les données d’OpenStreetMap.
+Il permet de calculer des trajets, des distances et des durées de parcours pour différents modes de transport (voiture, vélo, piéton, etc.), un peu comme Google Maps, mais en local ou sur un serveur privé. OSRM ets dosponible à l'adresse suivante : [https://project-osrm.org](https://project-osrm.org/).
+
+La documentation est accessible ici : [https://project-osrm.org/docs/v5.24.0/api/#](https://project-osrm.org/docs/v5.24.0/api/#)
+
+Pour commencer, Essayons de calculer le temps de trajet en voiture entre Fontainebleau et Provins. Tapez ceci dans votre navigateur.
+
+```{.url .custom-url}
+https://router.project-osrm.org/route/v1/car/3.2993092939773567,48.559461541790554;2.7013120786972142,48.40457231624569
+```
+
+- les coordonnées sont au format `longitude,latitude` ⚠️
+- `route` correspond au service
+- `car` correspond au moyen de transport. On peut aussi utiliser `bike` et `foot`.
+
+❓ Quelle est la distance ?
+
+❓ Quelle est le temps de trajet ?
+
+
+On peut également ajouter d'autres points. Par exemple, aller de Fontainebleau à Sens en passant par Provins.
+
+```{.url .custom-url}
+  "https://router.project-osrm.org/route/v1/car/2.7013120786972142,48.40457231624569;3.2993092939773567,48.559461541790554;3.2830220159456815,48.198749084774064"
+
+```
+En ajoutant les paramètres `?geometries=geojson&overview=full`, on peut récupérer les géométries
+
+```{.url .custom-url}
+https://router.project-osrm.org/route/v1/car/3.2993092939773567,48.559461541790554;2.7013120786972142,48.40457231624569?geometries=geojson&overview=full
+```
+
+Ce qui permet de visualiser le trajeyt sur une carte. 
+
+```{.html .custom-html}
+<!-- Import de la bibliothèque et du css-->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<div id="map"></div>
+```
+
+```{.css .custom-css}
+#map {
+    height: 500px;
+}
+```
+
+```{.js .custom-js}
+const url =
+  "https://router.project-osrm.org/route/v1/car/3.2993092939773567,48.559461541790554;2.7013120786972142,48.40457231624569?geometries=geojson&overview=full";
+
+async function main() {
+  // Execution de la requete
+  const response = await fetch(url);
+  const data = await response.json();
+  const trace = data.routes[0].geometry;
+  // Création de la carte dans le div #map
+  const map = L.map("map"); // L designe la bibliothèque leaflet. La fonction map crée une carte vide
+
+  // Position et zoom
+  map.setView([51.505, -0.09], 13);
+
+  // Ajout d'une couche de tuiles raster
+  const tiles = L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      attribution: "© OpenStreetMap",
+    },
+  );
+
+  // On ajoute la couche à la carte
+  tiles.addTo(map);
+
+  const layer = L.geoJSON(trace).addTo(map);
+  map.fitBounds(layer.getBounds(), { maxZoom: 18 });
+}
+
+main();
+```
+
+::: {.callout-note title="Exercice"}
+Calculer le temps de parcours à velo entre le batiment Olympe de Gouges et l'institut de geographie. Et affivchez la carte. 
+
+```{.js .custom-js}
+const odg = [48.82675288249501, 2.382689386585041] // ⚠️ lat, long 
+const igeo = [48.844837368476384, 2.3426324055721186]  // ⚠️ lat, long 
+
+```
+:::
+
+# Combinaisons
+
+En combinant les API, on peut faire des choses interessantes. 
+
+
+
+```{.html .custom-html}
+<div id ="temps"></div>
+<div id ="meteo"></div>
+<div id="chart"></div>
+```
+
+```{.js .custom-js}
+import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+
+// Points de départ et arrivée
+const bourgdoisans = [45.06330084181238, 6.024127804909032];
+const alpeshuez = [45.09033628569288, 6.0704267327131936];
+
+async function main() {
+  // Calcul du tracé de la route avec OSRM
+  const url = `https://router.project-osrm.org/route/v1/driving/${bourgdoisans[1]},${bourgdoisans[0]};${alpeshuez[1]},${alpeshuez[0]}?geometries=geojson&overview=full`;
+  const response = await fetch(url);
+  const data = await response.json();
+  document.getElementById("temps").textContent =
+    "Temps de parcours" + data.routes[0].duration + " minutes";
+
+  // Récupération du tracé et des coordonnées
+  const trace = data.routes[0].geometry;
+  const coords = trace.coordinates.filter((_, i) => i % 3 === 0);
+  const lon = coords.map((d) => d[0]).join("|");
+  const lat = coords.map((d) => d[1]).join("|");
+
+  // Calcul du profil altimétrique
+  const req = `https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=${lon}&lat=${lat}&resource=ign_rge_alti_wld&delimiter=|&indent=false&measures=false&zonly=false`;
+  const response2 = await fetch(req);
+  const data2 = await response2.json();
+
+  // Création du graphique
+  const altitudes = data2.elevations.map((d, i) => ({ x: i, y: d.z }));
+  const chart = Plot.plot({
+    marks: [
+      Plot.line(altitudes, { x: "x", y: "y" }), // ligne
+      Plot.dot(altitudes, { x: "x", y: "y" }), // points
+    ],
+    x: { label: "Point le long du profil" },
+    y: { label: "Altitude (m)" },
+    width: 600,
+    height: 300,
+  });
+
+  document.getElementById("chart").appendChild(chart);
+
+  // Récupération de la météo au sommet
+  const url_meteo = `https://api.open-meteo.com/v1/forecast?latitude=${alpeshuez[0]}&longitude=${alpeshuez[1]}&&current_weather=true&timezone=Europe%2FLondon`;
+  const response3 = await fetch(url_meteo);
+  const data3 = await response3.json();
+  document.getElementById("meteo").textContent =
+    "Il fait " + data3.current_weather.temperature + " °C au sommet";
+}
+// Appel de la fonction
+main();
+
+```
+
+
+
 
 
 
