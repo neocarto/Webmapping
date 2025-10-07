@@ -1,131 +1,407 @@
-::: {.callout-tip collapse="false"}
+# Les APIs
 
-## Qu'est ce qu'une API ?
+Une API (**Application Programming Interface**) est un point d'accès mis à disposition par un service (site web, administration, application) pour permettre à d'autres programmes de demander et recevoir des données ou le résultat d'une requete. 
 
-Une API (Application Programming Interface) est un point d'accès mis à disposition par un service (site web, administration, application) pour permettre à d'autres programmes de demander et recevoir des données ou le résultat d'une requete. 
+Dit autrement, une API permet de poser des questions à une base de données à distance, d'effectuer des traitements ou des opérations à distance, et d’en recevoir les réponses automatiquement.
 
-Dit autrement, une API permet à ton programme de poser des questions à une base de données à distance, d'effectuer des traitements ou des opérations à distance, et d’en recevoir les réponses automatiquement.
+Le résultat est généralement renvoyé au  format JSON.
 
-Le résultat est souvent renvoyé au  format JSON.
-:::
+Voyons quelques exemples.
 
-# Altimétrie
+## Altimétrie
 
-https://geoservices.ign.fr/documentation/services/services-geoplateforme/altimetrie
-
-Ce service de l'IGN s'appuie sur des ressources altimétriques pour fournir des altitudes. l'API permet de d'obtenir :
+Le service Géoplateforme de calcul altimétrique de l'**IGN** est disponible à l'adresse suivante : [https://geoservices.ign.fr/documentation/services/services-geoplateforme/altimetrie](https://geoservices.ign.fr/documentation/services/services-geoplateforme/altimetrie). Il s'appuie sur des ressources altimétriques pour fournir des altitudes. l'API permet de d'obtenir :
 
 - l'altitude d'un ou de plusieurs points ;
 - un profil altimétrique le long d'une courbe.
 
-NB : Le nombre de requètes est limité à 5/s.
+⚠️ Le nombre de requètes est limité à 5/s.
 
 Toute la documentation est [ici](https://geoservices.ign.fr/documentation/services/services-geoplateforme/altimetrie)
 
-
-Voir les différentes ressources possibles : https://data.geopf.fr/altimetrie/resources
-
-- Déterminer l'altitude d'un ou plusieurs points.
-
-
-
-::: {.callout-note title="Exercice"}
+- <b>Récupérer l'altitude d'un point</b>
 
 Voici les coordonnées de Montmartre : [48.88685856740631, 2.3430894611004986]
 
-Copiez cet url dans votre navigateur web.
 
+```{.url .custom-url}
 https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=2.3430894611004986&lat=48.88685856740631&resource=ign_rge_alti_wld
-
-Quelle est l'altitude de ce point ?
-
-:::
-
-
-
-
-
-
-
-
-
-```{.js .custom-js}
-fetch(
-  "https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=1.48|1.49&lat=43.54|43.55&resource=ign_rge_alti_wld&delimiter=|&indent=false&measures=false&zonly=false"
-).then((d) => d.json())
- .then(data => {
- console.log(data)
-})
 ```
 
-Avec une listé déroulante, ca peut donner ca :
+❓ Quelle est l'altitude de ce point ?
+
+Essayez à présent :
+
+```{.url .custom-url}
+https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=2.3430894611004986&lat=48.88685856740631&resource=ign_lidar_hd_mnx_multi_wld
+
+```
+
+❓ Quelle est l'altitude de ce point ?
+
+Pour voir les différentes ressources possibles, vous pouvez taper ceci
+
+
+```{.url .custom-url}
+https://data.geopf.fr/altimetrie/resources
+https://data.geopf.fr/altimetrie/resources/ign_rge_alti_wld
+```
+- <b>Récupérer l'altitude de plusieurs points</b>
+
+POur récupérer l'altitude de plusieurs points, on peut passer à l'utl plusieurs coordonnées séparées par un caractere spécial. 
+
+
+```{.url .custom-url}
+https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=1.48|1.49&lat=43.54|43.55&resource=ign_rge_alti_wld&delimiter=|&indent=false&measures=false&zonly=false
+```
+
+La signification de tous les parametres sont précisés sur [cette page](https://geoservices.ign.fr/documentation/services/services-geoplateforme/altimetrie)
+
+En JavaScript, on peut généralement utiliser une API avec les fonctions `fetch()` ou `d3.json()`.
+
+⚠️ Ce sont des fonctions **asysnchrones**.
+
+```{.js .custom-js}
+const url =
+    "https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=1.48|1.49&lat=43.54|43.55&resource=ign_rge_alti_wld&delimiter=|";
+
+async function main() {
+  const response = await fetch(url);
+  const data = await response.json();
+  console.log(data);
+}
+main();
+```
+
+On peut aussi utiliser le JavasCript pour construire l'url. Voici un exemple.
+
+```{.js .custom-js}
+// Voici une liste de lieux
+const lieux = [
+  { nom: "Mont Blanc", lat: 45.8326, lon: 6.8652 },
+  { nom: "Barre des Écrins", lat: 44.9225, lon: 6.3619 },
+  { nom: "Mont Ventoux", lat: 44.1740, lon: 5.2780 },
+  { nom: "Pic du Midi de Bigorre", lat: 42.9368, lon: 0.1428 },
+  { nom: "Puy de Sancy", lat: 45.5289, lon: 2.8083 },
+  { nom: "Pic de Canigou", lat: 42.5183, lon: 2.4567 },
+  { nom: "Grand Ballon", lat: 47.9043, lon: 7.0982 },
+  { nom: "Mont Aigoual", lat: 44.1180, lon: 3.5805 },
+  { nom: "Pic du Midi d’Ossau", lat: 42.8000, lon: -0.4420 },
+  { nom: "Mont Lozère", lat: 44.4236, lon: 3.7350 }
+];
+
+// On récupère les latitudes
+const latitudes = lieux.map(lieu => lieu.lat).join("|");
+console.log(latitudes)
+
+// On récupère les longitudes
+const longitudes = lieux.map(lieu => lieu.lon).join("|");
+console.log(longitudes)
+
+// On construit l'url
+const url = "https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=" + longitudes + "&lat=" + latitudes + "&resource=ign_rge_alti_wld&delimiter=|"
+console.log(url)
+
+// Lancer la requete avec fetch
+
+// Récupérer les resultats
+
+```
+
+On aurait pu aussi faire comme ceci avec les **backticks** (`) [ALTGR+7]. Cette solution est plus claire. 
+
+```{.js .custom-js}
+const url = `https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=${$longitudes}&lat=${$latitudes}&resource=ign_rge_alti_wld&delimiter=|`
+```
+
+Bien sur, on peut profiter des capacités de l'environnement web pour construire quelque chose de plus agréable à utiliser.
 
 ```{.html .custom-html}
-  <label for="lieux">Choisis un lieu :</label>
+  <label for="lieux">Choisissez un lieu :</label>
   <select id="lieux" name="lieux">
-    <option disabled selected>-- Choisis un lieu --</option>
+    <option disabled selected>-- Choisissez un sommet --</option>
   </select>
 
-  <p id="resultat"></p>
+  <div id="resultat"></div>
 ```
 
 ```{.js .custom-js}
 const lieux = [
-  { "nom": "Montmartre", "coords": [48.88685856740631, 2.3430894611004986] },
-  { "nom": "Tour Eiffel", "coords": [48.8583701, 2.2944813] },
-  { "nom": "Louvre", "coords": [48.8606111, 2.337644] }
-]
+  { nom: "Mont Blanc", lat: 45.8326, lon: 6.8652 },
+  { nom: "Barre des Écrins", lat: 44.9225, lon: 6.3619 },
+  { nom: "Mont Ventoux", lat: 44.1740, lon: 5.2780 },
+  { nom: "Pic du Midi de Bigorre", lat: 42.9368, lon: 0.1428 },
+  { nom: "Puy de Sancy", lat: 45.5289, lon: 2.8083 },
+  { nom: "Pic de Canigou", lat: 42.5183, lon: 2.4567 },
+  { nom: "Grand Ballon", lat: 47.9043, lon: 7.0982 },
+  { nom: "Mont Aigoual", lat: 44.1180, lon: 3.5805 },
+  { nom: "Pic du Midi d’Ossau", lat: 42.8000, lon: -0.4420 },
+  { nom: "Mont Lozère", lat: 44.4236, lon: 3.7350 }
+];
 
-const select = document.querySelector('#lieux');
+// On remplit la liste déroulante
+const select = document.querySelector("#lieux");
+lieux.forEach((lieu) => {
+  const option = document.createElement("option");
+  option.textContent = lieu.nom;
+  option.value = lieu.nom;
+  select.appendChild(option);
+});
 
-    lieux.forEach(lieu => {
-      const option = document.createElement('option');
-      option.textContent = lieu.nom;
-      option.value = JSON.stringify(lieu.coords); // on encode les coordonnées
-      select.appendChild(option);
-    });
+// On crée la fonction de requete
+async function getdata(lieu) {
+  const coordonnees = lieux.find((d) => d.nom == lieu);
+  const lat = coordonnees.lat;
+  const lon = coordonnees.lon;
+  const url = `https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=${lon}&lat=${lat}&resource=ign_rge_alti_wld`;
 
-    select.addEventListener('change', () => {
-      const coords = JSON.parse(select.value);
+  console.log(url)
 
-fetch(`https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=${coords[1]}&lat=${coords[0]}&resource=ign_rge_alti_wld`)
-  .then(response => response.json())
-  .then(data => {
-    console.log(coords)
-    const alt = data.elevations[0].z
-    const str = `L'altitude est de ${alt} metres`
-    document.querySelector("#resultat").textContent = str
-  })
+  // On execute la requete et on récupère le résultat
+  const response = await fetch(url);
+  const data = await response.json();
 
-    });
+  // On met en forme la réponse
+  const altitude = data.elevations[0].z;
+  const str = `L'altitude est de ${altitude} metres`;
+  // On l'affiche dans le div #resultat
+  document.querySelector("#resultat").textContent = str;
+}
+
+// On appelle la fonction à chaque fois qu'on selectionne un lieu dans la liste
+
+select.addEventListener("change", () => {
+  getdata(select.value);
+});
 ```
 
-Calculer un profil altimétrique
+- <b>Calculer un profil altimétrique</b>
 
-Ce calcul permet d'obtenir un profil en long. Il est accessible via l'URL suivante 
+Ce calcul permet d'obtenir un profil en long. Il est accessible via l'URL suivante : https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevationLine.{format}
 
-https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevationLine.{format}
+La requête **elevationLine** a les mêmes caractéristiques que la requête **elevation**, avec en supplément :
 
+- profile_mode : `simple` ou `accurate`
+- sampling : une valeur entre 2 et 5000
+
+Exemple de requete :
+
+```{.url .custom-url}
 https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevationLine.json?lon=1.48|1.49&lat=43.54|43.55&resource=ign_rge_alti_wld&delimiter=|&indent=true&measures=false&profile_mode=simple&sampling=4
+```
 
---------------------------------------------------
+Essayons de visualiser ce profil en long avec leaflet
+
+```{.html .custom-html}
+<!-- Import de la bibliothèque et du css-->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<div id="map"></div>
+```
+
+```{.js .custom-js}
+// Création de la requete
+const bourgdoisans = [45.06330084181238, 6.024127804909032];
+const alpeshuez = [45.09033628569288, 6.0704267327131936];
+const sample = 20;
+const url = `https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevationLine.json?lon=${bourgdoisans[1]}|${alpeshuez[1]}&lat=${bourgdoisans[0]}|${alpeshuez[0]}&resource=ign_rge_alti_wld&delimiter=|&indent=true&measures=false&profile_mode=simple&sampling=${sample}`;
+
+// Crétaion de la fonction
+async function main() {
+  // Execution de la requte
+  const response = await fetch(url);
+  const data = await response.json();
+  // Cartographie
+  const map = L.map("map");
+  map.setView([45.08, 6.05], 13);
+  const tiles = L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      attribution: "© OpenStreetMap",
+    },
+  ).addTo(map);
+  data.elevations.forEach((p) => {
+    console.log(p);
+    L.marker([p.lat, p.lon]).addTo(map).bindPopup(`Altitude : ${p.z} m`);
+  });
+}
+// Appel de la fonction
+main();
+```
+
+```{.css .custom-css}
+#map {
+    height: 500px;
+}
+```
+
+Il est aussi possible de visualiser ce profil sur un graphique. Voici un apperçu. Nous verrons cela plus en détail dans la partie dataviz.
+
+```{.html .custom-html}
+<div id="chart"></div>
+```
 
 
+```{.js .custom-js}
+import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
 
+// Création de la requete
+const bourgdoisans = [45.06330084181238, 6.024127804909032];
+const alpeshuez = [45.09033628569288, 6.0704267327131936];
+const sample = 20;
+const url = `https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevationLine.json?lon=${bourgdoisans[1]}|${alpeshuez[1]}&lat=${bourgdoisans[0]}|${alpeshuez[0]}&resource=ign_rge_alti_wld&delimiter=|&indent=true&measures=false&profile_mode=simple&sampling=${sample}`;
 
+// Crétaion de la fonction
+async function main() {
+  // Execution de la requte
+  const response = await fetch(url);
+  const data = await response.json();
+
+  const altitudes = data.elevations.map((d, i) => ({ x: i, y: d.z }));
+  const chart = Plot.plot({
+    marks: [
+      Plot.line(altitudes, { x: "x", y: "y" }), // ligne
+      Plot.dot(altitudes, { x: "x", y: "y" }), // points
+    ],
+    x: { label: "Point le long du profil" },
+    y: { label: "Altitude (m)" },
+    width: 600,
+    height: 300,
+  });
+
+  document.getElementById("chart").appendChild(chart);
+}
+// Appel de la fonction
+main();
+```
+
+::: {.callout-note title="Exercice"}
+Choisissez deux autres lieux et représentez le profil
+:::
 
 # Géocodage
 
+Le géocodage est le processus de transformation d’informations localisables en coordonnées géographiques (latitude et longitude). Il existe différents services. EN France, on utilisera L'API de géocodage de la Géoplateforme.
+
+L'API de géocodage de la Géoplateforme a pour but de fournir des coordonnées à partir d'une adresse ou d’une parcelle cadastrale (ou à l'inverse de fournir le localisant le plus proche à partir de coordonnées). Elle s'appuie sur des données BAN, BD TOPO® et Parcellaire Express (PCI).
+
+Il existe 2 types de geocodage (direct et inverse):
+
+- Le service de **géocodage direct** permet de fournir les coordonnées géographiques d’une adresse postale, d’un lieu ou de parcelles cadastrales à partir d’une requête HTTP. *https://data.geopf.fr/geocodage/search*
+- Le service de **géocodage inverse** a pour but de retourner, à partir d’un ou plusieurs points géographiques indiqués en latitude/longitude, la ou les entités géolocalisées les plus proches correspondantes, parmi les adresses, toponymes, parcelles cadastrales, et/ou unités administratives. *https://data.geopf.fr/geocodage/reverse*
+
+⚠️ Pour garantir un usage équitable de ce service très sollicité, une limite d'usage est appliquée. Elle est de 50 appels/IP/seconde.
+
+Pour découvrir le service, vous pouvez tapez ceci dans le navigateur web.
+
+```{.url .custom-url}
+https://data.geopf.fr/geocodage/getCapabilities
+```
+
+Pour connaitre les parametres de requete pour le géocodage direct, vous pouvez essayez ceci :
+
+```{.html .custom-html}
+<link
+  href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css"
+  rel="stylesheet"
+/>
+<script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+<div id="table"></div>
+```
+
+```{.js .custom-js}
+async function main() {
+  url = "https://data.geopf.fr/geocodage/getCapabilities"
+  const response = await fetch(url);
+  const data = await response.json();
+  console.log(data)
+ const table = new Tabulator("#table", {
+    data: data.operations[0].parameters,
+    layout: "fitColumns", 
+          columns: [
+        { title: "Nom", field: "name", sorter: "string" },
+        { title: "description", field: "description", sorter: "string" },
+      ],
+    });
+}
+// Appel de la fonction
+main();
+```
+
+Ou simplement regarder cette page : [https://data.geopf.fr/geocodage/openapi](https://data.geopf.fr/geocodage/openapi)
+
+Essayeons de voir comment ca marche requete.
+
+```{.url .custom-url}
+https://data.geopf.fr/geocodage/search?q=20 rue de Tolbiac Paris&returntruegeometry=false&limit=1
+```
+
+et
+
+```{.url .custom-url}
+https://data.geopf.fr/geocodage/search?q=20 rue de Tolbiac Paris&returntruegeometry=true&limit=1
+```
+
+On peut rapidemment crééer une petite application. 
 
 
-https://data.geopf.fr/geocodage/search
+```{.html .custom-html}
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<form id="geocode-form">
+  <div>
+    Adresse : <input type="text" id="adresse"/>
+    <input type="submit" value="Géocoder" />
+  </div>
+</form>
+<div id="resultat"></div>
+<div id="map"></div>
+```
 
+```{.css .custom-css}
+#map {
+    height: 500px;
+}
+```
 
-## BAN
+```{.js .custom-js}
+const form = document.querySelector("#geocode-form");
+form.addEventListener("submit", function (event) {
+  event.preventDefault(); // Empêche le rechargement de la page
+  const q = document.querySelector("#adresse").value;
+  drawmap(q);
+});
 
-La Base Adresse Nationale propose différents outils et APIs afin de vous permettre soit de travailler sur votre Base Adresse Locale, soit de consulter ou d'utiliser la Base Adresse Nationale. [https://adresse.data.gouv.fr/outils](https://adresse.data.gouv.fr/outils)
+async function drawmap(q) {
+  const url = `https://data.geopf.fr/geocodage/search?q=${q}&returntruegeometry=false&limit=1`;
+  const response = await fetch(url);
+  const data = await response.json();
+  // Resultat de le requette
+  console.log(data);
 
+  // Adresse trouvée
+  const find = data.features[0].properties.label;
+  // Coordonnées
+  const coords = data.features[0].geometry.coordinates.toReversed();
 
+  // Affichage de l'adresse trouvée
+  document.querySelector("#resultat").textContent = "Adresse trouvée : " + find;
+  // Creation de la carte
+  const map = L.map("map"); // L designe la bibliothèque leaflet. La fonction map crée une carte vide
+  // Position et zoom
+  map.setView(coords, 13);
+
+  // Ajout d'une couche de tuiles raster
+  const tiles = L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      attribution: "© OpenStreetMap",
+    },
+  ).addTo(map);
+
+  L.marker(coords).addTo(map);
+}
+```
 
 
 # Météo
