@@ -574,6 +574,8 @@ const igeo = [48.844837368476384, 2.3426324055721186]  // ⚠️ lat, long
 En combinant les API, on peut faire des choses interessantes. 
 
 
+REFAIRE AVEC : const url = `https://routing.openstreetmap.de/routed-bike/route/v1/driving/${bourgdoisans
+
 
 ```{.html .custom-html}
 <div id ="temps"></div>
