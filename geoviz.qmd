@@ -39,12 +39,237 @@ async function main() {
 main();
 ```
 
+Avec le parametre `style`, on peut completement configurer la carte. Par exemple, on peut modifier le code précédent en ajoutant :
+
+```{.js .custom-js}
+const style = {
+    fillColor: "red",
+    weight: 2,
+    opacity: 1,
+    color: 'white',
+    dashArray: '3',
+    fillOpacity: 0.7
+  }
+```
+
+et 
+
+```{.js .custom-js}
+ const layer = L.geoJSON(data, {style}).addTo(map);
+```
+
 **1 -Carte choroplethe**
 
-Avec leaflet, on peut changer la couleur de fond des polygones avce l'attribut `fillColor`. Pour réaliser une carte choroplethe, on a donc besoin d'une foncton qui va affecter une couleur en fonction d'une donnée. 
+Avec leaflet, pour réaliser une carte choroplethe, on a donc besoin d'une foncton qui va affecter une couleur en fonction d'une donnée. 
 
 Par exemple : 
 
+```{.js .custom-js}
+// Modules
+import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+const d3 = { json };
 
+// Fonction de carto
+async function main() {
+  const data = await d3.json(
+    "https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson",
+  );
+  console.log(data.features.map((d) => d.properties));
+  const map = L.map("map");
+  const layer = L.geoJSON(data, { style }).addTo(map);
+  map.fitBounds(layer.getBounds());
+}
+// Appel de la fonction
+main();
 
+// Helpers
+
+function getColor(value) {
+  return value > 200000
+    ? "#7a0177"
+    : value > 150000
+      ? "#c51b8a"
+      : value > 100000
+        ? "#f768a1"
+        : value > 50000
+          ? "#fa9fb5"
+          : value > 25000
+            ? "#fcc5c0"
+            : "#feebe2";
+}
+
+function style(feature) {
+  return {
+    fillColor: getColor(feature.properties.population), // ou autre attribut
+    weight: 1,
+    color: "white",
+    fillOpacity: 1,
+  };
+}
+```
+
+*NB : Avec des bibliothèques comme [`statsbreaks`](https://github.com/riatelab/statsbreaks) ou [`dicopal`](https://github.com/riatelab/dicopal.js/), on peut evidemment améliorer la fonction de discrétisation.*
+
+On peut aussi utiliser le plugin `leaflet-choropleth`
+
+```{.html .custom-html}
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://timwis.com/leaflet-choropleth/dist/choropleth.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<div id="map"></div>
+```
+
+```{.js .custom-js}
+import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+const d3 = { json };
+
+async function main() {
+  const data = await d3.json(
+    "https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson",
+  );
+  console.log(data.features.map((d) => d.properties));
+
+  // Création de la carte
+  const map = L.map("map");
+
+  // Ajout d’un fond
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap contributors",
+  }).addTo(map);
+
+  console.log(data);
+
+  // Création du choroplèthe
+  const choropleth = L.choropleth(data, {
+    valueProperty: "population", // attribut existant
+    scale: ["#f0f9e8", "#08589e"], // gamme de couleurs
+    steps: 6,
+    mode: "q", // q = quantiles
+    style: {
+      color: "#fff",
+      weight: 1,
+      fillOpacity: 0.8,
+    },
+    onEachFeature: function (feature, layer) {
+      layer.bindPopup(
+        `<strong>${feature.properties.l_ar}</strong><br>Population: ${feature.properties.population}`,
+      );
+    },
+  }).addTo(map);
+
+  // Ajuste le zoom sur la couche
+  map.fitBounds(choropleth.getBounds());
+}
+
+main();
+```
+
+**2 - Cercles proportionnels**
+
+```{.js .custom-js}
+import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+const d3 = { json };
+
+async function main() {
+  // Chargement du GeoJSON
+  const data = await d3.json(
+    "https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson",
+  );
+
+  // Création de la carte
+  const map = L.map("map");
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap contributors",
+  }).addTo(map);
+
+  // Ajoute les polygones de base (contours)
+  const arrLayer = L.geoJSON(data, {
+    style: {
+      color: "white",
+      weight: 1,
+      fillColor: "#ccc",
+      fillOpacity: 0.2,
+    },
+  }).addTo(map);
+
+  map.fitBounds(arrLayer.getBounds());
+
+  // Fonction pour convertir la population en rayon (pixels)
+  function getRadius(pop) {
+    return Math.sqrt(pop) / 30; // ajuster le diviseur selon l’échelle
+  }
+
+  // Boucle sur chaque arrondissement
+  data.features.forEach((f) => {
+    const centroid = turf.centroid(f);
+    const [lon, lat] = centroid.geometry.coordinates;
+    const pop = f.properties.population;
+
+    // Ajoute un cercle proportionnel
+    L.circleMarker([lat, lon], {
+      radius: getRadius(pop),
+      color: "#e41a1c",
+      fillColor: "#e41a1c",
+      fillOpacity: 0.6,
+      weight: 1,
+    })
+      .bindPopup(`<strong>${f.properties.l_ar}</strong><br>Population : ${pop}`)
+      .addTo(map);
+  });
+}
+
+main();
+```
+
+Avec Leaflet, on peut faire beaucpup de choses. Et il existe beaucoup d'exemples en ligne. Par contre, ca necessite de savoir coder. Il n'y a pas de types de cartes thématiques clé en main à Et c'est assez verbeux. Heureusement, il existe d'autres solutions.
+
+ 
 ## 2 - Avec geoviz
+
+`geoviz` est une bibliothèque JavaScript (en développement) permettant de concevoir des **cartes thématiques**. Elle fournit un ensemble de fonctions compatibles avec `d3`. Conçue pour être intuitive et concise, elle permet de gérer différentes couches géographiques (points, lignes, polygones), différents modes de représentations (symboles proportionnels, choroplethe, typologies, symboles, etc) et différentes couches d'habillage (echelle, nord, tuiles, graticule, etc) afin de créer de jolies cartes. Un des principaux avantage est agalement de pouvoir gérer les systèmes de projection. En résumé, les cartes conçues avec geoviz sont :
+
+🌳 Thématiques ✒️ Vectoriales 👆 Interactives ♻️ Interopérables 🔎 Zoomables
+
+- Le code est ici : [https://github.com/riatelab/geoviz](https://github.com/riatelab/geoviz)
+- La documentation est là : [https://riatelab.github.io/geoviz/](https://riatelab.github.io/geoviz/)
+- Et on trouvera ici de nombreux exemples : [https://observablehq.com/@neocartocnrs/geoviz](https://observablehq.com/@neocartocnrs/geoviz)
+
+On installe la bibliothèque de la façon suivante : 
+
+```{.html .custom-html}
+<script src="https://cdn.jsdelivr.net/npm/geoviz@0.8.2" charset="utf-8"></script>
+```
+
+ou
+
+```{.js .custom-js}
+import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.8.2/+esm";
+```
+
+Et voiçi une premiere carte : 
+
+```{.html .custom-html}
+<div id = "map"></div>
+```
+
+```{.js .custom-js}
+// Les modules
+import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.8.2/+esm";
+import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+const d3 = { json };
+
+// La fonction de carto
+async function drawMap() {
+  // Chargement du GeoJSON
+  const data = await d3.json(
+    "https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson",
+  );
+  // Création de la carte
+  let svg = geoviz.create({ domain: data });
+  // Ajout d'une couche
+  svg.path({ data });
+  // Return dans le div
+  document.querySelector("#map").append(svg.render());
+}
+drawMap();
+```
