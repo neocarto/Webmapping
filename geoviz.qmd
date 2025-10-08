@@ -246,7 +246,9 @@ ou
 import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.8.2/+esm";
 ```
 
-Et voiçi une premiere carte : 
+**1 - Principes**
+
+Et voici une premiere carte : 
 
 ```{.html .custom-html}
 <div id = "map"></div>
@@ -273,3 +275,152 @@ async function drawMap() {
 }
 drawMap();
 ```
+
+Dans la fonction `create'()`, on peut definir le domaine d'affichage (`domain`), la taille de la carte (`width`), les marges (`margin`) et la couleur de fond (`background`). Il est également possible de définir la projection (`projection`). Pour comprendre comment fonctionnent les projections, vous pouvez regarder [ici](https://observablehq.com/@neocartocnrs/map-projections).
+
+ Voici un exemple : 
+
+```{.js .custom-js}
+// Les modules
+import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.8.2/+esm";
+import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+const d3 = { json };
+
+// La fonction de carto
+async function drawMap() {
+  // Chargement du GeoJSON
+  const data = await d3.json(
+    "https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/world_209.geojson",
+  );
+  // Création de la carte
+  let svg = geoviz.create({ projection: "NaturalEarth1", width: 500 });
+  // Ajout d'une couche
+  svg.path({ data });
+  // Return dans le div
+  document.querySelector("#map").append(svg.render());
+}
+drawMap();
+```
+
+Dans la fonction `svg.path()`, on peut aussi changer le style de la couche grace aux parametres SVG. Par exemple : 
+
+```{.js .custom-js}
+svg.path,({ data, fill:"#CCC", fillOpacity:0.7, stroke:"white" });
+```
+
+::: {.callout-note title="Exercice"}
+- Essayez d'autres projections. Par exemple `"Mercator"`, `"Bertin1953"`, `"Spilhaus"` `"Polar"`
+- Mettez une couleur de fond
+- Changez le style de la couche pays
+- Rendez la carte zoomable en mettant dans la fonction `create()` : `zoomable:true`
+:::
+
+**2 - Couches d'habillage**
+
+Avec `geoviz`, on peut supproposer différentes couches comme dans un SIG. Certaines sont prêtes à l'emploi. Comme : 
+
+```{.js .custom-js}
+svg.outline() // La forme de la Terre
+svg.graticule() // Les lignes de latitude et longitude
+svg.earth() // Fond de carte d'habillage Natural Earth (⚠️ fonction asynchrone. Utiliser await)
+```
+On peut également ajouter des couches d'habillage
+
+```{.js .custom-js}
+svg.header() // Titre de la carte
+svg.footer() // Sources
+svg.north() // Flèche nord
+svg.scalebar() // Barre d'échelle
+```
+Reportez-vous à la documentation pour connaitre les paramètres ([https://riatelab.github.io/geoviz/global.html](https://riatelab.github.io/geoviz/global.html)).
+
+Ainsi, il est possible de réaliser rapidement une jolie carte d'édition.
+
+```{.js .custom-js}
+let svg = geoviz.create({ projection: "Dodecahedral", width: 600 });
+svg.header({ text: "Où est le Nord ?" });
+svg.outline({ fill: "#38896F" });
+svg.graticule({ step: 20, stroke: "white" });
+svg.path({ datum: data, fill: "white", fillOpacity: 0.3 });
+svg.footer({ text: "Source: Nicolas Lambert, 2025" });
+document.querySelector("#map").append(svg.render());
+```
+
+::: {.callout-note title="Exercice"}
+Essayez de créer une jolie carte sur Paris en changeant les différents paramètres.
+
+```{.js .custom-js}
+// Les modules
+import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.8.2/+esm";
+import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+const d3 = { json };
+
+async function drawMap() {
+  // Chargement du GeoJSON
+  const data = await d3.json(
+    "https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson",
+  );
+  // A vous de jouer
+  //...
+}
+drawMap();
+```
+:::
+
+**3 - Interactivité**
+
+Avec `geoviz`, il est possible de rendre la carte zoomable en activant le paramètre `zoomable:true` dans la fcontion `create()`. Avec la couche `geoviz.tile()`, il est possible de d'ajouter des tuiles OpenStreetMap (⚠️ on bascule automatiquement sur la projection de Meractor). 
+
+```{.js .custom-js}
+async function drawMap() {
+  // Chargement du GeoJSON
+  const data = await d3.json(
+    "https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson",
+  );
+  let svg = geoviz.create({
+    domain:data,
+    margin:20,
+    projection: "Mercator",
+    zoomable: true,
+    width: 400,
+  });
+  svg.tile();
+  svg.path({ datum: data, fill: "none", stroke: "red", fillOpacity: 0.3 });
+  document.querySelector("#map").append(svg.render());
+}
+drawMap();
+```
+
+::: {.callout-note title="Exercice"}
+1 - Sur la carte du Monde, faites une carte avec la projection `Orthographic` et le paramètre `zoomable:true`.
+
+2 - Essayez avec `zoomable:"versor"`
+
+3 - Changez la projection. Par exemple : "NaturalEarth1"
+
+Que constatez-vous ?
+
+:::
+
+
+Avec le paramètre `tip:true`, il est également possible de créer des infobules sur n'importe quelle couche.
+
+Essayez par exemple : 
+
+```{.js .custom-js}
+svg.path(data, tip:true)
+```
+
+Vous pouvez aussi ecrire `tip:"$name"` pour afficher la valeur du champ name.
+
+Ou bien, écrire une expression plus complexes avec les backticks, comme : 
+
+```
+tip : `This country is $name
+It is located in $region
+Its population is $pop`
+```
+
+
+
+**4 - Symbologie**
