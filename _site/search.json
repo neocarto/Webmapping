@@ -254,7 +254,7 @@
     "href": "geoviz.html",
     "title": "Geovisualisation",
     "section": "",
-    "text": "La géovisualisation prolonge la cartographie thématique en tirant parti des possibilités offertes par le numérique. Comme la cartographie classique, elle vise à représenter et à interpréter des phénomènes géographiques à partir de données, mais elle y ajoute l’interactivité. Grâce aux technologies web, il devient possible d’explorer les données à différentes échelles, de modifier les variables représentées en temps réel, ou encore de croiser cartes et graphiques. La géovisualisation transforme ainsi la carte en un outil d’exploration et d’analyse autant qu’en un support de communication, renouvelant profondément les pratiques de la cartographie thématique à l’ère du numérique.",
+    "text": "La géovisualisation prolonge la cartographie thématique en tirant parti des possibilités offertes par le numérique. Comme la cartographie classique, elle vise à représenter et à interpréter des phénomènes géographiques à partir de données, mais elle y ajoute l’interactivité. Grâce aux technologies web, il devient possible d’explorer les données à différentes échelles, de modifier les variables représentées en temps réel, ou encore de croiser cartes et graphiques. La géovisualisation transforme ainsi la carte en un outil d’exploration et d’analyse autant qu’en un support de communication, renouvelant profondément les pratiques de la cartographie thématique à l’ère du numérique.\n\n\nTout d’abord, revoyons comment on afficher un geoJSON\n&lt;script src=\"https://unpkg.com/leaflet/dist/leaflet.js\"&gt;&lt;/script&gt;\n&lt;link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet/dist/leaflet.css\" /&gt;\n&lt;div id=\"map\"&gt;&lt;/div&gt;\n#map {\n    height: 500px;\n}\n// Modules\nimport { json } from \"https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm\";\nconst d3 = { json };\n\n// Fonction de carto\nasync function main() {\n  const data = await d3.json(\n    \"https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson\",\n  );\n  const map = L.map(\"map\");\n  const layer = L.geoJSON(data).addTo(map);\n  map.fitBounds(layer.getBounds());\n}\n// Appel de la fonction\nmain();\n1 -Carte choroplethe\nAvec leaflet, on peut changer la couleur de fond des polygones avce l’attribut fillColor. Pour réaliser une carte choroplethe, on a donc besoin d’une foncton qui va affecter une couleur en fonction d’une donnée.\nPar exemple :",
     "crumbs": [
       "Geoviz"
     ]
@@ -432,9 +432,19 @@
     "href": "geoviz.html#avec-leaflet",
     "title": "Geovisualisation",
     "section": "",
-    "text": "2 - Avec geoviz",
+    "text": "Tout d’abord, revoyons comment on afficher un geoJSON\n&lt;script src=\"https://unpkg.com/leaflet/dist/leaflet.js\"&gt;&lt;/script&gt;\n&lt;link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet/dist/leaflet.css\" /&gt;\n&lt;div id=\"map\"&gt;&lt;/div&gt;\n#map {\n    height: 500px;\n}\n// Modules\nimport { json } from \"https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm\";\nconst d3 = { json };\n\n// Fonction de carto\nasync function main() {\n  const data = await d3.json(\n    \"https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson\",\n  );\n  const map = L.map(\"map\");\n  const layer = L.geoJSON(data).addTo(map);\n  map.fitBounds(layer.getBounds());\n}\n// Appel de la fonction\nmain();\n1 -Carte choroplethe\nAvec leaflet, on peut changer la couleur de fond des polygones avce l’attribut fillColor. Pour réaliser une carte choroplethe, on a donc besoin d’une foncton qui va affecter une couleur en fonction d’une donnée.\nPar exemple :",
     "crumbs": [
       "Geoviz"
+    ]
+  },
+  {
+    "objectID": "credit.html",
+    "href": "credit.html",
+    "title": "Support de cours Webmapping 2<br/><span style='font-size: 0.6em; color: #999'>Master 2 TGAE (2025–2026)</span>",
+    "section": "",
+    "text": "Ce support de cours est réalisé par Nicolas Lambert (UAR RIATE/CNRS). Il est disponible sur https://github.com/neocarto/webmapping sous licence GNU GENERAL PUBLIC - Version 3, 29 June 2007.",
+    "crumbs": [
+      "About"
     ]
   }
 ]

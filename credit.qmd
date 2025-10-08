@@ -1,0 +1,1 @@
+Ce support de cours est réalisé par [Nicolas Lambert](https://neocarto.github.io/cv/) (UAR RIATE/CNRS). Il est disponible sur [https://github.com/neocarto/webmapping](https://github.com/neocarto/webmapping) sous licence  GNU GENERAL PUBLIC - Version 3, 29 June 2007.

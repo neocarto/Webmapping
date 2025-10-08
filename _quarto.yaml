@@ -22,8 +22,10 @@ website:
         file: dataviz.qmd
       - text: "Geoviz"
         file: geoviz.qmd
-      - text: "A rendre"
+      - text: "À rendre"
         file: eval.qmd
+      - text: "About"
+        file: credit.qmd
 format:
   html:
     toc: true         
