@@ -403,10 +403,19 @@ async function drawmap(q) {
 }
 ```
 
-Il existe d'autres API de géocodage.
+NB : L’API de géocodage de la Géoplateforme ne permet de faire du géocodage qu'en France. Mais, il existe d'autres API de géocodages pour le Monde entier. Citons-en deux : [**Nominatim**](https://nominatim.org/) et [**Photon**](https://github.com/komoot/photon), deux services de géocodage (direct et inverse) basés sur les données d’OpenStreetMap
 
-TODO : Nominatim
+Essayons :
 
+```{.url .custom-url}
+https://nominatim.openstreetmap.org/search?q=Caracas&format=json
+```
+
+ou 
+
+```{.url .custom-url}
+https://photon.komoot.io/api/?q=Caracas
+```
 
 # Météo
 
@@ -480,9 +489,16 @@ meteo();
 # Osrm
 
 OSRM (pour Open Source Routing Machine) est un moteur de calcul d’itinéraires open source, très performant, basé sur les données d’OpenStreetMap.
-Il permet de calculer des trajets, des distances et des durées de parcours pour différents modes de transport (voiture, vélo, piéton, etc.), un peu comme Google Maps, mais en local ou sur un serveur privé. OSRM ets dosponible à l'adresse suivante : [https://project-osrm.org](https://project-osrm.org/).
+Il permet de calculer des trajets, des distances et des durées de parcours pour différents modes de transport (voiture, vélo, piéton, etc.), un peu comme Google Maps, mais en local ou sur un serveur privé. OSRM est dosponible à l'adresse suivante : [https://project-osrm.org](https://project-osrm.org/).
 
-La documentation est accessible ici : [https://project-osrm.org/docs/v5.24.0/api/#](https://project-osrm.org/docs/v5.24.0/api/#)
+Pour utiliser OSRM, vous pouvez utilisez différentes services (instances d'OSRM). Chacune s'appuie sur une version du réseau et propose différents calculs.
+
+- Serveur de demo OSRM : `https://router.project-osrm.org/route` (voiture uniquement)
+- Serveur INSEE : `https://metric-osrm-backend.lab.sspcloud.fr/` (France. voiture uniquement)
+- Serveur `https://routing.openstreetmap.de/` (voiture (`routed-car`), vélo (`routed-bike`), à pied (`routed-foot`))
+
+
+Pour connaitre les différents paramètres, la documentation est accessible ici : [https://project-osrm.org/docs/v5.24.0/api/#](https://project-osrm.org/docs/v5.24.0/api/#)
 
 Pour commencer, Essayons de calculer le temps de trajet en voiture entre Fontainebleau et Provins. Tapez ceci dans votre navigateur.
 
@@ -491,13 +507,12 @@ https://router.project-osrm.org/route/v1/car/3.2993092939773567,48.5594615417905
 ```
 
 - les coordonnées sont au format `longitude,latitude` ⚠️
-- `route` correspond au service
-- `car` correspond au moyen de transport. On peut aussi utiliser `bike` et `foot`.
+- `https://router.project-osrm.org/route/v1/` correspond au service
+- `car` correspond au moyen de transport. 
 
 ❓ Quelle est la distance ?
 
 ❓ Quelle est le temps de trajet ?
-
 
 On peut également ajouter d'autres points. Par exemple, aller de Fontainebleau à Sens en passant par Provins.
 
@@ -511,12 +526,13 @@ En ajoutant les paramètres `?geometries=geojson&overview=full`, on peut récup�
 https://router.project-osrm.org/route/v1/car/3.2993092939773567,48.559461541790554;2.7013120786972142,48.40457231624569?geometries=geojson&overview=full
 ```
 
-Ce qui permet de visualiser le trajeyt sur une carte. 
+Ce qui permet de visualiser le trajet sur une carte. 
 
 ```{.html .custom-html}
 <!-- Import de la bibliothèque et du css-->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<div id="duration"></div>
 <div id="map"></div>
 ```
 
@@ -534,24 +550,20 @@ async function main() {
   // Execution de la requete
   const response = await fetch(url);
   const data = await response.json();
-  const trace = data.routes[0].geometry;
+
+  // Durée
+  const duration  = data.routes[0].duration/60
+  document.querySelector("#duration").textContent = "Temps : " + duration + " minutes"
+
   // Création de la carte dans le div #map
-  const map = L.map("map"); // L designe la bibliothèque leaflet. La fonction map crée une carte vide
-
-  // Position et zoom
-  map.setView([51.505, -0.09], 13);
-
-  // Ajout d'une couche de tuiles raster
+  const trace = data.routes[0].geometry;
+  const map = L.map("map");
   const tiles = L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
       attribution: "© OpenStreetMap",
     },
-  );
-
-  // On ajoute la couche à la carte
-  tiles.addTo(map);
-
+  ).addTo(map);
   const layer = L.geoJSON(trace).addTo(map);
   map.fitBounds(layer.getBounds(), { maxZoom: 18 });
 }
@@ -560,13 +572,29 @@ main();
 ```
 
 ::: {.callout-note title="Exercice"}
-Calculer le temps de parcours à velo entre le batiment Olympe de Gouges et l'institut de geographie. Et affivchez la carte. 
+En vous inspirant de l'exemple ci-dessus, calculez le temps de parcours à velo entre le batiment Olympe de Gouges et l'institut de geographie. Et affichez la carte. 
+
+Utilisez le service `https://routing.openstreetmap.de/` et le moyen de transport `routed-bike` 
 
 ```{.js .custom-js}
 const odg = [48.82675288249501, 2.382689386585041] // ⚠️ lat, long 
 const igeo = [48.844837368476384, 2.3426324055721186]  // ⚠️ lat, long 
-
+const url = `https://routing.openstreetmap.de/routed-bike/route/v1/driving/${**lon1**},${**lat1**]};${**lon2**},${**lat2**}?geometries=geojson&overview=full`
+async function main() {
+ // Executez la requete
+ // Recupérer le Resultat
+ // Récupérez la trace
+ // Affichzez la carte
+}
+main();
 ```
+
+❓ Quelle est la distance ?
+
+❓ Quel est le temps de trajet ?
+
+❓ Quel est le temps de trajet en voiture (`routed-car`) ? A pied (`routed-foot`) ?
+
 :::
 
 # Combinaisons
@@ -578,43 +606,64 @@ REFAIRE AVEC : const url = `https://routing.openstreetmap.de/routed-bike/route/v
 
 
 ```{.html .custom-html}
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <div id ="temps"></div>
 <div id ="meteo"></div>
 <div id="chart"></div>
+<div id="map"></div>
 ```
+
+```{.css .custom-css}
+#map {
+    height: 500px;
+}
+```
+
 
 ```{.js .custom-js}
 import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
-
-// Points de départ et arrivée
-const bourgdoisans = [45.06330084181238, 6.024127804909032];
-const alpeshuez = [45.09033628569288, 6.0704267327131936];
-
 async function main() {
-  // Calcul du tracé de la route avec OSRM
-  const url = `https://router.project-osrm.org/route/v1/driving/${bourgdoisans[1]},${bourgdoisans[0]};${alpeshuez[1]},${alpeshuez[0]}?geometries=geojson&overview=full`;
-  const response = await fetch(url);
-  const data = await response.json();
-  document.getElementById("temps").textContent =
-    "Temps de parcours" + data.routes[0].duration + " minutes";
+  // 1 - GEOCODAGE
 
-  // Récupération du tracé et des coordonnées
+  let url =
+    "https://data.geopf.fr/geocodage/search?q=rue%20humbert%20le%20bourg%20d%27oisans&returntruegeometry=true&limit=1";
+  let response = await fetch(url);
+  let data = await response.json();
+  const bourgdoisans = data.features[0].geometry.coordinates;
+
+  url =
+    "https://data.geopf.fr/geocodage/search?q=avenue%20du%20rief%20niel%20alpe%20d%27huez&returntruegeometry=true&limit=1";
+  response = await fetch(url);
+  data = await response.json();
+  const alpeshuez = data.features[0].geometry.coordinates;
+
+  // 2 - CALCUL AVEC OSRM (VELO)
+
+  url = `https://routing.openstreetmap.de/routed-bike/route/v1/driving/${bourgdoisans[0]},${bourgdoisans[1]};6.0508,45.07467;${alpeshuez[0]},${alpeshuez[1]}?geometries=geojson&overview=full`;
+
+  response = await fetch(url);
+  data = await response.json();
   const trace = data.routes[0].geometry;
+
+  document.getElementById("temps").textContent =
+    "Temps de parcours : " +
+    Math.round(data.routes[0].duration / 60) +
+    " minutes";
+
+  // 3 - CREATION DU PROFIL ALTIMETRIQUE
+
   const coords = trace.coordinates.filter((_, i) => i % 3 === 0);
   const lon = coords.map((d) => d[0]).join("|");
   const lat = coords.map((d) => d[1]).join("|");
-
-  // Calcul du profil altimétrique
-  const req = `https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=${lon}&lat=${lat}&resource=ign_rge_alti_wld&delimiter=|&indent=false&measures=false&zonly=false`;
-  const response2 = await fetch(req);
-  const data2 = await response2.json();
-
-  // Création du graphique
-  const altitudes = data2.elevations.map((d, i) => ({ x: i, y: d.z }));
+  url = `https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=${lon}&lat=${lat}&resource=ign_rge_alti_wld&delimiter=|&indent=false&measures=false&zonly=false`;
+  response = await fetch(url);
+  data = await response.json();
+  const altitudes = data.elevations.map((d, i) => ({ x: i, y: d.z }));
   const chart = Plot.plot({
     marks: [
       Plot.line(altitudes, { x: "x", y: "y" }), // ligne
-      Plot.dot(altitudes, { x: "x", y: "y" }), // points
+      //Plot.dot(altitudes, { x: "x", y: "y" }), // points
     ],
     x: { label: "Point le long du profil" },
     y: { label: "Altitude (m)" },
@@ -624,19 +673,29 @@ async function main() {
 
   document.getElementById("chart").appendChild(chart);
 
-  // Récupération de la météo au sommet
-  const url_meteo = `https://api.open-meteo.com/v1/forecast?latitude=${alpeshuez[0]}&longitude=${alpeshuez[1]}&&current_weather=true&timezone=Europe%2FLondon`;
-  const response3 = await fetch(url_meteo);
-  const data3 = await response3.json();
-  document.getElementById("meteo").textContent =
-    "Il fait " + data3.current_weather.temperature + " °C au sommet";
-}
-// Appel de la fonction
-main();
+  // 4 - CREATION DE LA CARTE
+  const map = L.map("map");
+  const tiles = L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      attribution: "© OpenStreetMap",
+    },
+  ).addTo(map);
+  const layer = L.geoJSON(trace).addTo(map);
+  map.fitBounds(layer.getBounds(), { maxZoom: 18 });
 
+  // 5 - RECUPERATION DE LA METEO AU SOMMET
+  url = `https://api.open-meteo.com/v1/forecast?latitude=${alpeshuez[1]}&longitude=${alpeshuez[0]}&&current_weather=true&timezone=Europe%2FLondon`;
+  response = await fetch(url);
+  data = await response.json();
+  document.getElementById("meteo").textContent =
+    "Il fait " + data.current_weather.temperature + " °C au sommet";
+}
+
+main();
 ```
 
-
+⚠️ Problème : OSRM ne prend pas en compte la pente dans le temps de calcul, ce qui est problématique. Dans notre exemple, le temps ets le même en montée et en descente. Mais il existe d'autres engins de routage qui la prennent en compte la pente, comme **valhalla**. Si vous voulez tester, la documention est disponible ici. [https://valhalla.github.io/valhalla/](https://valhalla.github.io/valhalla/). 
 
 
 

@@ -1,1 +1,7 @@
-# Geoviz
+# Geovisualisation
+
+La géovisualisation prolonge la **cartographie thématique** en tirant parti des possibilités offertes par le numérique. Comme la cartographie classique, elle vise à représenter et à interpréter des phénomènes géographiques à partir de données, mais elle y ajoute l’interactivité. Grâce aux technologies web, il devient possible d’explorer les données à différentes échelles, de modifier les variables représentées en temps réel, ou encore de croiser cartes et graphiques. La géovisualisation transforme ainsi la carte en un outil d’exploration et d’analyse autant qu’en un support de communication, renouvelant profondément les pratiques de la cartographie thématique à l’ère du numérique.
+
+## 1 - Avec Leaflet
+
+## 2 - Avec geoviz
