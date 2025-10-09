@@ -118,7 +118,7 @@
     "href": "credit.html",
     "title": "Support de cours Webmapping 2<br/><span style='font-size: 0.6em; color: #999'>Master 2 TGAE (2025–2026)</span>",
     "section": "",
-    "text": "Ce support de cours est réalisé avec quarto par Nicolas Lambert (UAR RIATE/CNRS). Il est disponible sur https://github.com/neocarto/webmapping sous licence GNU GENERAL PUBLIC - Version 3, 29 June 2007 (voir).",
+    "text": "https://neocarto.github.io/Webmapping\n\nCe support de cours est réalisé avec quarto par Nicolas Lambert (UAR RIATE/CNRS). Il est disponible sur https://github.com/neocarto/webmapping sous licence GNU GENERAL PUBLIC - Version 3, 29 June 2007 (voir).",
     "crumbs": [
       "About"
     ]
