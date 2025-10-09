@@ -421,6 +421,234 @@ It is located in $region
 Its population is $pop`
 ```
 
-
-
 **4 - Symbologie**
+
+Dans `geoviz`, il y a une fonction couteau suisse qui s'appelle la fonction `plot`. Elle permet de réaliser toutes les cartes produites précédement. Par exemple : 
+
+```{.js .custom-js}
+let svg = geoviz.create({ projection: "Dodecahedral", width: 600 });
+svg.plot({ type: "header", text: "Où est le Nord ?" });
+svg.plot({ type: "outline", fill: "#38896F" });
+svg.plot({ type: "graticule", step: 20, stroke: "white" });
+svg.plot({ type: "path", datum: data, fill: "white", fillOpacity: 0.3 });
+svg.plot({ type: "footer", text: "Source: Nicolas Lambert, 2025" });
+document.querySelector("#map").append(svg.render());
+```
+
+La fonction plot contient également des types pour la carto thématique. 
+
+- `type: "prop"` : Carte par symboles proportionnels. [https://riatelab.github.io/geoviz/global.html#plot/prop](https://riatelab.github.io/geoviz/global.html#plot/prop)
+- `type: "choro"` : Carte choroplèthe. [https://riatelab.github.io/geoviz/global.html#plot/choro](https://riatelab.github.io/geoviz/global.html#plot/choro)
+- `type: "typo"` : Carte de typologie. [https://riatelab.github.io/geoviz/global.html#plot/typo](https://riatelab.github.io/geoviz/global.html#plot/typo)
+- `type: "propchoro"` : Carte avec des symboles proportionnels coloriés (quanti). [https://riatelab.github.io/geoviz/global.html#plot/propchoro](https://riatelab.github.io/geoviz/global.html#plot/propchoro)
+- `type: "proptypo"` : Carte avec des symboles proportionnels coloriés (quali). [https://riatelab.github.io/geoviz/global.html#plot/proptypo](https://riatelab.github.io/geoviz/global.html#plot/proptypo)
+
+
+<ins>4.1 - La jointure</ins>
+
+
+Pour commencer une carte statistique, quel que soit le logiciel utilisé, il est souvent necessaire de réaliser une jointure entre le fond de carte et les données attributaires. Cette opération est assez compliquée à réaliser en pure JavaScript. Heureusement, geoviz propose une fonction pour cela. 
+
+Voir un exemple ici : [https://observablehq.com/@neocartocnrs/handle-geometries](https://observablehq.com/@neocartocnrs/handle-geometries?collection=@neocartocnrs/geoviz)
+
+
+```{.js .custom-js}
+// Les modules
+import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.8.2/+esm";
+import { json, csv } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+const d3 = { json, csv };
+
+// La fonction de carto
+async function drawMap() {
+  // Chargement du GeoJSON
+  const countries = await d3.json(
+    "https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/world_209.geojson",
+  );
+
+  // Chargement des données statistiques
+  const stats = await d3.csv(
+    "https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/stats_countries.csv",
+  );
+  // Jointure
+  const data = geoviz.tool.merge({
+    geom: countries, // fond de carte
+    geom_id: "ISO3", // identifiant dans le fond de carte
+    data: stats, // tableau de données
+    data_id: "id", // identifiant dans le tableau de données
+  }).featureCollection;
+
+  // Creation de la carte
+  //...
+}
+drawMap();
+```
+
+Nous pouvons maintenant réaliser des cartes thématiques
+
+<ins>4.2 - Symbole sproportionnels</ins>
+
+Le type `prop` permet de réaliser des cartes par symboles proportionnels.
+
+```{.js .custom-js}
+svg.plot({ type: "prop", data: data, var: "pop" });
+```
+
+Les symboles sont configurable. Essayez d'ajouter les parametres `k:10` ou `symbol:"square"`. Essayez aussi `dodge: true`
+
+On peut aussi configurer la légende avec les paramètres `leg_*`. Par exemple : `leg_pos` ou `leg_title`
+
+```{.js .custom-js}
+svg.plot({ type: "prop", data: data, var: "pop", leg_pos:[20,200], leg_title:"Population, 2020" });
+```
+
+
+<ins>4.3 - Carte choroplethe</ins>
+
+Le type `choro` permet de réaliser des cartes thématiques. Il permet facilement de choisir une méthode de discrétisation et une palete de couleur. Par défaut la discrétisation choisie est la méthode des quantiles. 
+
+```{.js .custom-js}
+svg.plot({ type: "choro", data: data, var: "gdppc" });
+```
+
+Avec l'attribut `method`, on peut changer la méthode de discrétisation : 'quantile', 'q6', 'equal', 'jenks', 'msd', 'geometric', 'headtail', 'pretty', 'arithmetic' or 'nestedmeans'
+
+Avec l'attribut `colors`, on peut changer de palette de couleurs : "ArmyRose_7", "Earth_7", "Fall_7", "Geyser_7", "TealRose_7", "Temps_7", "Tropic_7", "BluGrn_7", "BluYl_7", "BrwnYl_7", "BurgYl_7", "Burg_7", "DarkMint_7", "Emrld_7", "Magenta_7", "Mint_7", "OrYel_7", "Peach_7", "PinkYl_7", "PurpOr_7"... Voir [dicopal](https://observablehq.com/@neocartocnrs/dicopal-library)
+
+
+```{.js .custom-js}
+  svg.plot({
+    type: "choro",
+    data: data,
+    var: "gdppc",
+    method: "jenks",
+    nb: 4,
+    colors: "PinkYl",
+  });
+```
+
+<ins>4.4 - Combinaissons</ins>
+
+Avec `type: "propchoro"`, on peut facilement effectuer des combinaisons.
+
+
+```{.js .custom-js}
+  svg.plot({
+    type: "propchoro",
+    data: data,
+    var1: "pop",
+    var2: "gdppc",
+    k:30,
+    method: "headtail",
+    nb: 6,
+    colors: "Reds",
+    leg1_title:"Population",
+    leg2_title:"Richesse"
+  });
+```
+
+Le principe est le même avec les autres types. Se référer à la documentation :[https://riatelab.github.io/geoviz](https://riatelab.github.io/geoviz/)
+
+<ins>4.5 - Petit exemple de cartographie interactive</ins>
+
+En remobilisant ce qu'on a appris jusqu'ici, on peut essayer de créer une carte interactive avec un slider qui permet de faire varier la taille des cercles. 
+
+```{.html .custom-html}
+<div>
+  <input type="range" id="size" name="volume" min="10" max="100" value="50" />
+  <label for="size" id="labelsize">Radius max (50)</label>
+</div>
+<div id = "map"></div>
+```
+
+```{.js .custom-js}
+// Les modules
+import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.8.2/+esm";
+import { json, csv } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+const d3 = { json, csv };
+
+// La fonction de carto
+async function drawMap() {
+  // Chargement du GeoJSON
+  const countries = await d3.json(
+    "https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/world_209.geojson",
+  );
+
+  // Chargement des données statistiques
+  const stats = await d3.csv(
+    "https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/stats_countries.csv",
+  );
+
+  // On identifie le slider
+  const slider = document.getElementById("size");
+  
+  // On crée une fonction qui dessine les cercles
+  function drawCircles() {
+    return svg.plot({
+      id: "bubbles", // <- Il faut définir un identifiant. TryEssayez de le supprimer....
+      type: "prop",
+      symbol: "circle",
+      data: data,
+      var: "pop",
+      fill: "#F13C47",
+      k: +slider.value,
+      leg_title: "Population",
+    });
+  }
+  // Jointure
+  const data = geoviz.tool.merge({
+    geom: countries,
+    geom_id: "ISO3",
+    data: stats,
+    data_id: "id",
+  }).featureCollection;
+
+  // Creation de la carte
+  let svg = geoviz.create({ projection: "NaturalEarth1", width: 600 });
+  svg.path({ data: countries, fill: "#CCC" });
+  drawCircles();
+  document.querySelector("#map").append(svg.render());
+
+  // Interactivité
+  slider.addEventListener("input", function () {
+    document.getElementById("labelsize").innerHTML =
+      `Radius max (${slider.value})`;
+    drawCircles();
+  });
+}
+
+// Et voilà !
+drawMap();
+
+```
+
+
+::: {.callout-note title="Exercice"}
+- Créez une carte thématique sur Paris (conseil : utilisez la projection de Mercator.)
+- Vous avez à disposition la variable `"population"` (quanti rel) et la variable `"density"` (quanti abs).
+- Ajoutez des couches d'habillage
+- Essayez de la rendre interactive (`zoomable`, `tip`, etc.)
+
+```{.html .custom-html}
+<div id = "map"></div>
+```
+
+
+```{.js .custom-js}
+// Modules
+import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+const d3 = { json };
+
+// Fonction de carto
+async function main() {
+  const paris = await d3.json(
+    "https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson",
+  );
+  // Créez votre carte ici
+  // ...
+}
+
+// Appel de la fonction
+main();
+```
+
+:::

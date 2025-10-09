@@ -1,42 +1,40 @@
-# A rendre ! 
+# À rendre ! 
 
-## Exercice 1
+<div class = "disclaimer">Exercices notés à rendre au plus tard le <ins>dimanche 30 novembre à 23h59</ins>. À envoyer par e-mail à <ins>nicolas.lambert[@]cnrs.fr</ins> avec comme objet : [Master 2 TGAE ] vos noms et prénoms. Envoyez vos deux exercices dans deux <ins>fichiers zip</ins> en piece jointe.</div>
 
-Realiser une carte de vos 10 lieux préférés à Paris
+## Exercices
 
-- préparer les données
-- Créez une carte (leaflet ?)
-- Calculer le centroide et affichez-le
-- Personnalisez-là
+::: {.callout-note title="Exercice 1 - Realisez une carte de vos 10 lieux (ou plus) préférés à Paris"}
+
+Création d'une carte **leaflet** Dans **jsfidle**
+
+- Repérez vos à lieux préférés à Paris.
+- Préparez les données. Localisez vos lieux manuellement (directement les lat, lon) ou avec du géocodage.
+- Créez une carte `leaflet` avec les 10 markers.
+- Ajoutez des infobulles.
+- Personalisez la carte (style des tuiles, taille, epingles, etc.)
 - Ajoutez un titre
-- AJoutez un petit paragraphe de commentaire en dessous
+- Ajoutez un petit paragraphe de quelques lignes de commentaire en dessous pour expliquer de quoi il s'agit
+- Signez votre carte en faisant figurer votre nom quelque part
+- Rendez l'ensemble le plus joli possible
 
-## Exercice 2
+Bonus
 
-Avec une API, récupérez l'altitude des points. Quel est le point le plus haut ?
+- Définissez votre zone d'intéret 
+    - Calculez avec `turf`, une enveloppe concave autour de vos points ([https://turfjs.org/docs/api/concave](https://turfjs.org/docs/api/concave)). N'hesitez pas à modifier la paramètre `maxEdge`.
+    - Calculez une zone tampon (`buffer`) de 500 metres autour de cette enveloppe ([https://turfjs.org/docs/api/buffer](https://turfjs.org/docs/api/buffer))
+    - Afficher la zone d'intérêt sur la carte
 
-## 
+Rendu
 
+- Téléchargez le .zip
+- Dans le fichier téléchargé, changez si besoin `<script>` par `<script type = "module">`
 
-???
+:::
 
-- Faire une carte sur les equipements sportifs ou les licences.
-- Expliquez vos choix techniques
-- Commentez la carte.
-- Envoyer le fichier jsfiddle + doc de commentaire.
+::: {.callout-note title="Exercice 2 - xxx"}
 
-### Equipements sportifs
-
-<!-- https://data.sports.gouv.fr/explore/dataset/equipements-sportifs/table/
-https://data.sports.gouv.fr/api/explore/v2.1/catalog/datasets/equipements-sportifs/records?limit=20&refine=equip_type_name%3A%22Salle%20d%27escrime%22 -->
-
-### Licences
-
-TODO
-
-
-
-### Quelques trucs pour vous aider
+:::
 
 
 
