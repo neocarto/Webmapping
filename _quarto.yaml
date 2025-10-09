@@ -1,5 +1,6 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "Support de cours Webmapping 2<br/><span style='font-size: 0.6em; color: #999'>Master 2 TGAE (2025–2026)</span>"
