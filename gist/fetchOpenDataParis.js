@@ -3,7 +3,11 @@
 // By, Nicolas Lambert, 2025
 // ------------------------------------------------------
 
-async function fetchOpenDataParis(dataset, geojson = true, coords = undefined) {
+export async function fetchOpenDataParis(
+  dataset,
+  geojson = true,
+  coords = undefined
+) {
   let all = [];
   let offset = 0;
   const limit = 100;
