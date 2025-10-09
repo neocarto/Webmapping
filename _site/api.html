@@ -210,7 +210,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#osrm" id="toc-osrm" class="nav-link" data-scroll-target="#osrm">Osrm</a></li>
   <li><a href="#combinaisons" id="toc-combinaisons" class="nav-link" data-scroll-target="#combinaisons">Combinaisons</a></li>
   <li><a href="#lopen-data" id="toc-lopen-data" class="nav-link" data-scroll-target="#lopen-data">L’open data</a></li>
-  <li><a href="#eurostat" id="toc-eurostat" class="nav-link" data-scroll-target="#eurostat">Eurostat</a></li>
   </ul>
 </nav>
     </div>
@@ -692,7 +691,6 @@ Exercice
 <section id="combinaisons" class="level1">
 <h1>Combinaisons</h1>
 <p>En combinant les API, on peut faire des choses interessantes.</p>
-<p>REFAIRE AVEC : const url = `https://routing.openstreetmap.de/routed-bike/route/v1/driving/${bourgdoisans</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode html custom-html code-with-copy"><code class="sourceCode html"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">"https://unpkg.com/leaflet/dist/leaflet.js"</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">"stylesheet"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://unpkg.com/leaflet/dist/leaflet.css"</span><span class="ot"> </span><span class="dt">/&gt;</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id </span><span class="op">=</span><span class="st">"temps"</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
@@ -778,69 +776,76 @@ Exercice
 </section>
 <section id="lopen-data" class="level1">
 <h1>L’open data</h1>
-<p><img src="img/opendata.jpg" class="img-fluid"></p>
 <p>L’idée de l’Open Data naît dans les années 1990, dans le sillage des mouvements pour le logiciel libre et l’accès libre à l’information scientifique. Mais c’est au tournant des années 2000 que le concept prend de l’ampleur.</p>
 <p><strong>2005</strong> : le Royaume-Uni lance le portail data.gov.uk, un des premiers sites publics de données ouvertes.</p>
 <p><strong>2007</strong> : à Sebastopol (Californie), une réunion entre militants de la transparence et développeurs formule les principes de l’Open Data : données complètes, primaires, lisibles par machine, libres de droit…</p>
 <p><strong>2009</strong> : les États-Unis créent le portail data.gov sur impulsion d’Obama (Open Government Initiative).</p>
 <p><strong>2011</strong> : la France ouvre son propre portail de données publiques, data.gouv.fr</p>
 <p>En France, le mouvement est porté par des collectivités locales (comme Paris, Rennes, Nantes) et l’État. La loi pour une République numérique (2016) renforce l’obligation d’ouverture des données publiques.</p>
-</section>
-<section id="eurostat" class="level1">
-<h1>Eurostat</h1>
-<p>https://observablehq.com/<span class="citation" data-cites="eurostat-ws/eurostat-statistics-api">@eurostat-ws/eurostat-statistics-api</span></p>
-<p>Tapez ca dans le navigateur web</p>
-<p>https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/reg_area3?format=JSON&amp;unit=KM2&amp;landuse=TOTAL&amp;lang=EN&amp;TIME=2025</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { json } <span class="im">from</span> <span class="st">"https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm"</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">fromEurostat</span>(query) {</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> result <span class="op">=</span> <span class="cf">await</span> <span class="fu">json</span>(query)<span class="op">;</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> category <span class="op">=</span> result<span class="op">.</span><span class="at">dimension</span><span class="op">.</span><span class="at">geo</span><span class="op">.</span><span class="at">category</span><span class="op">;</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> data <span class="op">=</span>  <span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(category<span class="op">.</span><span class="at">index</span>)<span class="op">.</span><span class="fu">map</span>((key) <span class="kw">=&gt;</span> ({</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">id</span><span class="op">:</span> key<span class="op">,</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">label</span><span class="op">:</span> category<span class="op">.</span><span class="at">label</span>[key]<span class="op">,</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">value</span><span class="op">:</span> result<span class="op">.</span><span class="at">value</span>[category<span class="op">.</span><span class="at">index</span>[key]]</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  }))<span class="op">;</span></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(data)</span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="fu">fromEurostat</span>(</span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/reg_area3?format=JSON&amp;unit=KM2&amp;landuse=TOTAL&amp;lang=EN&amp;TIME=2025"</span></span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="opendata.paris.fr" class="level3">
-<h3 class="anchored" data-anchor-id="opendata.paris.fr">opendata.paris.fr</h3>
+<p>Il existe des API pour accéder aux données publiques.</p>
 <p>Sur le site de la mairie de Paris, de nombreux jeux de données sont également disponibles à travers une API qui permet de requeter toutes les dounnées ouvertes de la ville.</p>
+<p>Le site est disponible ici : <a href="https://opendata.paris.fr/explore">https://opendata.paris.fr/explore</a></p>
 <p>Par exemple, regardons la localisation des stations de Vélib.</p>
 <p><a href="https://opendata.paris.fr/explore/dataset/velib-emplacement-des-stations/information/">https://opendata.paris.fr/explore/dataset/velib-emplacement-des-stations/information/</a></p>
 <p>Il y en a 1459.</p>
 <p>Tapez cette URL dans la barre de votre navigateur :</p>
 <pre><code>https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-emplacement-des-stations/records</code></pre>
 <p>On obtient le résultat de la requete au format JSON. Malheureusemeent, <strong>le nombre de résultat est limité à 100</strong>. Heureusement, il y a le parametre offset. On fait une boucle et hop.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">getAllStations</span>() {</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> allStations <span class="op">=</span> []<span class="op">;</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> offset <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> limit <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> totalCount <span class="op">=</span> <span class="kw">Infinity</span><span class="op">;</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (offset <span class="op">&lt;</span> totalCount) {</span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> url <span class="op">=</span> <span class="vs">`https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-emplacement-des-stations/records?limit=</span><span class="sc">${</span>limit<span class="sc">}</span><span class="vs">&amp;offset=</span><span class="sc">${</span>offset<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(url)<span class="op">;</span></span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>    allStations<span class="op">.</span><span class="fu">push</span>(<span class="op">...</span>data<span class="op">.</span><span class="at">results</span>)<span class="op">;</span></span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>    totalCount <span class="op">=</span> data<span class="op">.</span><span class="at">total_count</span> <span class="op">||</span> allStations<span class="op">.</span><span class="at">length</span><span class="op">;</span> <span class="co">// total_count est fourni par l'API</span></span>
-<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>    offset <span class="op">+=</span> limit<span class="op">;</span></span>
-<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(allStations)<span class="op">;</span></span>
-<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(allStations<span class="op">.</span><span class="at">length</span>)<span class="op">;</span></span>
-<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a><span class="fu">getAllStations</span>()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="data.gouv" class="level3">
-<h3 class="anchored" data-anchor-id="data.gouv">data.gouv</h3>
-<p>La plateforme data.gouv.fr a été officiellement lancée le 5 décembre 2011. C’est le portail français officiel d’open data, qui centralise et diffuse des données publiques pour les citoyens, chercheurs, journalistes, entreprises et développeurs. De nombreux jeux de données sont disponibles. On peut les télécharger gratuitement.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">getAllStations</span>() {</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> allStations <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> offset <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> limit <span class="op">=</span> <span class="dv">100</span><span class="op">;</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> totalCount <span class="op">=</span> <span class="kw">Infinity</span><span class="op">;</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (offset <span class="op">&lt;</span> totalCount) {</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> url <span class="op">=</span> <span class="vs">`https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-emplacement-des-stations/records?limit=</span><span class="sc">${</span>limit<span class="sc">}</span><span class="vs">&amp;offset=</span><span class="sc">${</span>offset<span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(url)<span class="op">;</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    allStations<span class="op">.</span><span class="fu">push</span>(<span class="op">...</span>data<span class="op">.</span><span class="at">results</span>)<span class="op">;</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>    totalCount <span class="op">=</span> data<span class="op">.</span><span class="at">total_count</span> <span class="op">||</span> allStations<span class="op">.</span><span class="at">length</span><span class="op">;</span> <span class="co">// total_count est fourni par l'API</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>    offset <span class="op">+=</span> limit<span class="op">;</span></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(allStations)<span class="op">;</span></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(allStations<span class="op">.</span><span class="at">length</span>)<span class="op">;</span></span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a><span class="fu">getAllStations</span>()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Pour vous faciliter la vie, j’ai créé une petite fonction <code>fetchOpenDataParis()</code> qui permet de récupérer les données et de récupérer les résultats au format geoJSON.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Modules</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { fetchOpenDataParis } <span class="im">from</span> <span class="st">"https://cdn.jsdelivr.net/gh/neocarto/Webmapping@main/gist/fetchOpenDataParis.js"</span><span class="op">;</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co">// Fonction fetch</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">main</span>() {</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> poi <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetchOpenDataParis</span>(<span class="st">"velib-emplacement-des-stations"</span>)<span class="op">;</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(poi)</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a> }</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="co">// Appel de la fonction</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="fu">main</span>()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>On peut donc facilement acceder aux données de l’API et les visualiser.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode html custom-html code-with-copy"><code class="sourceCode html"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">"https://unpkg.com/leaflet/dist/leaflet.js"</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">link</span><span class="ot"> rel</span><span class="op">=</span><span class="st">"stylesheet"</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://unpkg.com/leaflet/dist/leaflet.css"</span><span class="ot"> </span><span class="dt">/&gt;</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span><span class="ot"> id</span><span class="op">=</span><span class="st">"map"</span><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode css custom-css code-with-copy"><code class="sourceCode css"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#map</span> {</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">height</span><span class="ch">:</span> <span class="dv">500</span><span class="dt">px</span><span class="op">;</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Modules</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { fetchOpenDataParis } <span class="im">from</span> <span class="st">"https://cdn.jsdelivr.net/gh/neocarto/Webmapping@main/gist/fetchOpenDataParis.js"</span><span class="op">;</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co">// Fonction fetch</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">main</span>() {</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> poi <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetchOpenDataParis</span>(<span class="st">"velib-emplacement-des-stations"</span>)<span class="op">;</span></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> map <span class="op">=</span> L<span class="op">.</span><span class="fu">map</span>(<span class="st">"map"</span>)<span class="op">;</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  L<span class="op">.</span><span class="fu">tileLayer</span>(<span class="st">"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"</span><span class="op">,</span> {</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">attribution</span><span class="op">:</span> <span class="st">"© OpenStreetMap"</span><span class="op">,</span></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>  })<span class="op">.</span><span class="fu">addTo</span>(map)<span class="op">;</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> layer <span class="op">=</span> L<span class="op">.</span><span class="fu">geoJSON</span>(poi)<span class="op">.</span><span class="fu">addTo</span>(map)<span class="op">;</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>  map<span class="op">.</span><span class="fu">fitBounds</span>(layer<span class="op">.</span><span class="fu">getBounds</span>())<span class="op">;</span></span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a><span class="co">// Appel de la fonction</span></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="fu">main</span>()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

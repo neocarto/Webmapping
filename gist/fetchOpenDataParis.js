@@ -24,7 +24,7 @@ export async function fetchOpenDataParis(
 
   // Field with coordinates
   if (!coords) {
-    coords = ["geo_point_2d", "coordonnees_geo"].filter((x) =>
+    coords = ["geo_point_2d", "coordonnees_geo", "coordonnees"].filter((x) =>
       Object.keys(all[0]).includes(x)
     )[0];
   }

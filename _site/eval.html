@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -185,33 +219,31 @@ ul.task-list li input[type="checkbox"] {
 <section id="à-rendre" class="level1">
 <h1>À rendre !</h1>
 <div class="disclaimer">
-Exercices notés à rendre au plus tard le <ins>dimanche 30 novembre à 23h59</ins>. À envoyer par e-mail à <ins>nicolas.lambert[@]cnrs.fr</ins> avec comme objet : [Master 2 TGAE ] vos noms et prénoms. Envoyez vos deux exercices dans deux <ins>fichiers zip</ins> en piece jointe.
+Exercices notés à rendre au plus tard le <ins>dimanche 30 novembre à 23h59</ins>. À envoyer par e-mail à <ins>nicolas.lambert[@]cnrs.fr</ins> avec comme objet : [Master 2 TGAE ] vos noms et prénoms. Envoyez vos programmes dans un <ins>fichiers zip</ins> en pièce jointe.
 </div>
 <section id="exercices" class="level2">
 <h2 class="anchored" data-anchor-id="exercices">Exercices</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Exercice 1 - Realisez une carte de vos 10 lieux (ou plus) préférés à Paris">
+<div class="callout callout-style-default callout-note callout-titled" title="Exercice 1 (<ins>14 points</ins>) - Realisez une carte `leaflet` de vos 10 lieux préférés à Paris">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercice 1 - Realisez une carte de vos 10 lieux (ou plus) préférés à Paris
+Exercice 1 (<ins>14 points</ins>) - Realisez une carte <code>leaflet</code> de vos 10 lieux préférés à Paris
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Création d’une carte <strong>leaflet</strong> Dans <strong>jsfidle</strong></p>
+<p><strong>Création d’une carte leaflet</strong></p>
 <ul>
 <li>Repérez vos à lieux préférés à Paris.</li>
-<li>Préparez les données. Localisez vos lieux manuellement (directement les lat, lon) ou avec du géocodage.</li>
+<li>Dans <strong>jsfiddle</strong>, préparez les données. Localisez vos lieux manuellement (directement les lat, lon) ou avec du géocodage.</li>
 <li>Créez une carte <code>leaflet</code> avec les 10 markers.</li>
 <li>Ajoutez des infobulles.</li>
-<li>Personalisez la carte (style des tuiles, taille, epingles, etc.)</li>
-<li>Ajoutez un titre</li>
-<li>Ajoutez un petit paragraphe de quelques lignes de commentaire en dessous pour expliquer de quoi il s’agit</li>
-<li>Signez votre carte en faisant figurer votre nom quelque part</li>
+<li>Personalisez la carte à votre convenance</li>
+<li>Ajoutez un titre et une source</li>
 <li>Rendez l’ensemble le plus joli possible</li>
 </ul>
-<p>Bonus</p>
+<p><strong>Bonus</strong></p>
 <ul>
 <li>Définissez votre zone d’intéret
 <ul>
@@ -220,26 +252,92 @@ Exercice 1 - Realisez une carte de vos 10 lieux (ou plus) préférés à Paris
 <li>Afficher la zone d’intérêt sur la carte</li>
 </ul></li>
 </ul>
-<p>Rendu</p>
+<p><strong>Rendu</strong></p>
 <ul>
 <li>Téléchargez le .zip</li>
+<li>Dézippez</li>
 <li>Dans le fichier téléchargé, changez si besoin <code>&lt;script&gt;</code> par <code>&lt;script type = "module"&gt;</code></li>
+<li>Testez dans votre navigateur</li>
 </ul>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Exercice 2 - xxx">
+<div class="callout callout-style-default callout-note callout-titled" title="Exercice 2 (<ins>6 points</ins>) - Realisez une carte `geoviz` à partir des données OpenData de la ville de Paris">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercice 2 - xxx
+Exercice 2 (<ins>6 points</ins>) - Realisez une carte <code>geoviz</code> à partir des données OpenData de la ville de Paris
 </div>
 </div>
 <div class="callout-body-container callout-body">
-
+<p>Dans cet exercice, on cherche à réaliser une carte thématique sur Paris à partir du site Open Data de la ville.</p>
+<p><strong>Etape 1</strong> - Selectionner une variable</p>
+<ul>
+<li>Allez sur le site Open data de la ville de Paris : <a href="https://opendata.paris.fr/explore">https://opendata.paris.fr/explore</a></li>
+<li>Choisissez un jeu de données ponctuel. Par exemple : <code>"velib-emplacement-des-stations"</code>,<code>"sanisettesparis"</code>,<code>"ilots-de-fraicheur-equipements-activites"</code>, <code>"fontaines-a-boire"</code>, <code>"arbres-plantes-par-projet"</code>, <code>"arbres-a-abattre-pour-raison-sanitaires-et-essence-de-remplacement"</code>, <code>"bornes-dappel-taxi"</code>, <code>"panneaux_d_affichage_associatifs"</code>, <code>"etablissements-scolaires-colleges"</code>,<code>"secteurs-scolaires-maternelles"</code>, etc.</li>
+<li>Dans le navigateur, tapez la requete pour tester : <code>https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/{nom de votre jeu de données}/records</code></li>
+<li>Rappel, l’API ne permet de récuperer que 100 elements. Pour régler ca, je vous ai créé la fonction <code>fetchOpenDataParis</code> qui permet de récupérer tous les enregistrements et obtenir le résultat en geoJSON.</li>
+</ul>
+<p><strong>Etape 2</strong> - Réaliser une carte par arrondissement</p>
+<ul>
+<li>Une fois la variable choisie, il fait compter le nombre d’équipements par communes. Pour cela, on utilise encore une fois <code>turf</code>.</li>
+<li>On obtient un nouveau jeau de données contant pour chaque arrondissmeent, la variable <code>count</code> qui contient le nombre d’équipements.</li>
+<li>Avec <code>geoviz</code>, on cartographie cette variable avec la fonction <code>plot</code> et <code>type:"prop"</code>.</li>
+<li>Habiller la carte pour la rendre la plus jolie possible.</li>
+</ul>
+<p><strong>A vous de jouer</strong></p>
+<p>Dans <strong>jsfiddle</strong>, copiez le code ci-dessous. Rremplacez “sanisettesparis” par l’indicateur de votre choix. Complétez la partie <em>Cartographie avec geoviz</em> pour réaliser votre carte.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Modules</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { fetchOpenDataParis } <span class="im">from</span> <span class="st">"https://cdn.jsdelivr.net/gh/neocarto/Webmapping@main/gist/fetchOpenDataParis.js"</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="op">*</span> <span class="im">as</span> geoviz <span class="im">from</span> <span class="st">"https://cdn.jsdelivr.net/npm/geoviz@0.8.2/+esm"</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { json } <span class="im">from</span> <span class="st">"https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm"</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { pointsWithinPolygon } <span class="im">from</span> <span class="st">"https://cdn.jsdelivr.net/npm/@turf/turf@7/+esm"</span><span class="op">;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">// Fonction fetch et carto</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">main</span>() {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> arrondissements <span class="op">=</span> <span class="cf">await</span> <span class="fu">json</span>(</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson"</span><span class="op">,</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> poi <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetchOpenDataParis</span>(<span class="st">"sanisettesparis"</span>)<span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Comptage des points dans les polygones</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> paris <span class="op">=</span> {</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">type</span><span class="op">:</span> <span class="st">"FeatureCollection"</span><span class="op">,</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">features</span><span class="op">:</span> arrondissements<span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">map</span>((poly) <span class="kw">=&gt;</span> {</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> pts <span class="op">=</span> <span class="fu">pointsWithinPolygon</span>(poi<span class="op">,</span> poly)<span class="op">;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> count <span class="op">=</span> pts<span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> {</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">...</span>poly<span class="op">,</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="dt">properties</span><span class="op">:</span> { count }<span class="op">,</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>      }<span class="op">;</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    })<span class="op">,</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Cartographie avec geoviz</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="co">// let svg = geoviz.create(...)</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="co">// svg.plot(....)</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="co">// svg.plot(...)</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="co">// svg.plot(...)</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="co">// document.querySelector("#map").append(svg.render()); // vous devez avoir un div avec un id "map"</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co">// Appel de la fonction</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="fu">main</span>()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Rendu</strong></p>
+<ul>
+<li>Téléchargez le .zip</li>
+<li>Dézippez</li>
+<li>Dans le fichier téléchargé, changez <code>&lt;script&gt;</code> par <code>&lt;script type = "module"&gt;</code></li>
+<li>Testez dans votre navigateur</li>
+</ul>
 </div>
 </div>
+<ul>
+<li>Zippez vos deux fichiers html</li>
+<li>Envoyez par mail</li>
+</ul>
+<p>En cas de problème ➡️ <ins>nicolas.lambert[@]cnrs.fr</ins></p>
 
 
 </section>

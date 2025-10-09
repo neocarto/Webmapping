@@ -1,41 +1,112 @@
 # À rendre ! 
 
-<div class = "disclaimer">Exercices notés à rendre au plus tard le <ins>dimanche 30 novembre à 23h59</ins>. À envoyer par e-mail à <ins>nicolas.lambert[@]cnrs.fr</ins> avec comme objet : [Master 2 TGAE ] vos noms et prénoms. Envoyez vos deux exercices dans deux <ins>fichiers zip</ins> en piece jointe.</div>
+<div class = "disclaimer">Exercices notés à rendre au plus tard le <ins>dimanche 30 novembre à 23h59</ins>. À envoyer par e-mail à <ins>nicolas.lambert[@]cnrs.fr</ins> avec comme objet : [Master 2 TGAE ] vos noms et prénoms. Envoyez vos programmes dans un <ins>fichiers zip</ins> en pièce jointe.</div>
 
 ## Exercices
 
-::: {.callout-note title="Exercice 1 - Realisez une carte de vos 10 lieux (ou plus) préférés à Paris"}
+::: {.callout-note title="Exercice 1 (<ins>14 points</ins>) - Realisez une carte `leaflet` de vos 10 lieux préférés à Paris"}
 
-Création d'une carte **leaflet** Dans **jsfidle**
+**Création d'une carte leaflet**
 
 - Repérez vos à lieux préférés à Paris.
-- Préparez les données. Localisez vos lieux manuellement (directement les lat, lon) ou avec du géocodage.
+- Dans **jsfiddle**, préparez les données. Localisez vos lieux manuellement (directement les lat, lon) ou avec du géocodage.
 - Créez une carte `leaflet` avec les 10 markers.
 - Ajoutez des infobulles.
-- Personalisez la carte (style des tuiles, taille, epingles, etc.)
-- Ajoutez un titre
-- Ajoutez un petit paragraphe de quelques lignes de commentaire en dessous pour expliquer de quoi il s'agit
-- Signez votre carte en faisant figurer votre nom quelque part
+- Personalisez la carte à votre convenance
+- Ajoutez un titre et une source
 - Rendez l'ensemble le plus joli possible
 
-Bonus
+**Bonus**
 
 - Définissez votre zone d'intéret 
     - Calculez avec `turf`, une enveloppe concave autour de vos points ([https://turfjs.org/docs/api/concave](https://turfjs.org/docs/api/concave)). N'hesitez pas à modifier la paramètre `maxEdge`.
     - Calculez une zone tampon (`buffer`) de 500 metres autour de cette enveloppe ([https://turfjs.org/docs/api/buffer](https://turfjs.org/docs/api/buffer))
     - Afficher la zone d'intérêt sur la carte
 
-Rendu
+**Rendu**
 
 - Téléchargez le .zip
+- Dézippez
 - Dans le fichier téléchargé, changez si besoin `<script>` par `<script type = "module">`
+- Testez dans votre navigateur
 
 :::
 
-::: {.callout-note title="Exercice 2 - xxx"}
+::: {.callout-note title="Exercice 2 (<ins>6 points</ins>) - Realisez une carte `geoviz` à partir des données OpenData de la ville de Paris"}
+
+Dans cet exercice, on cherche à réaliser une carte thématique sur Paris à partir du site Open Data de la ville. 
+
+**Etape 1** - Selectionner une variable
+
+- Allez sur le site Open data de la ville de Paris : [https://opendata.paris.fr/explore](https://opendata.paris.fr/explore)
+- Choisissez un jeu de données ponctuel. Par exemple : `"velib-emplacement-des-stations"`,`"sanisettesparis"`,`"ilots-de-fraicheur-equipements-activites"`, `"fontaines-a-boire"`, `"arbres-plantes-par-projet"`, `"arbres-a-abattre-pour-raison-sanitaires-et-essence-de-remplacement"`, `"bornes-dappel-taxi"`, `"panneaux_d_affichage_associatifs"`, `"etablissements-scolaires-colleges"`,`"secteurs-scolaires-maternelles"`, etc.
+- Dans le navigateur, tapez la requete pour tester : `https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/{nom de votre jeu de données}/records`
+- Rappel, l'API ne permet de récuperer que 100 elements. Pour régler ca, je vous ai créé la fonction `fetchOpenDataParis` qui permet de récupérer tous les enregistrements et obtenir le résultat en geoJSON.
+
+**Etape 2** - Réaliser une carte par arrondissement 
+
+- Une fois la variable choisie, il fait compter le nombre d'équipements par communes. Pour cela, on utilise encore une fois `turf`.
+- On obtient un nouveau jeau de données contant pour chaque arrondissmeent, la variable `count` qui contient le nombre d'équipements.
+- Avec `geoviz`, on cartographie cette variable avec la fonction `plot` et `type:"prop"`.
+- Habiller la carte pour la rendre la plus jolie possible.
+
+**A vous de jouer**
+
+Dans **jsfiddle**, copiez le code ci-dessous. Rremplacez "sanisettesparis" par l'indicateur de votre choix. Complétez la partie *Cartographie avec geoviz* pour réaliser votre carte. 
+
+```{.js .custom-js}
+// Modules
+import { fetchOpenDataParis } from "https://cdn.jsdelivr.net/gh/neocarto/Webmapping@main/gist/fetchOpenDataParis.js";
+import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.8.2/+esm";
+import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
+import { pointsWithinPolygon } from "https://cdn.jsdelivr.net/npm/@turf/turf@7/+esm";
+
+// Fonction fetch et carto
+async function main() {
+  const arrondissements = await json(
+    "https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson",
+  );
+  const poi = await fetchOpenDataParis("sanisettesparis");
+
+  // Comptage des points dans les polygones
+  const paris = {
+    type: "FeatureCollection",
+    features: arrondissements.features.map((poly) => {
+      const pts = pointsWithinPolygon(poi, poly);
+      const count = pts.features.length;
+      return {
+        ...poly,
+        properties: { count },
+      };
+    }),
+  };
+
+  // Cartographie avec geoviz
+  // let svg = geoviz.create(...)
+  // svg.plot(....)
+  // svg.plot(...)
+  // svg.plot(...)
+  // document.querySelector("#map").append(svg.render()); // vous devez avoir un div avec un id "map"
+}
+
+// Appel de la fonction
+main();
+```
+
+**Rendu**
+
+- Téléchargez le .zip
+- Dézippez
+- Dans le fichier téléchargé, changez `<script>` par `<script type = "module">`
+- Testez dans votre navigateur
 
 :::
 
+
+- Zippez vos deux fichiers html
+- Envoyez par mail
+
+En cas de problème ➡️ <ins>nicolas.lambert[@]cnrs.fr</ins>
 
 
 

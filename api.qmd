@@ -601,10 +601,6 @@ main();
 
 En combinant les API, on peut faire des choses interessantes. 
 
-
-REFAIRE AVEC : const url = `https://routing.openstreetmap.de/routed-bike/route/v1/driving/${bourgdoisans
-
-
 ```{.html .custom-html}
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -698,15 +694,9 @@ main();
 ⚠️ Problème : OSRM ne prend pas en compte la pente dans le temps de calcul, ce qui est problématique. Dans notre exemple, le temps ets le même en montée et en descente. Mais il existe d'autres engins de routage qui la prennent en compte la pente, comme **valhalla**. Si vous voulez tester, la documention est disponible ici. [https://valhalla.github.io/valhalla/](https://valhalla.github.io/valhalla/). 
 
 
-
-
--------------------------------------------------
-
+<hr/>
 
 # L'open data
-
-![](img/opendata.jpg)
-
 
 L’idée de l’Open Data naît dans les années 1990, dans le sillage des mouvements pour le logiciel libre et l’accès libre à l’information scientifique. Mais c’est au tournant des années 2000 que le concept prend de l’ampleur.
 
@@ -721,42 +711,11 @@ L’idée de l’Open Data naît dans les années 1990, dans le sillage des mouv
 
 En France, le mouvement est porté par des collectivités locales (comme Paris, Rennes, Nantes) et l’État. La loi pour une République numérique (2016) renforce l’obligation d’ouverture des données publiques.
 
-
-# Eurostat
-
-
-https://observablehq.com/@eurostat-ws/eurostat-statistics-api
-
-
-Tapez ca dans le navigateur web
-
-https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/reg_area3?format=JSON&unit=KM2&landuse=TOTAL&lang=EN&TIME=2025
-
-
-```{.js .custom-js}
-import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm"
-async function fromEurostat(query) {
-  const result = await json(query);
-  const category = result.dimension.geo.category;
-  const data =  Object.keys(category.index).map((key) => ({
-    id: key,
-    label: category.label[key],
-    value: result.value[category.index[key]]
-  }));
-  console.log(data)
-}
-
-fromEurostat(
-  "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/reg_area3?format=JSON&unit=KM2&landuse=TOTAL&lang=EN&TIME=2025"
-  )
-```
-
-
-
-
-### opendata.paris.fr
+Il existe des API pour accéder aux données publiques.
 
 Sur le site de la mairie de Paris, de nombreux jeux de données sont également disponibles à travers une API qui permet de requeter toutes les dounnées ouvertes de la ville.
+
+Le site est disponible ici : [https://opendata.paris.fr/explore](https://opendata.paris.fr/explore)
 
 Par exemple, regardons la localisation des stations de Vélib.
 
@@ -793,10 +752,51 @@ async function getAllStations() {
 getAllStations();
 ```
 
+Pour vous faciliter la vie, j'ai créé une petite fonction `fetchOpenDataParis()` qui permet de récupérer les données et de récupérer les résultats au format geoJSON.
+
+```{.js .custom-js}
+// Modules
+import { fetchOpenDataParis } from "https://cdn.jsdelivr.net/gh/neocarto/Webmapping@main/gist/fetchOpenDataParis.js";
+
+// Fonction fetch
+async function main() {
+  const poi = await fetchOpenDataParis("velib-emplacement-des-stations");
+  console.log(poi)
+ }
+
+// Appel de la fonction
+main();
+```
+
+On peut donc facilement acceder aux données de l'API et les visualiser.
 
 
-### data.gouv
+```{.html .custom-html}
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<div id="map"></div>
+```
 
-La plateforme data.gouv.fr a été officiellement lancée le 5 décembre 2011. C’est le portail français officiel d’open data, qui centralise et diffuse des données publiques pour les citoyens, chercheurs, journalistes, entreprises et développeurs. De nombreux jeux de données sont disponibles. On peut les télécharger gratuitement.
+```{.css .custom-css}
+#map {
+    height: 500px;
+}
+```
 
+```{.js .custom-js}
+// Modules
+import { fetchOpenDataParis } from "https://cdn.jsdelivr.net/gh/neocarto/Webmapping@main/gist/fetchOpenDataParis.js";
 
+// Fonction fetch
+async function main() {
+  const poi = await fetchOpenDataParis("velib-emplacement-des-stations");
+  const map = L.map("map");
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap",
+  }).addTo(map);
+  const layer = L.geoJSON(poi).addTo(map);
+  map.fitBounds(layer.getBounds());
+}
+// Appel de la fonction
+main();
+```
