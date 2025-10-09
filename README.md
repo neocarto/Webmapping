@@ -2,4 +2,4 @@
 Supports de courts Webmapping
 
 M2 TGAE
-GA6CY100 Webmapping & SIG en ligne
+GA6CY100 Webmapping & SIG en ligne ici : https://neocarto.github.io/Webmapping/
