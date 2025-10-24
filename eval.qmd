@@ -104,9 +104,8 @@ main();
 
 
 - Zippez vos deux fichiers html
-- Envoyez par mail
-
-En cas de problème ➡️ <ins>nicolas.lambert[@]cnrs.fr</ins>
+- Nommez le fichier zip "votre-nom.zip"
+- Envoyez par mail à <ins>nicolas.lambert[@]cnrs.fr</ins>
 
 
 

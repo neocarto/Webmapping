@@ -208,6 +208,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#quest-ce-que-le-web" id="toc-quest-ce-que-le-web" class="nav-link active" data-scroll-target="#quest-ce-que-le-web">Qu’est ce que le web ?</a></li>
   <li><a href="#quest-ce-que-le-webmapping" id="toc-quest-ce-que-le-webmapping" class="nav-link" data-scroll-target="#quest-ce-que-le-webmapping">Qu’est ce que le webmapping ?</a></li>
   <li><a href="#webmapping-ou-géovisualisation" id="toc-webmapping-ou-géovisualisation" class="nav-link" data-scroll-target="#webmapping-ou-géovisualisation">Webmapping ou géovisualisation ?</a></li>
+  <li><a href="#architectures-web-clientserveur" id="toc-architectures-web-clientserveur" class="nav-link" data-scroll-target="#architectures-web-clientserveur">Architectures web (client/serveur)</a></li>
   </ul>
 </nav>
     </div>
@@ -331,6 +332,14 @@ Web ou Internet ?
 <p><img src="img/histoire.png" class="wide"></p>
 <p>Autrement dit, le webmapping vise surtout la diffusion et l’accessibilité, alors que la géovisualisation met l’accent sur l’analyse et l’interprétation.</p>
 <p>Dans ce cours, nous aborderons les deux aspects. Nous regarderons ce qui se passe <strong>sous le capot</strong>. Nous nous concentrerons sur les technologies <strong>côté client</strong>.</p>
+</section>
+<section id="architectures-web-clientserveur" class="level2">
+<h2 class="anchored" data-anchor-id="architectures-web-clientserveur">Architectures web (client/serveur)</h2>
+<p>Le Web fonctionne sur un modèle <strong>client-serveur</strong> : le navigateur (client) envoie une requête au serveur, qui renvoie une réponse contenant la page ou les données demandées. Le <strong>navigateur</strong> affiche ensuite ces informations à l’écran.</p>
+<p><img src="img/clientserver.png" class="wide"></p>
+<p>Une <strong>web map</strong> est composée de plusieurs éléments qui travaillent ensemble : le fond de carte (souvent en tuiles raster ou vectorielles), les données géographiques ajoutées par-dessus, et le style qui définit leur apparence. Le tout est affiché dans le navigateur grâce à une bibliothèque JavaScript (comme Leaflet ou MapLibre) qui permet l’interaction — zoom, clics, filtres. Le navigateur récupère les tuiles et les données auprès de serveurs, rendant la carte dynamique et modulaire.</p>
+<p><img src="img/anatomywebmap.png" class="wide"></p>
+<p><em>Source : <a href="https://maptime.fun/anatomy-of-a-web-map">https://maptime.fun/anatomy-of-a-web-map</a></em></p>
 
 
 </section>

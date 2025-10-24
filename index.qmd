@@ -134,6 +134,15 @@ Autrement dit, le webmapping vise surtout la diffusion et l’accessibilité, al
 
 Dans ce cours, nous aborderons les deux aspects. Nous regarderons ce qui se passe **sous le capot**. Nous nous concentrerons sur les technologies **côté client**. 
 
+## Architectures web (client/serveur)
 
+Le Web fonctionne sur un modèle **client-serveur** : le navigateur (client) envoie une requête au serveur, qui renvoie une réponse contenant la page ou les données demandées. Le **navigateur** affiche ensuite ces informations à l’écran.
 
+<img src="img/clientserver.png" class="wide"/>
+
+Une **web map** est composée de plusieurs éléments qui travaillent ensemble : le fond de carte (souvent en tuiles raster ou vectorielles), les données géographiques ajoutées par-dessus, et le style qui définit leur apparence. Le tout est affiché dans le navigateur grâce à une bibliothèque JavaScript (comme Leaflet ou MapLibre) qui permet l’interaction — zoom, clics, filtres. Le navigateur récupère les tuiles et les données auprès de serveurs, rendant la carte dynamique et modulaire.
+
+<img src="img/anatomywebmap.png" class="wide"/>
+
+*Source : [https://maptime.fun/anatomy-of-a-web-map](https://maptime.fun/anatomy-of-a-web-map)*
 
