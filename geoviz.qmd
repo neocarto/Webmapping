@@ -237,13 +237,13 @@ Avec Leaflet, on peut faire beaucpup de choses. Et il existe beaucoup d'exemples
 On installe la bibliothèque de la façon suivante : 
 
 ```{.html .custom-html}
-<script src="https://cdn.jsdelivr.net/npm/geoviz@0.8.2" charset="utf-8"></script>
+<script src="https://cdn.jsdelivr.net/npm/geoviz@0.9.4" charset="utf-8"></script>
 ```
 
 ou
 
 ```{.js .custom-js}
-import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.8.2/+esm";
+import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.9.4/+esm";
 ```
 
 **1 - Principes**
@@ -256,7 +256,7 @@ Et voici une premiere carte :
 
 ```{.js .custom-js}
 // Les modules
-import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.8.2/+esm";
+import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.9.4/+esm";
 import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
 const d3 = { json };
 
@@ -282,7 +282,7 @@ Dans la fonction `create'()`, on peut definir le domaine d'affichage (`domain`),
 
 ```{.js .custom-js}
 // Les modules
-import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.8.2/+esm";
+import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.9.4/+esm";
 import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
 const d3 = { json };
 
@@ -351,7 +351,7 @@ Essayez de créer une jolie carte sur Paris en changeant les différents paramè
 
 ```{.js .custom-js}
 // Les modules
-import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.8.2/+esm";
+import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.9.4/+esm";
 import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
 const d3 = { json };
 
@@ -454,7 +454,7 @@ Voir un exemple ici : [https://observablehq.com/@neocartocnrs/handle-geometries]
 
 ```{.js .custom-js}
 // Les modules
-import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.8.2/+esm";
+import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.9.4/+esm";
 import { json, csv } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
 const d3 = { json, csv };
 
@@ -562,7 +562,7 @@ En remobilisant ce qu'on a appris jusqu'ici, on peut essayer de créer une carte
 
 ```{.js .custom-js}
 // Les modules
-import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.8.2/+esm";
+import * as geoviz from "https://cdn.jsdelivr.net/npm/geoviz@0.9.4/+esm";
 import { json, csv } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
 const d3 = { json, csv };
 
