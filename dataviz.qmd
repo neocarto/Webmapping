@@ -322,6 +322,7 @@ async function main() {
   console.log(popByRegion);
 
   // Complétez le code avec la bibliothèque de votre choix
+  // Par exemple https://observablehq.com/@observablehq/plot-vertical-bar-chart
 }
 
 main();

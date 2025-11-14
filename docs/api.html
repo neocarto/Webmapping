@@ -254,7 +254,7 @@ https://data.geopf.fr/altimetrie/resources/ign_rge_alti_wld</code></pre>
 <p>POur récupérer l’altitude de plusieurs points, on peut passer à l’utl plusieurs coordonnées séparées par un caractere spécial.</p>
 <pre class="url custom-url"><code>https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=1.48|1.49&amp;lat=43.54|43.55&amp;resource=ign_rge_alti_wld&amp;delimiter=|&amp;indent=false&amp;measures=false&amp;zonly=false</code></pre>
 <p>La signification de tous les parametres sont précisés sur <a href="https://geoservices.ign.fr/documentation/services/services-geoplateforme/altimetrie">cette page</a></p>
-<p>En JavaScript, on peut généralement utiliser une API avec les fonctions <code>fetch()</code> ou <code>d3.json()</code>.</p>
+<p>En JavaSCript, on peut généralement utiliser une API avec les fonctions <code>fetch()</code> ou <code>d3.json()</code>.</p>
 <p>⚠️ Ce sont des fonctions <strong>asysnchrones</strong>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> url <span class="op">=</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=1.48|1.49&amp;lat=43.54|43.55&amp;resource=ign_rge_alti_wld&amp;delimiter=|"</span><span class="op">;</span></span>
@@ -497,42 +497,44 @@ Exercice
 <div class="sourceCode" id="cb22"><pre class="sourceCode css custom-css code-with-copy"><code class="sourceCode css"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#map</span> {</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">height</span><span class="ch">:</span> <span class="dv">500</span><span class="dt">px</span><span class="op">;</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> form <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">"#geocode-form"</span>)<span class="op">;</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>form<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">"submit"</span><span class="op">,</span> <span class="kw">function</span> (<span class="bu">event</span>) {</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">event</span><span class="op">.</span><span class="fu">preventDefault</span>()<span class="op">;</span> <span class="co">// Empêche le rechargement de la page</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> q <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">"#adresse"</span>)<span class="op">.</span><span class="at">value</span><span class="op">;</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drawmap</span>(q)<span class="op">;</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">drawmap</span>(q) {</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> url <span class="op">=</span> <span class="vs">`https://data.geopf.fr/geocodage/search?q=</span><span class="sc">${</span>q<span class="sc">}</span><span class="vs">&amp;returntruegeometry=false&amp;limit=1`</span><span class="op">;</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(url)<span class="op">;</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Resultat de le requette</span></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(data)<span class="op">;</span></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Adresse trouvée</span></span>
+<div class="sourceCode" id="cb23"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> map<span class="op">;</span> <span class="co">// carte globale</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> marker<span class="op">;</span> <span class="co">// marqueur global</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> form <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">"#geocode-form"</span>)<span class="op">;</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>form<span class="op">.</span><span class="fu">addEventListener</span>(<span class="st">"submit"</span><span class="op">,</span> <span class="kw">function</span> (<span class="bu">event</span>) {</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">event</span><span class="op">.</span><span class="fu">preventDefault</span>()<span class="op">;</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> q <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">"#adresse"</span>)<span class="op">.</span><span class="at">value</span><span class="op">;</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drawmap</span>(q)<span class="op">;</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">drawmap</span>(q) {</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> url <span class="op">=</span> <span class="vs">`https://data.geopf.fr/geocodage/search?q=</span><span class="sc">${</span>q<span class="sc">}</span><span class="vs">&amp;returntruegeometry=false&amp;limit=1`</span><span class="op">;</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> response <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetch</span>(url)<span class="op">;</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> data <span class="op">=</span> <span class="cf">await</span> response<span class="op">.</span><span class="fu">json</span>()<span class="op">;</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> find <span class="op">=</span> data<span class="op">.</span><span class="at">features</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">label</span><span class="op">;</span></span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Coordonnées</span></span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> coords <span class="op">=</span> data<span class="op">.</span><span class="at">features</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">geometry</span><span class="op">.</span><span class="at">coordinates</span><span class="op">.</span><span class="fu">toReversed</span>()<span class="op">;</span></span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Affichage de l'adresse trouvée</span></span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">"#resultat"</span>)<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span> <span class="st">"Adresse trouvée : "</span> <span class="op">+</span> find<span class="op">;</span></span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Creation de la carte</span></span>
-<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> map <span class="op">=</span> L<span class="op">.</span><span class="fu">map</span>(<span class="st">"map"</span>)<span class="op">;</span> <span class="co">// L designe la bibliothèque leaflet. La fonction map crée une carte vide</span></span>
-<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Position et zoom</span></span>
-<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>  map<span class="op">.</span><span class="fu">setView</span>(coords<span class="op">,</span> <span class="dv">13</span>)<span class="op">;</span></span>
-<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Ajout d'une couche de tuiles raster</span></span>
-<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> tiles <span class="op">=</span> L<span class="op">.</span><span class="fu">tileLayer</span>(</span>
-<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"</span><span class="op">,</span></span>
-<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>      <span class="dt">attribution</span><span class="op">:</span> <span class="st">"© OpenStreetMap"</span><span class="op">,</span></span>
-<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>    }<span class="op">,</span></span>
-<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>  )<span class="op">.</span><span class="fu">addTo</span>(map)<span class="op">;</span></span>
-<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>  L<span class="op">.</span><span class="fu">marker</span>(coords)<span class="op">.</span><span class="fu">addTo</span>(map)<span class="op">;</span></span>
-<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> coords <span class="op">=</span> data<span class="op">.</span><span class="at">features</span>[<span class="dv">0</span>]<span class="op">.</span><span class="at">geometry</span><span class="op">.</span><span class="at">coordinates</span><span class="op">.</span><span class="fu">toReversed</span>()<span class="op">;</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">"#resultat"</span>)<span class="op">.</span><span class="at">textContent</span> <span class="op">=</span> <span class="st">"Adresse trouvée : "</span> <span class="op">+</span> find<span class="op">;</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>  <span class="co">// --- Création de la carte UNE SEULE FOIS ---</span></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>map) {</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    map <span class="op">=</span> L<span class="op">.</span><span class="fu">map</span>(<span class="st">"map"</span>)<span class="op">.</span><span class="fu">setView</span>(coords<span class="op">,</span> <span class="dv">13</span>)<span class="op">;</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>    L<span class="op">.</span><span class="fu">tileLayer</span>(<span class="st">"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"</span><span class="op">,</span> {</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>      <span class="dt">attribution</span><span class="op">:</span> <span class="st">"© OpenStreetMap"</span><span class="op">,</span></span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>    })<span class="op">.</span><span class="fu">addTo</span>(map)<span class="op">;</span></span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>    map<span class="op">.</span><span class="fu">setView</span>(coords<span class="op">,</span> <span class="dv">13</span>)<span class="op">;</span></span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>  <span class="co">// --- Gestion du marqueur ---</span></span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (marker) {</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>    marker<span class="op">.</span><span class="fu">setLatLng</span>(coords)<span class="op">;</span></span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>    marker <span class="op">=</span> L<span class="op">.</span><span class="fu">marker</span>(coords)<span class="op">.</span><span class="fu">addTo</span>(map)<span class="op">;</span></span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>NB : L’API de géocodage de la Géoplateforme ne permet de faire du géocodage qu’en France. Mais, il existe d’autres API de géocodages pour le Monde entier. Citons-en deux : <a href="https://nominatim.org/"><strong>Nominatim</strong></a> et <a href="https://github.com/komoot/photon"><strong>Photon</strong></a>, deux services de géocodage (direct et inverse) basés sur les données d’OpenStreetMap</p>
 <p>Essayons :</p>
 <pre class="url custom-url"><code>https://nominatim.openstreetmap.org/search?q=Caracas&amp;format=json</code></pre>
@@ -621,7 +623,7 @@ Exercice
 <p>❓ Quelle est la distance ?</p>
 <p>❓ Quelle est le temps de trajet ?</p>
 <p>On peut également ajouter d’autres points. Par exemple, aller de Fontainebleau à Sens en passant par Provins.</p>
-<pre class="url custom-url"><code>  "https://router.project-osrm.org/route/v1/car/2.7013120786972142,48.40457231624569;3.2993092939773567,48.559461541790554;3.2830220159456815,48.198749084774064"
+<pre class="url custom-url"><code> https://router.project-osrm.org/route/v1/car/2.7013120786972142,48.40457231624569;3.2993092939773567,48.559461541790554;3.2830220159456815,48.198749084774064
 </code></pre>
 <p>En ajoutant les paramètres <code>?geometries=geojson&amp;overview=full</code>, on peut récupérer les géométries</p>
 <pre class="url custom-url"><code>https://router.project-osrm.org/route/v1/car/3.2993092939773567,48.559461541790554;2.7013120786972142,48.40457231624569?geometries=geojson&amp;overview=full</code></pre>
@@ -787,7 +789,7 @@ Exercice
 <p>Le site est disponible ici : <a href="https://opendata.paris.fr/explore">https://opendata.paris.fr/explore</a></p>
 <p>Par exemple, regardons la localisation des stations de Vélib.</p>
 <p><a href="https://opendata.paris.fr/explore/dataset/velib-emplacement-des-stations/information/">https://opendata.paris.fr/explore/dataset/velib-emplacement-des-stations/information/</a></p>
-<p>Il y en a 1459.</p>
+<p>Il y en a 1501.</p>
 <p>Tapez cette URL dans la barre de votre navigateur :</p>
 <pre><code>https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/velib-emplacement-des-stations/records</code></pre>
 <p>On obtient le résultat de la requete au format JSON. Malheureusemeent, <strong>le nombre de résultat est limité à 100</strong>. Heureusement, il y a le parametre offset. On fait une boucle et hop.</p>
@@ -930,7 +932,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/neocarto\.github\.io\/Webmapping\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

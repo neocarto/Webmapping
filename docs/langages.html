@@ -233,7 +233,7 @@ Comment écrire et tester du code ?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Pour écrire du code, on utilise génralement une IDE (interface de développement). Il en existe de nombreux sur la marché et un certains nombre d’entre eux sont gratuits. Mais on peut utiliser un simple éditeur de texte type <strong>notepad</strong> ou <strong>notepadd++</strong>. Ensuite, il suffit d’ouvrir les fichiers avec votre navigateur web préféré. <img src="img/ide.png" class="img-fluid" style="width:70.0%"> Vous pouvez aussi utiliser des environnement de développement en ligne spécialement conçu pour tester, partager et déboguer du code. On peut citer <strong>JSFiddle</strong>, <strong>CodePen</strong>, <strong>JSBin</strong>, <strong>PlayCode</strong>, <strong>StackBlitz</strong> ou <strong>Observable</strong>. Pour ce cours, je vous propose d’utiliser <strong>JSFiddle</strong>.</p>
+<p>Pour écrire du code, on utilise génralement une IDE (interface de développement). Il en existe de nombreux sur la marché et un certains nombre d’entre eux sont gratuits. Mais on peut utiliser un simple éditeur de texte type <strong>notepad</strong> ou <strong>notepad++</strong>. Ensuite, il suffit d’ouvrir les fichiers avec votre navigateur web préféré. <img src="img/ide.png" class="img-fluid" style="width:70.0%"> Vous pouvez aussi utiliser des environnement de développement en ligne spécialement conçu pour tester, partager et déboguer du code. On peut citer <strong>JSFiddle</strong>, <strong>CodePen</strong>, <strong>JSBin</strong>, <strong>PlayCode</strong>, <strong>StackBlitz</strong> ou <strong>Observable</strong>. Pour ce cours, je vous propose d’utiliser <strong>JSFiddle</strong>.</p>
 <p><a href="https://jsfiddle.net" target="_blank"> <img src="img/jsfiddle.png" class="img-fluid" style="width:20.0%"> </a></p>
 </div>
 </div>
@@ -430,7 +430,7 @@ Les outils de développement du navigateur
 <section id="le-format-json" class="level3">
 <h3 class="anchored" data-anchor-id="le-format-json">Le format JSON</h3>
 <p>Le JSON (JavaScript Object Notation) est un format léger de données créé en 2001 par <strong>Douglas Crockford</strong>. Il sert à représenter des informations sous forme de <strong>paires clé-valeur</strong> dans un texte lisible, facile à échanger entre applications. Très simple et universel, JSON est largement utilisé grâce à sa compatibilité avec de nombreux langages de programmation.</p>
-<p>Voici à quoi ca ressemble. En fait, il s’agit d’un Array dont chaque élément est un objet. C’ets la façon qu’on a en JavaScrit de formaliser un tableau.</p>
+<p>Voici à quoi ca ressemble. En fait, il s’agit d’un Array dont chaque élément est un objet. C’est la façon qu’on a en JavaScrit de formaliser un tableau.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> books <span class="op">=</span> [</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>{<span class="st">"titre"</span><span class="op">:</span><span class="st">"Le Petit Prince"</span><span class="op">,</span><span class="st">"auteur"</span><span class="op">:</span><span class="st">"Antoine de Saint-Exupéry"</span><span class="op">,</span><span class="st">"cycle"</span><span class="op">:</span><span class="st">"jeunesse"</span><span class="op">,</span><span class="st">"annee"</span><span class="op">:</span><span class="dv">1943</span>}<span class="op">,</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>{<span class="st">"titre"</span><span class="op">:</span><span class="st">"Harry Potter à l'école des sorciers"</span><span class="op">,</span><span class="st">"auteur"</span><span class="op">:</span><span class="st">"J.K. Rowling"</span><span class="op">,</span><span class="st">"cycle"</span><span class="op">:</span><span class="st">"jeunesse"</span><span class="op">,</span><span class="st">"annee"</span><span class="op">:</span><span class="dv">1997</span>}<span class="op">,</span></span>
@@ -469,8 +469,11 @@ Les outils de développement du navigateur
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(auteurs)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Récupérer des modalités uniques (<code>Set</code>)</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(books<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">cycle</span> <span class="op">==</span> <span class="st">"classique"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Exemple de code classique.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> cycles <span class="op">=</span> books<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">cycle</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> cyclesUniques <span class="op">=</span> <span class="kw">new</span> <span class="bu">Set</span>(cycles)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(cyclesUniques)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Exemple de code classique (<code>Set</code> et <code>Array.from</code>)</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> cycles <span class="op">=</span> books<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">cycle</span>)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>cycles <span class="op">=</span> <span class="kw">new</span> <span class="bu">Set</span>(cycles)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>cycles <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>(cycles)</span>
@@ -516,7 +519,7 @@ Exercice
 <h3 class="anchored" data-anchor-id="les-bibliothèques">Les bibliothèques</h3>
 <p>Une bibliothèque JavaScript est un ensemble de fonctions ou d’objets prêts à l’emploi, écrits en JavaScript, que tu peux réutiliser dans tes projets pour éviter de tout coder à la main. Les bibioltèques JavaScript sont disponibles dans <a href="https://www.npmjs.com/"><strong>npm</strong></a> (abréviation de Node Package Manager).</p>
 <p><img src="img/npm.png" class="img-fluid" style="width:100.0%"></p>
-<p>Il y a plusieurs façons d’importer une bibliothèque. La documentation d echaque bibliothèque explique comment il faut procéder et dans quel contexte. Voici un exemple.</p>
+<p>Il y a plusieurs façons d’importer une bibliothèque. La documentation de chaque bibliothèque explique comment il faut procéder et dans quel contexte. Voici un exemple.</p>
 <p><strong>La bibliothèque confetti</strong></p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode html custom-html code-with-copy"><code class="sourceCode html"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- Import de la bibliothèque--&gt;</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> src</span><span class="op">=</span><span class="st">"https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -806,7 +809,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/neocarto\.github\.io\/Webmapping\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

@@ -6,7 +6,7 @@ Les langages du web sont les technologies qui permettent de créer, structurer, 
 👉 Un site web de référence : [https://developer.mozilla.org/fr/docs/Web](https://developer.mozilla.org/fr/docs/Web)
 
 ::: {.callout-tip title="Comment écrire et tester du code ?"}
-Pour écrire du code, on utilise génralement une IDE (interface de développement). Il en existe de nombreux sur la marché et un certains nombre d'entre eux sont gratuits. Mais on peut utiliser un simple éditeur de texte type **notepad** ou **notepadd++**. Ensuite, il suffit d'ouvrir les fichiers avec votre navigateur web préféré. 
+Pour écrire du code, on utilise génralement une IDE (interface de développement). Il en existe de nombreux sur la marché et un certains nombre d'entre eux sont gratuits. Mais on peut utiliser un simple éditeur de texte type **notepad** ou **notepad++**. Ensuite, il suffit d'ouvrir les fichiers avec votre navigateur web préféré. 
 ![](img/ide.png){width=70%}
 Vous pouvez aussi utiliser des environnement de développement en ligne spécialement conçu pour tester, partager et déboguer du code.  On peut citer **JSFiddle**, **CodePen**, **JSBin**, **PlayCode**, **StackBlitz** ou **Observable**. Pour ce cours, je vous propose d'utiliser **JSFiddle**.
 
@@ -264,7 +264,7 @@ for (let i = 0; i < 5; i++) {
 
 Le JSON (JavaScript Object Notation) est un format léger de données créé en 2001 par **Douglas Crockford**. Il sert à représenter des informations sous forme de **paires clé-valeur** dans un texte lisible, facile à échanger entre applications. Très simple et universel, JSON est largement utilisé grâce à sa compatibilité avec de nombreux langages de programmation.
 
-Voici à quoi ca ressemble. En fait, il s'agit d'un Array dont chaque élément est un objet. C'ets la façon qu'on a en JavaScrit de formaliser un tableau. 
+Voici à quoi ca ressemble. En fait, il s'agit d'un Array dont chaque élément est un objet. C'est la façon qu'on a en JavaScrit de formaliser un tableau. 
 
 ```{.js .custom-js}
 const books = [
@@ -344,10 +344,13 @@ console.log(auteurs);
 Récupérer des modalités uniques (`Set`)
 
 ```{.js .custom-js}
-console.log(books.filter(d => d.cycle == "classique"))
+
+const cycles = books.map(d => d.cycle)
+const cyclesUniques = new Set(cycles)
+console.log(cyclesUniques)
 ```
 
-Exemple de code classique.
+Exemple de code classique (`Set` et `Array.from`)
 
 ```{.js .custom-js}
 let cycles = books.map(d => d.cycle)
@@ -394,7 +397,7 @@ Une bibliothèque JavaScript est un ensemble de fonctions ou d’objets prêts �
 
 ![](img/npm.png){width="100%"}
 
-Il y a plusieurs façons d'importer une bibliothèque. La documentation d echaque bibliothèque explique comment il faut procéder et dans quel contexte. Voici un exemple. 
+Il y a plusieurs façons d'importer une bibliothèque. La documentation de chaque bibliothèque explique comment il faut procéder et dans quel contexte. Voici un exemple. 
 
 **La bibliothèque confetti** 
 

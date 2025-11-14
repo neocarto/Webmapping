@@ -57,7 +57,7 @@ https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=1.48|1.
 
 La signification de tous les parametres sont précisés sur [cette page](https://geoservices.ign.fr/documentation/services/services-geoplateforme/altimetrie)
 
-En JavaScript, on peut généralement utiliser une API avec les fonctions `fetch()` ou `d3.json()`.
+En JavaSCript, on peut généralement utiliser une API avec les fonctions `fetch()` ou `d3.json()`.
 
 ⚠️ Ce sont des fonctions **asysnchrones**.
 
@@ -365,9 +365,12 @@ On peut rapidemment crééer une petite application.
 ```
 
 ```{.js .custom-js}
+let map; // carte globale
+let marker; // marqueur global
+
 const form = document.querySelector("#geocode-form");
 form.addEventListener("submit", function (event) {
-  event.preventDefault(); // Empêche le rechargement de la page
+  event.preventDefault();
   const q = document.querySelector("#adresse").value;
   drawmap(q);
 });
@@ -376,30 +379,29 @@ async function drawmap(q) {
   const url = `https://data.geopf.fr/geocodage/search?q=${q}&returntruegeometry=false&limit=1`;
   const response = await fetch(url);
   const data = await response.json();
-  // Resultat de le requette
-  console.log(data);
 
-  // Adresse trouvée
   const find = data.features[0].properties.label;
-  // Coordonnées
   const coords = data.features[0].geometry.coordinates.toReversed();
 
-  // Affichage de l'adresse trouvée
   document.querySelector("#resultat").textContent = "Adresse trouvée : " + find;
-  // Creation de la carte
-  const map = L.map("map"); // L designe la bibliothèque leaflet. La fonction map crée une carte vide
-  // Position et zoom
-  map.setView(coords, 13);
 
-  // Ajout d'une couche de tuiles raster
-  const tiles = L.tileLayer(
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
+  // --- Création de la carte UNE SEULE FOIS ---
+  if (!map) {
+    map = L.map("map").setView(coords, 13);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: "© OpenStreetMap",
-    },
-  ).addTo(map);
+    }).addTo(map);
+  } else {
+    map.setView(coords, 13);
+  }
 
-  L.marker(coords).addTo(map);
+  // --- Gestion du marqueur ---
+  if (marker) {
+    marker.setLatLng(coords);
+  } else {
+    marker = L.marker(coords).addTo(map);
+  }
 }
 ```
 
@@ -517,7 +519,7 @@ https://router.project-osrm.org/route/v1/car/3.2993092939773567,48.5594615417905
 On peut également ajouter d'autres points. Par exemple, aller de Fontainebleau à Sens en passant par Provins.
 
 ```{.url .custom-url}
-  "https://router.project-osrm.org/route/v1/car/2.7013120786972142,48.40457231624569;3.2993092939773567,48.559461541790554;3.2830220159456815,48.198749084774064"
+ https://router.project-osrm.org/route/v1/car/2.7013120786972142,48.40457231624569;3.2993092939773567,48.559461541790554;3.2830220159456815,48.198749084774064
 
 ```
 En ajoutant les paramètres `?geometries=geojson&overview=full`, on peut récupérer les géométries
@@ -721,7 +723,7 @@ Par exemple, regardons la localisation des stations de Vélib.
 
 [https://opendata.paris.fr/explore/dataset/velib-emplacement-des-stations/information/](https://opendata.paris.fr/explore/dataset/velib-emplacement-des-stations/information/)
 
-Il y en a 1459.
+Il y en a 1501.
 
 Tapez cette URL dans la barre de votre navigateur :
 

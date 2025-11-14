@@ -262,7 +262,7 @@ Quel est le résultat affiché dans la console ? Que constatez-vous ?
 
 `fetch()` est un fonction asynchrone. Une fonction asynchrone sert à gérer des opérations longues ou incertaines (comme appeler une API, lire un fichier, attendre une réponse du serveur, etc.) sans bloquer le reste du programme. Une fonction async permet de faire des choses en arrière-plan, tout en gardant un code clair et fluide, sans bloquer l’exécution.
 
-Pour séoudre les prmoesses (promises) en JavaScript, il y a deux solution.
+Pour résoudre les promesses (promises) en JavaScript, il y a deux solution.
 
 - `then()`
 
@@ -330,13 +330,13 @@ data.features[0]
 Connaitre le nombre de pays
 
 ```{.js .custom-js}
-data.features.length()
+data.features.length
 ```
 
-Par exemple, récupérer tous les codes ISO3
+Par exemple, récupérer tous les noms des arrondissements
 
 ```{.js .custom-js}
-data.features.map(d => d.properties.ISO3)
+data.features.map(d => d.properties.l_aroff)
 ```
 Ou récupérer toutes les géométries
 
@@ -352,14 +352,15 @@ Extraire le 6e arrondissement arrondissement
 data.features.filter(d => d.properties.c_ar == 6)
 ```
 
-La plupart des fonctions de turf sont concues pour s'appluquer à une seule géométrie. Si on veut, par exemple, récupérer tous les centroides des arrondissements parisiens, il va falloir faire une boucle. 
+La plupart des fonctions de turf sont concues pour s'appliquer à une seule géométrie. Si on veut, par exemple, récupérer tous les centroides des arrondissements parisiens, il va falloir faire une boucle. 
 
 ```{.js .custom-js}
-centroids = paris.features.map((feature) => {
+let centroids = data.features.map((feature) => {
   const center = turf.centroid(feature);
   center.properties = { ...feature.properties };
   return center;
 })
+console.log(centroids)
 ```
 
 

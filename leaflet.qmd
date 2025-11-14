@@ -106,18 +106,26 @@ points.forEach(p => {
 
 #### - Regrouper les markers
 
-le clustering n’est pas inclus dans Leaflet par défaut. Il faut charger le plugin `Leaflet.markercluster` en ajoutant les lignes suivantes :
-
+le clustering n’est pas inclus dans Leaflet par défaut. Il faut charger le plugin `Leaflet.markercluster` en modifiant la partie html. Attention, l'ordre est important.
 ```{.html .custom-html}
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
 <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+
+<div id="map"></div>
+
 ```
 
 Puis
 
 ```{.js .custom-js}
-// Fond de carte
+// Carte
+const map = L.map('map').setView([51.505, -0.09], 13); 
+
+// Tuiles
 const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap'
 }).addTo(map);
