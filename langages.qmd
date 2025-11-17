@@ -45,19 +45,26 @@ En HTML, on peut créer des formulaires.
 
 ```{.html .custom-html}
 <form>
-  Nom : <input type="text"><br>
-  Mot de passe : <input type="password"><br>
-  Email : <input type="email"><br>
-  Age : <input type="number" min="0"><br>
-  Sexe : 
-    <input type="radio" name="sexe" value="homme"> Homme
-    <input type="radio" name="sexe" value="femme"> Femme<br>
-  Abonnement : <input type="checkbox"><br>
-  Date de naissance : <input type="date"><br>
-  Couleur préférée : <input type="color"><br>
-  Fichier : <input type="file"><br>
-  <input type="submit" value="Envoyer">
+  Nom : <input type="text" /><br />
+  Mot de passe : <input type="password" /><br />
+  Email : <input type="email" /><br />
+  Age : <input type="number" min="0" /><br />
+  Sexe :
+  <input type="radio" name="sexe" value="homme" /> Homme
+  <input type="radio" name="sexe" value="femme" /> Femme<br />
+  Abonnement : <input type="checkbox" /><br />
+  Date de naissance : <input type="date" /><br />
+  Couleur préférée : <input type="color" /><br />
+  Style :
+  <select id="style" name="style">
+    <option value="jazz">Jazz</option>
+    <option value="rock">Rock</option>
+    <option value="rap">Rap</option></select
+  ><br />
+  Fichier : <input type="file" /><br />
+  <input type="submit" value="Envoyer" />
 </form>
+
 ```
 
 Grâce à la balise `svg`, on peut même dessiner directement.
