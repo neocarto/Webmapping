@@ -390,7 +390,7 @@ fetch("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/dat
 
     // Combien y en a t-il de villes de plus de 500 000 habitants en France ?
 
-    // Affichez un Array avec la liste des villes
+    // Récupérez leurs noms dans une ARray 
 
     // Fin
     // ------------------
