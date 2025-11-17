@@ -386,7 +386,7 @@ fetch("https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/dat
 
     // Combien y en a t'il ?
 
-    // Combien y en a t-il dans l'hémisphère Sud ? 
+    // Parmi ces villes de plus de 500 000 habitants, combien y en a t-il dans l'hémisphère Sud ? 
 
     // Combien y en a t-il de villes de plus de 500 000 habitants en France ?
 
