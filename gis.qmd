@@ -140,7 +140,7 @@ Un club de randonneurs veut savoir où se retrouver pour une marche. On leur don
 Code à compléter :
 
 ```{.html .custom-html}
-  <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+  <script src="https://unpkg.com/@turf/turf@7/turf.min.js"></script>
   <h2>Exercice Turf.js : zone de rencontre</h2>
   <div id="output"></div>
 ```

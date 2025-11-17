@@ -64,6 +64,8 @@ Avec leaflet, pour réaliser une carte choroplethe, on a donc besoin d'une fonct
 
 Par exemple : 
 
+⚠️ <ins>Normalement, on ne réalise par de cartes choroplethes avec des données quantitatives absolues !!! </ins>
+
 ```{.js .custom-js}
 // Modules
 import { json } from "https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm";
@@ -229,7 +231,7 @@ async function main() {
 main();
 ```
 
-Avec Leaflet, on peut faire beaucpup de choses. Et il existe beaucoup d'exemples en ligne. Par contre, ca necessite de savoir coder. Il n'y a pas de types de cartes thématiques clé en main à Et c'est assez verbeux. Heureusement, il existe d'autres solutions.
+Avec Leaflet, on peut faire beaucoup de choses. Et il existe beaucoup d'exemples en ligne. Par contre, ca necessite de savoir coder. Il n'y a pas de types de cartes thématiques clé en main à Et c'est assez verbeux. Heureusement, il existe d'autres solutions.
 
  
 ## 2 - Avec geoviz
@@ -632,7 +634,7 @@ drawMap();
 
 ::: {.callout-note title="Exercice"}
 - Créez une carte thématique sur Paris (conseil : utilisez la projection de Mercator.)
-- Vous avez à disposition la variable `"population"` (quanti rel) et la variable `"density"` (quanti abs).
+- Vous avez à disposition la variable `"population"` (quanti abs) et la variable `"density"` (quanti rel).
 - Ajoutez des couches d'habillage
 - Essayez de la rendre interactive (`zoomable`, `tip`, etc.)
 
