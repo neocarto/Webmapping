@@ -16,8 +16,6 @@
 - Ajoutez un titre et une source
 - Rendez l'ensemble le plus joli possible
 
-**Bonus**
-
 - Définissez votre zone d'intéret 
     - Calculez avec `turf`, une enveloppe concave autour de vos points ([https://turfjs.org/docs/api/concave](https://turfjs.org/docs/api/concave)). N'hesitez pas à modifier la paramètre `maxEdge`.
     - Calculez une zone tampon (`buffer`) de 500 metres autour de cette enveloppe ([https://turfjs.org/docs/api/buffer](https://turfjs.org/docs/api/buffer))
