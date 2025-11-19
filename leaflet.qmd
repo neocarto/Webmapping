@@ -371,6 +371,161 @@ L.geoJSON(geojsonPolygons, {
 
 Bien sur, dans la pratique, on n'écrit pas le geoJSON directement dans le code. Mais on l'importe. Nous verrons cela un petit peu plus tard. 
 
+
+
+#### - Légende
+
+On peut ajouter une légende comme cela
+
+```{.html .custom-html}
+<!-- Import de la bibliothèque et du css-->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<div id="map"></div>
+```
+
+```{.js .custom-js}
+// Création de la carte dans le div #map
+const map = L.map("map"); // L designe la bibliothèque leaflet. La fonction map crée une carte vide
+
+// Position et zoom
+map.setView([51.505, -0.09], 13);
+
+// Ajout d'une couche de tuiles raster
+const tiles = L.tileLayer(
+  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+  {
+    attribution: "© OpenStreetMap",
+  },
+);
+
+const legend = L.control({ position: "bottomright" });
+
+legend.onAdd = function (map) {
+  const div = L.DomUtil.create("div", "legend");
+  div.innerHTML = `
+    <h4>Légende</h4>
+    <i style="background: red"></i> Zone A<br>
+    <i style="background: blue"></i> Zone B<br>
+  `;
+  return div;
+};
+
+legend.addTo(map);
+
+// On ajoute la couche à la carte
+tiles.addTo(map);
+
+```
+
+
+```{.css .custom-css}
+#map {
+  height: 500px;
+}
+
+.legend {
+  background: white;
+  padding: 10px;
+  border-radius: 6px;
+  line-height: 1.4;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.legend i {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
+}
+
+```
+
+On peut ajouter n'importe quel contenu danbs la légende. Par exemple du SVG
+
+```{.html .custom-html}
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<div id="map"></div>
+```
+
+
+```{.js .custom-js}
+// --- Initialisation de la carte ---
+const map = L.map("map").setView([48.8566, 2.3522], 12);
+
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 19
+}).addTo(map);
+
+
+// --- Légende SVG ---
+const legend = L.control({ position: "bottomright" });
+
+legend.onAdd = function (map) {
+  const div = L.DomUtil.create("div", "legend");
+
+  div.innerHTML = `
+    <h4>Légende</h4>
+    <svg width="170" height="100">
+
+      <!-- Rond rouge -->
+      <g transform="translate(0,0)">
+        <circle cx="10" cy="10" r="8" fill="#e41a1c"></circle>
+        <text x="28" y="14" font-size="12">Catégorie A</text>
+      </g>
+
+      <!-- Carré bleu -->
+      <g transform="translate(0,28)">
+        <rect x="2" y="2" width="16" height="16" fill="#377eb8"></rect>
+        <text x="28" y="15" font-size="12">Catégorie B</text>
+      </g>
+
+      <!-- Ligne verte -->
+      <g transform="translate(0,58)">
+        <line x1="2" y1="9" x2="18" y2="9"
+              stroke="#4daf4a" stroke-width="4"></line>
+        <text x="28" y="12" font-size="12">Trajet</text>
+      </g>
+
+    </svg>
+  `;
+
+  return div;
+};
+
+legend.addTo(map);
+
+
+```
+
+
+
+```{.css .custom-css}
+#map {
+  width: 100%;
+  height: 400px;
+}
+
+.legend {
+  background: white;
+  padding: 10px 12px;
+  border-radius: 6px;
+  line-height: 1.4;
+  box-shadow: 0 0 6px rgba(0,0,0,0.25);
+  font-family: sans-serif;
+}
+
+.legend h4 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  text-align: left;
+}
+
+```
+
+
+
+
 #### - Minimap
 
 Le plugin MiniMap permet d'ajouer une carte de localisation.
@@ -513,3 +668,16 @@ Voir la documentation et les exemples [ici](https://maplibre.org/maplibre-gl-js/
 
 
 
+.legend {
+  background: white;
+  padding: 10px;
+  border-radius: 6px;
+  line-height: 1.4;
+  box-shadow: 0 0 6px rgba(0,0,0,0.3);
+}
+.legend i {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
+}
