@@ -363,7 +363,19 @@ let centroids = data.features.map((feature) => {
 console.log(centroids)
 ```
 
+Convertir un Array avec des coordonnées en geoJSON.
 
+
+```{.js .custom-js}
+const pointsParis = [
+  { id: 1, name: "Tour Eiffel", lat: 48.8584, lng: 2.2945 },
+  { id: 2, name: "Louvre", lat: 48.8606, lng: 2.3376 },
+  { id: 3, name: "Notre-Dame", lat: 48.8529, lng: 2.35 },
+  { id: 4, name: "Sacré-Cœur", lat: 48.8867, lng: 2.3431 },
+]
+const geopoints = pointsParis.map((d) => turf.point([d.lng, d.lat], d))
+console.log(geopoints)
+```
 
 # Afficher un geoJSON
 
