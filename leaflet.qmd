@@ -576,13 +576,6 @@ legend.addTo(map);
 #map {
   height: 500px;
 }
-
-#legend {
-  position: absolute;   /* important pour superposer sur la carte */
-  bottom: 300px;         /* distance depuis le bas */
-  right: 10px;          /* distance depuis la droite */
-}
-
 ```
 
 
