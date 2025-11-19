@@ -715,22 +715,3 @@ Ajout d'un marker
 ```
 
 Voir la documentation et les exemples [ici](https://maplibre.org/maplibre-gl-js/docs/examples/)
-
-
-
-
-
-
-.legend {
-  background: white;
-  padding: 10px;
-  border-radius: 6px;
-  line-height: 1.4;
-  box-shadow: 0 0 6px rgba(0,0,0,0.3);
-}
-.legend i {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  margin-right: 6px;
-}
