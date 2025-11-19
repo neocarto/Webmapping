@@ -373,7 +373,9 @@ const pointsParis = [
   { id: 3, name: "Notre-Dame", lat: 48.8529, lng: 2.35 },
   { id: 4, name: "Sacré-Cœur", lat: 48.8867, lng: 2.3431 },
 ]
-const geopoints = pointsParis.map((d) => turf.point([d.lng, d.lat], d))
+const geopoints = turf.featureCollection(
+   pointsParis.map((d) => turf.point([d.lng, d.lat], d))
+);
 console.log(geopoints)
 ```
 
