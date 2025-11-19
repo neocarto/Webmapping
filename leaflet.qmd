@@ -440,7 +440,7 @@ tiles.addTo(map);
 
 ```
 
-On peut ajouter n'importe quel contenu danbs la légende. Par exemple du SVG
+On peut ajouter n'importe quel contenu dans la légende. Par exemple du SVG
 
 ```{.html .custom-html}
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -523,7 +523,67 @@ legend.addTo(map);
 
 ```
 
+Vous pouvez aussi utiliser d'autres bibliothèques pour dessiner la légende. Par exemple, la bibliothèque [`geoviz`](https://github.com/riatelab/geoviz) que nous verrons une petit peu plus tar et qui dispose des fonctions pour dessiner des légendes complexes en svg. Nous verrons cela plus tard. Mais d'ici là, voici un exemple. 
 
+```{.html .custom-html}
+<!-- Import de la bibliothèque et du css-->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script
+  src="https://cdn.jsdelivr.net/npm/geoviz@0.9.4"
+  charset="utf-8"
+></script>
+<div id="map"></div>
+```
+
+
+```{.js .custom-js}
+// Création de la carte
+const map = L.map("map").setView([51.505, -0.09], 13);
+
+// Ajout des tuiles
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: "© OpenStreetMap",
+}).addTo(map);
+
+// --- LÉGENDE GEOVIZ ---
+const legend = L.control({ position: "bottomright" });
+
+legend.onAdd = function () {
+  // Conteneur Leaflet
+  const div = L.DomUtil.create("div", "legend");
+
+  // Appel geoviz → renvoie un objet SVGSVGElement
+  const svgElem = geoviz.legend.typo_vertical({
+    title: "Legend",
+    subtitle: "(With geoviz)",
+    frame: true,
+  });
+
+  // Insérer le SVG (car c'est un objet DOM)
+  div.appendChild(svgElem);
+
+  return div;
+};
+
+legend.addTo(map);
+
+```
+
+
+
+```{.css .custom-css}
+#map {
+  height: 500px;
+}
+
+#legend {
+  position: absolute;   /* important pour superposer sur la carte */
+  bottom: 300px;         /* distance depuis le bas */
+  right: 10px;          /* distance depuis la droite */
+}
+
+```
 
 
 #### - Minimap
