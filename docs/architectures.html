@@ -80,7 +80,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./credit.html">About</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./architectures.html">Architectures techniques</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -119,7 +119,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./architectures.html" class="sidebar-item-text sidebar-link">
+  <a href="./architectures.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Architectures techniques</span></a>
   </div>
 </li>
@@ -167,7 +167,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./credit.html" class="sidebar-item-text sidebar-link active">
+  <a href="./credit.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">About</span></a>
   </div>
 </li>
@@ -177,7 +177,17 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#architectures-web-clientserveur" id="toc-architectures-web-clientserveur" class="nav-link active" data-scroll-target="#architectures-web-clientserveur">Architectures web (client/serveur)</a>
+  <ul class="collapse">
+  <li><a href="#panorama-des-logiciels" id="toc-panorama-des-logiciels" class="nav-link" data-scroll-target="#panorama-des-logiciels">Panorama des logiciels</a></li>
+  <li><a href="#composition-dune-web-map" id="toc-composition-dune-web-map" class="nav-link" data-scroll-target="#composition-dune-web-map">Composition d’une web map</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -185,14 +195,26 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div id="credit">
-<h2 class="anchored">
-<a href="https://neocarto.github.io/Webmapping">https://neocarto.github.io/Webmapping</a>
-</h2>
-<p><br><img src="./img/nico.jpg" style="width: 200px;">Ce support de cours est réalisé avec <a href="https://quarto.org/">quarto</a> par <a href="https://neocarto.github.io/cv/">Nicolas Lambert</a> (<a href="https://riate.cnrs.fr/">UAR RIATE</a>/<a href="https://www.cnrs.fr/fr">CNRS</a>). Il est disponible sur <a href="https://github.com/neocarto/webmapping">https://github.com/neocarto/webmapping</a> sous licence GNU GENERAL PUBLIC - Version 3, 29 June 2007 (<a href="https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/LICENSE">voir</a>).</p>
-</div>
+<section id="architectures-web-clientserveur" class="level1">
+<h1>Architectures web (client/serveur)</h1>
+<p>Le Web fonctionne sur un modèle <strong>client-serveur</strong> : le navigateur (client) envoie une requête au serveur, qui renvoie une réponse contenant la page ou les données demandées. Le <strong>navigateur</strong> affiche ensuite ces informations à l’écran.</p>
+<p><img src="img/clientserver.png" class="wide"></p>
+<p>Le <strong>backend</strong> désigne la partie d’une application qui fonctionne « derrière » l’interface, sur le serveur. Il s’occupe notamment de traiter les données, appliquer les règles de fonctionnement, communiquer avec les bases de données et fournir des services au reste de l’application. L’utilisateur ne voit généralement pas directement cette partie. Par exemple, lorsqu’un site affiche les résultats d’une recherche, le backend peut aller chercher les données dans une base, les traiter et les transmettre au navigateur.</p>
+<p>Le <strong>frontend</strong> correspond à la partie d’une application visible et directement utilisée par l’utilisateur. Il comprend l’interface, les boutons, les menus, les cartes, les graphiques, les animations, etc. Il fonctionne principalement dans le navigateur web et repose notamment sur HTML, CSS et JavaScript. Dans une application cartographique, par exemple, le frontend est responsable de l’affichage de la carte et des interactions : zoomer, déplacer la carte, cliquer sur un pays ou modifier un indicateur.</p>
+<p>On parle de <strong>full stack</strong> lorsqu’une personne ou une application prend en charge à la fois le frontend et le backend. Un développeur full stack peut donc concevoir l’interface visible par l’utilisateur, programmer la logique exécutée côté serveur, gérer les bases de données et assurer la communication entre ces différentes couches. Une application full stack forme ainsi une chaîne complète, de l’interface jusqu’aux données et aux traitements qui se trouvent derrière.</p>
+<section id="panorama-des-logiciels" class="level2">
+<h2 class="anchored" data-anchor-id="panorama-des-logiciels">Panorama des logiciels</h2>
+<p><img src="img/panorama_logiciels.svg" class="wide"></p>
+</section>
+<section id="composition-dune-web-map" class="level2">
+<h2 class="anchored" data-anchor-id="composition-dune-web-map">Composition d’une web map</h2>
+<p>Une <strong>web map</strong> est composée de plusieurs éléments qui travaillent ensemble : le fond de carte (souvent en tuiles raster ou vectorielles), les données géographiques ajoutées par-dessus, et le style qui définit leur apparence. Le tout est affiché dans le navigateur grâce à une bibliothèque JavaScript (comme Leaflet ou MapLibre) qui permet l’interaction — zoom, clics, filtres. Le navigateur récupère les tuiles et les données auprès de serveurs, rendant la carte dynamique et modulaire.</p>
+<p><img src="img/anatomywebmap.png" class="wide"></p>
+<p><em>Source : <a href="https://maptime.fun/anatomy-of-a-web-map">https://maptime.fun/anatomy-of-a-web-map</a></em></p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -13,8 +13,12 @@ website:
         file: index.qmd
       - text: "Les langages du web"
         file: langages.qmd
+      - text: "Architectures techniques"
+        file: architectures.qmd
       - text: "Leaflet"
         file: leaflet.qmd
+      - text: "MapLibre"
+        file: maplibre.qmd
       - text: "SIG"
         file: gis.qmd
       - text: "Les API"

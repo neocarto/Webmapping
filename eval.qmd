@@ -1,10 +1,7 @@
-# À rendre ! 
+# Exercices
 
-<div class = "disclaimer">Exercices notés à rendre au plus tard le <ins>dimanche 30 novembre à 23h59</ins>. À envoyer par e-mail à <ins>nicolas.lambert[@]cnrs.fr</ins> avec comme objet : [Master 2 TGAE ] vos noms et prénoms. Envoyez vos programmes dans un <ins>fichiers zip</ins> en pièce jointe.</div>
 
-## Exercices
-
-::: {.callout-note title="Exercice 1 (<ins>14 points</ins>) - Realisez une carte `leaflet` de vos 10 lieux préférés à Paris"}
+::: {.callout-note title="Exercice 1 - Realisez une carte `leaflet` de vos 10 lieux préférés à Paris"}
 
 **Création d'une carte leaflet**
 
@@ -20,16 +17,9 @@
     - Calculez une zone tampon (`buffer`) de 500 metres autour de cette enveloppe ([https://turfjs.org/docs/api/buffer](https://turfjs.org/docs/api/buffer))
     - Afficher la zone d'intérêt sur la carte
 
-**Rendu**
-
-- Téléchargez le .zip
-- Dézippez
-- Dans le fichier téléchargé, changez si besoin `<script>` par `<script type = "module">`
-- Testez dans votre navigateur
-
 :::
 
-::: {.callout-note title="Exercice 2 (<ins>6 points</ins>) - Realisez une carte `geoviz` à partir des données OpenData de la ville de Paris"}
+::: {.callout-note title="Exercice 2 - Realisez une carte `geoviz` à partir des données OpenData de la ville de Paris"}
 
 Dans cet exercice, on cherche à réaliser une carte thématique sur Paris à partir du site Open Data de la ville. 
 
@@ -90,19 +80,4 @@ async function main() {
 main();
 ```
 
-**Rendu**
-
-- Téléchargez le .zip
-- Dézippez
-- Dans le fichier téléchargé, changez `<script>` par `<script type = "module">`
-- Testez dans votre navigateur
-
 :::
-
-
-- Zippez vos deux fichiers html
-- Nommez le fichier zip "votre-nom.zip"
-- Envoyez par mail à <ins>nicolas.lambert[@]cnrs.fr</ins>
-
-
-

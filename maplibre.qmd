@@ -1,0 +1,261 @@
+## maplibre-gl
+
+[MapLibre](https://maplibre.org/) est une bibliothèque JavaScript open source permettant d'afficher des cartes interactives vectorielles sur le web, en 2D ou en 3D (vue "globe"). Elle est née en 2020 suite à la décision de Mapbox de fermer le code source de Mapbox GL JS à partir de la version 2. MapLibre constitue donc une alternative libre, soutenue par une communauté active. 
+
+Voir la documentation et les exemples [ici](https://maplibre.org/maplibre-gl-js/docs/examples/)
+
+```{.html .custom-html}
+<!-- Import du CSS -->
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@^6.12.0/dist/maplibre-gl.css" />
+<div id="map"></div>
+```  
+
+Comme pour leaflet, on a besoin du css
+
+```{.css .custom-css}
+#map {
+    height: 500px;
+}
+```
+
+Puis, on crée une carte
+
+```{.js .custom-js}
+import * as maplibregl from 'https://unpkg.com/maplibre-gl@^6.12.0/dist/maplibre-gl.mjs';
+const map = new maplibregl.Map({
+  container: 'map',
+  style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
+  center: [2.5, 46.8],
+  zoom: 6
+});
+```
+
+#### - Tuiles vectorielles
+
+Les tuiles vectorielles (vector tiles, également appelées tiled vectors ou vectiles) sont des ensembles de données géographiques organisés en tuiles, généralement de forme carrée, afin d’être transférés sur le Web. Il s’agit d’une méthode relativement récente de diffusion des cartes Web interactives, qui combine certains avantages des tuiles cartographiques raster pré-rendues avec ceux des données cartographiques vectorielles. Comme pour les cartes Web raster, largement utilisées, les données cartographiques sont demandées par le client sous la forme d’un ensemble de « tuiles » correspondant à des zones carrées du territoire, définies à l’avance par leur taille et leur position. Mais, contrairement aux tuiles raster, le serveur ne renvoie pas une image cartographique pré-rendue : il transmet des données vectorielles, découpées selon les limites de chaque tuile.
+
+De plus, le style cartographique peut être appliqué ultérieurement, voire directement dans le navigateur, ce qui offre une beaucoup plus grande souplesse dans la représentation des données.
+
+Plusieurs acteurs fournissent des tuiles vectorielles, sous différentes formes : données ouvertes, services commerciaux ou serveurs que l’on peut héberger soi-même.
+
+- **MapTiler** — fournit des fonds cartographiques en tuiles vectorielles, notamment basés sur OpenStreetMap.
+- **Mapbox** — l’un des pionniers et grands fournisseurs de tuiles vectorielles, avec son propre format et ses services de diffusion.
+- **OpenStreetMap Foundation** — les données OSM sont vectorielles, mais les serveurs officiels ne fournissent pas directement un service général de tuiles vectorielles comparable à Mapbox ou MapTiler. Des services tiers les dérivent d'OSM.
+- **Esri** — propose des fonds et services de tuiles vectorielles via ArcGIS.
+- **etc.**
+
+L'IGN propose également des tuiles vectorielles. Dans cet exemple, MapLibre utilise le style cartographique standard.json.
+
+```{.js .custom-js}
+const styleUrl =
+  "https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json";
+
+async function getStyle() {
+  const style = await fetch(styleUrl).then(d => d.json());
+  console.log(style);
+}
+getStyle();
+```
+
+le fichier JSON contient : 
+
+- les sources de données avec les URL permettant de récupérer les tuiles vectorielles .pbf ;
+- les noms des couches vectorielles disponibles dans ces tuiles (bati_surf, routes, etc.) ;
+- les règles de représentation → couleurs, épaisseurs, opacités, niveaux de zoom, etc. ;
+- les métadonnées : nom du style, attribution, version, éventuellement description, etc.
+
+Pour les afficher, on peut faire : 
+
+```{.html .custom-html}
+<!-- Import du CSS -->
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@^6.12.0/dist/maplibre-gl.css" />
+<div id="map"></div>
+```  
+
+Comme pour leaflet, on a besoin du css
+
+```{.css .custom-css}
+#map {
+    height: 500px;
+}
+```
+
+Puis, on crée une carte
+
+```{.js .custom-js}
+import * as maplibregl from 'https://unpkg.com/maplibre-gl@^6.12.0/dist/maplibre-gl.mjs';
+const map = new maplibregl.Map({
+  container: 'map',
+  style: 'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json',
+  center: [2.35, 48.85],
+  zoom: 10
+});
+```
+
+#### - Extraire un élément d'une tuile vectorielle
+
+Contrairement aux tuiles raster, les tuiles vectorielles ne sont pas des images pré-rendues. Elles contiennent des données géographiques brutes (points, lignes, polygones) qui peuvent être extraites et stylisées dynamiquement dans le navigateur. 
+
+
+```{.js .custom-js}
+import * as maplibregl from "https://unpkg.com/maplibre-gl@^6.12.0/dist/maplibre-gl.mjs";
+const styleUrl =
+  "https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json";
+const style = await (await fetch(styleUrl)).json();
+const map = new maplibregl.Map({
+  container: "map",
+  style: {
+    version: 8,
+    sources: style.sources,
+    layers: [
+      {
+        id: "fond",
+        type: "background",
+        paint: { "background-color": "#f4f1ea" },
+      },
+      {
+        id: "bati",
+        type: "fill",
+        source: "plan_ign",
+        "source-layer": "bati_surf",
+        paint: {
+          "fill-color": "#c96",
+          "fill-opacity": 0.9,
+        },
+      },
+    ],
+  },
+  center: [2.35, 48.855],
+  zoom: 16,
+});
+```
+
+Afficher uniquement les routes
+
+
+```{.js .custom-js}
+  const styleUrl = "https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json";
+  const style = await (await fetch(styleUrl)).json();
+  const routes = style.layers.filter((l) => l["source-layer"] === "routier_route");
+  const mapRoutes = new ml.Map({
+    container: display(html`<div style="height: 500px;"></div>`),
+    style: {
+      version: 8,
+      sources: style.sources,
+      layers: [
+        {id: "fond", type: "background", paint: {"background-color": "#f4f1ea"}},
+        ...routes
+      ]
+    },
+    center: [2.35, 48.855],
+    zoom: 15
+  });
+```
+#### - Styliser
+
+On peut donc récupérer ce qu'on veut, ajouter ce qu'on veut et stylyser comme on le veut.
+
+
+```{.js .custom-js}
+import * as maplibregl from "https://unpkg.com/maplibre-gl@^6.12.0/dist/maplibre-gl.mjs";
+const styleUrl =
+  "https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json";
+const style = await (await fetch(styleUrl)).json();
+
+
+// On ajoute une couche 3D pour les bâtiments
+  style.layers.push({
+    id: "bati_surf-3d",
+    type: "fill-extrusion",
+    source: "plan_ign",
+    "source-layer": "bati_surf",
+    paint: {
+      "fill-extrusion-color": "#d8cfc0",
+      "fill-extrusion-height": ["coalesce", ["to-number", ["get", "hauteur"], null], 12],
+      "fill-extrusion-base": 0,
+      "fill-extrusion-opacity": 0.9
+    }
+  });
+
+
+const map = new maplibregl.Map({
+  container: "map",
+  style: style,
+  center: [2.35, 48.855],
+  zoom: 16,
+  pitch: 60,
+  bearing: -20,
+  maxPitch: 85
+});
+```
+
+
+
+#### - Vue globe 
+
+
+```{.js .custom-js}
+const map = new maplibregl.Map({
+  container: 'map',
+  style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
+  center: [2.5, 46.8], // [lon, lat]
+  zoom: 6
+});
+
+    map.on('style.load', () => {
+        map.setProjection({
+            type: 'globe', // Set projection to globe
+        });
+    });
+```
+
+#### - Ajout d'un marker
+
+```{.js .custom-js}
+    const marker = new maplibregl.Marker()
+        .setLngLat([12.550343, 55.665957])
+        .addTo(map);
+```
+
+#### - Ajouter une couche geoJSON
+
+Pour ajouter un geoJSON, une solution est de modifier le style de la carte pour y ajouter une source et une couche. Par exemple, pour ajouter les arrondissements de Paris :
+
+```{.js .custom-js}
+
+import * as maplibregl from 'https://unpkg.com/maplibre-gl@^6.12.0/dist/maplibre-gl.mjs';
+
+  const st = await (
+    await fetch(
+      "https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json"
+    )
+  ).json();
+  const data = await (
+    await fetch(
+      "https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson"
+    )
+  ).json();
+
+  st.sources.paris = {type: "geojson", data};
+  st.layers.splice(
+    st.layers.findIndex((l) => l["source-layer"] === "routier_route"),
+    0,
+    {
+      id: "paris",
+      type: "fill",
+      source: "paris",
+      paint: {"fill-color": "#e07b39", "fill-opacity": 0.5}
+    }
+  );
+
+  const map = new maplibregl.Map({
+    container: "map",
+    style: st,
+    center: [2.34, 48.857],
+    zoom: 11.5
+  });
+```
+
+### - Aller plus loin
+
+Beaucoup d'autres fonctionnalités sont expliquées sur le site de maplibre. Voir [https://maplibre.org/maplibre-gl-js/docs/examples](https://maplibre.org/maplibre-gl-js/docs/examples)
