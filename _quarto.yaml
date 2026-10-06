@@ -27,7 +27,7 @@ website:
         file: dataviz.qmd
       - text: "Geoviz"
         file: geoviz.qmd
-      - text: "À rendre"
+      - text: "Exercices"
         file: eval.qmd
       - text: "About"
         file: credit.qmd
