@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -114,7 +80,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./eval.html">À rendre</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./architectures.html">Architectures techniques</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -153,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./architectures.html" class="sidebar-item-text sidebar-link">
+  <a href="./architectures.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Architectures techniques</span></a>
   </div>
 </li>
@@ -195,7 +161,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./eval.html" class="sidebar-item-text sidebar-link active">
+  <a href="./eval.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">À rendre</span></a>
   </div>
 </li>
@@ -215,7 +181,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#exercices" id="toc-exercices" class="nav-link active" data-scroll-target="#exercices">Exercices</a></li>
+  <li><a href="#architectures-web-clientserveur" id="toc-architectures-web-clientserveur" class="nav-link active" data-scroll-target="#architectures-web-clientserveur">Architectures web (client/serveur)</a>
+  <ul class="collapse">
+  <li><a href="#panorama-des-logiciels" id="toc-panorama-des-logiciels" class="nav-link" data-scroll-target="#panorama-des-logiciels">Panorama des logiciels</a></li>
+  <li><a href="#composition-dune-web-map" id="toc-composition-dune-web-map" class="nav-link" data-scroll-target="#composition-dune-web-map">Composition d’une web map</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -225,103 +195,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="exercices" class="level1">
-<h1>Exercices</h1>
-<div class="callout callout-style-default callout-note callout-titled" title="Exercice 1 - Realisez une carte `leaflet` de vos 10 lieux préférés à Paris">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Exercice 1 - Realisez une carte <code>leaflet</code> de vos 10 lieux préférés à Paris
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Création d’une carte leaflet</strong></p>
-<ul>
-<li>Repérez vos à lieux préférés à Paris.</li>
-<li>Dans <strong>jsfiddle</strong>, préparez les données. Localisez vos lieux manuellement (directement les lat, lon) ou avec du géocodage.</li>
-<li>Créez une carte <code>leaflet</code> avec les 10 markers.</li>
-<li>Ajoutez des infobulles.</li>
-<li>Personalisez la carte à votre convenance</li>
-<li>Ajoutez un titre et une source</li>
-<li>Rendez l’ensemble le plus joli possible</li>
-<li>Définissez votre zone d’intéret
-<ul>
-<li>Calculez avec <code>turf</code>, une enveloppe concave autour de vos points (<a href="https://turfjs.org/docs/api/concave">https://turfjs.org/docs/api/concave</a>). N’hesitez pas à modifier la paramètre <code>maxEdge</code>.</li>
-<li>Calculez une zone tampon (<code>buffer</code>) de 500 metres autour de cette enveloppe (<a href="https://turfjs.org/docs/api/buffer">https://turfjs.org/docs/api/buffer</a>)</li>
-<li>Afficher la zone d’intérêt sur la carte</li>
-</ul></li>
-</ul>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Exercice 2 - Realisez une carte `geoviz` à partir des données OpenData de la ville de Paris">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Exercice 2 - Realisez une carte <code>geoviz</code> à partir des données OpenData de la ville de Paris
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Dans cet exercice, on cherche à réaliser une carte thématique sur Paris à partir du site Open Data de la ville.</p>
-<p><strong>Etape 1</strong> - Selectionner une variable</p>
-<ul>
-<li>Allez sur le site Open data de la ville de Paris : <a href="https://opendata.paris.fr/explore">https://opendata.paris.fr/explore</a></li>
-<li>Choisissez un jeu de données ponctuel. Par exemple : <code>"velib-emplacement-des-stations"</code>,<code>"sanisettesparis"</code>,<code>"ilots-de-fraicheur-equipements-activites"</code>, <code>"fontaines-a-boire"</code>, <code>"arbres-plantes-par-projet"</code>, <code>"arbres-a-abattre-pour-raison-sanitaires-et-essence-de-remplacement"</code>, <code>"bornes-dappel-taxi"</code>, <code>"panneaux_d_affichage_associatifs"</code>, <code>"etablissements-scolaires-colleges"</code>,<code>"secteurs-scolaires-maternelles"</code>, etc.</li>
-<li>Dans le navigateur, tapez la requete pour tester : <code>https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/{nom de votre jeu de données}/records</code></li>
-<li>Rappel, l’API ne permet de récuperer que 100 elements. Pour régler ca, je vous ai créé la fonction <code>fetchOpenDataParis</code> qui permet de récupérer tous les enregistrements et obtenir le résultat en geoJSON.</li>
-</ul>
-<p><strong>Etape 2</strong> - Réaliser une carte par arrondissement</p>
-<ul>
-<li>Une fois la variable choisie, il fait compter le nombre d’équipements par communes. Pour cela, on utilise encore une fois <code>turf</code>.</li>
-<li>On obtient un nouveau jeau de données contant pour chaque arrondissmeent, la variable <code>count</code> qui contient le nombre d’équipements.</li>
-<li>Avec <code>geoviz</code>, on cartographie cette variable avec la fonction <code>plot</code> et <code>type:"prop"</code>.</li>
-<li>Habiller la carte pour la rendre la plus jolie possible.</li>
-</ul>
-<p><strong>A vous de jouer</strong></p>
-<p>Dans <strong>jsfiddle</strong>, copiez le code ci-dessous. Rremplacez “sanisettesparis” par l’indicateur de votre choix. Complétez la partie <em>Cartographie avec geoviz</em> pour réaliser votre carte.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode js custom-js code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Modules</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { fetchOpenDataParis } <span class="im">from</span> <span class="st">"https://cdn.jsdelivr.net/gh/neocarto/Webmapping@main/gist/fetchOpenDataParis.js"</span><span class="op">;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="op">*</span> <span class="im">as</span> geoviz <span class="im">from</span> <span class="st">"https://cdn.jsdelivr.net/npm/geoviz@0.8.2/+esm"</span><span class="op">;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { json } <span class="im">from</span> <span class="st">"https://cdn.jsdelivr.net/npm/d3-fetch@3/+esm"</span><span class="op">;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { pointsWithinPolygon } <span class="im">from</span> <span class="st">"https://cdn.jsdelivr.net/npm/@turf/turf@7/+esm"</span><span class="op">;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">// Fonction fetch et carto</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="kw">function</span> <span class="fu">main</span>() {</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> arrondissements <span class="op">=</span> <span class="cf">await</span> <span class="fu">json</span>(</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://raw.githubusercontent.com/neocarto/Webmapping/refs/heads/main/data/paris.geojson"</span><span class="op">,</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> poi <span class="op">=</span> <span class="cf">await</span> <span class="fu">fetchOpenDataParis</span>(<span class="st">"sanisettesparis"</span>)<span class="op">;</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Comptage des points dans les polygones</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> paris <span class="op">=</span> {</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">type</span><span class="op">:</span> <span class="st">"FeatureCollection"</span><span class="op">,</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">features</span><span class="op">:</span> arrondissements<span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">map</span>((poly) <span class="kw">=&gt;</span> {</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> pts <span class="op">=</span> <span class="fu">pointsWithinPolygon</span>(poi<span class="op">,</span> poly)<span class="op">;</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> count <span class="op">=</span> pts<span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> {</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">...</span>poly<span class="op">,</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="dt">properties</span><span class="op">:</span> { count }<span class="op">,</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>      }<span class="op">;</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    })<span class="op">,</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Cartographie avec geoviz</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="co">// let svg = geoviz.create(...)</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="co">// svg.plot(....)</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="co">// svg.plot(...)</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="co">// svg.plot(...)</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="co">// document.querySelector("#map").append(svg.render()); // vous devez avoir un div avec un id "map"</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co">// Appel de la fonction</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="fu">main</span>()<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+<section id="architectures-web-clientserveur" class="level1">
+<h1>Architectures web (client/serveur)</h1>
+<p>Le Web fonctionne sur un modèle <strong>client-serveur</strong> : le navigateur (client) envoie une requête au serveur, qui renvoie une réponse contenant la page ou les données demandées. Le <strong>navigateur</strong> affiche ensuite ces informations à l’écran.</p>
+<p><img src="img/clientserver.png" class="wide"></p>
+<p>Le <strong>backend</strong> désigne la partie d’une application qui fonctionne « derrière » l’interface, sur le serveur. Il s’occupe notamment de traiter les données, appliquer les règles de fonctionnement, communiquer avec les bases de données et fournir des services au reste de l’application. L’utilisateur ne voit généralement pas directement cette partie. Par exemple, lorsqu’un site affiche les résultats d’une recherche, le backend peut aller chercher les données dans une base, les traiter et les transmettre au navigateur.</p>
+<p>Le <strong>frontend</strong> correspond à la partie d’une application visible et directement utilisée par l’utilisateur. Il comprend l’interface, les boutons, les menus, les cartes, les graphiques, les animations, etc. Il fonctionne principalement dans le navigateur web et repose notamment sur HTML, CSS et JavaScript. Dans une application cartographique, par exemple, le frontend est responsable de l’affichage de la carte et des interactions : zoomer, déplacer la carte, cliquer sur un pays ou modifier un indicateur.</p>
+<p>On parle de <strong>full stack</strong> lorsqu’une personne ou une application prend en charge à la fois le frontend et le backend. Un développeur full stack peut donc concevoir l’interface visible par l’utilisateur, programmer la logique exécutée côté serveur, gérer les bases de données et assurer la communication entre ces différentes couches. Une application full stack forme ainsi une chaîne complète, de l’interface jusqu’aux données et aux traitements qui se trouvent derrière.</p>
+<section id="panorama-des-logiciels" class="level2">
+<h2 class="anchored" data-anchor-id="panorama-des-logiciels">Panorama des logiciels</h2>
+<p><img src="img/panorama_logiciels.svg" class="wide"></p>
+</section>
+<section id="composition-dune-web-map" class="level2">
+<h2 class="anchored" data-anchor-id="composition-dune-web-map">Composition d’une web map</h2>
+<p>Une <strong>web map</strong> est composée de plusieurs éléments qui travaillent ensemble : le fond de carte (souvent en tuiles raster ou vectorielles), les données géographiques ajoutées par-dessus, et le style qui définit leur apparence. Le tout est affiché dans le navigateur grâce à une bibliothèque JavaScript (comme Leaflet ou MapLibre) qui permet l’interaction — zoom, clics, filtres. Le navigateur récupère les tuiles et les données auprès de serveurs, rendant la carte dynamique et modulaire.</p>
+<p><img src="img/anatomywebmap.png" class="wide"></p>
+<p><em>Source : <a href="https://maptime.fun/anatomy-of-a-web-map">https://maptime.fun/anatomy-of-a-web-map</a></em></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
