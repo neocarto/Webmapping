@@ -134,26 +134,36 @@ Afficher uniquement les routes
 
 
 ```{.js .custom-js}
-  const styleUrl = "https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json";
-  const style = await (await fetch(styleUrl)).json();
-  const routes = style.layers.filter((l) => l["source-layer"] === "routier_route");
-  const mapRoutes = new ml.Map({
-    container: display(html`<div style="height: 500px;"></div>`),
-    style: {
-      version: 8,
-      sources: style.sources,
-      layers: [
-        {id: "fond", type: "background", paint: {"background-color": "#f4f1ea"}},
-        ...routes
-      ]
-    },
-    center: [2.35, 48.855],
-    zoom: 15
-  });
+import * as maplibregl from 'https://unpkg.com/maplibre-gl@^6.12.0/dist/maplibre-gl.mjs';
+
+const styleUrl =
+  'https://data.geopf.fr/annexes/ressources/vectorTiles/styles/PLAN.IGN/standard.json';
+const style = await (await fetch(styleUrl)).json();
+const routes = style.layers.filter(
+  (l) => l['source-layer'] === 'routier_route',
+);
+const mapRoutes = new maplibregl.Map({
+  container: 'map',
+  style: {
+    version: 8,
+    sources: style.sources,
+    layers: [
+      {
+        id: 'fond',
+        type: 'background',
+        paint: { 'background-color': '#f4f1ea' },
+      },
+      ...routes,
+    ],
+  },
+  center: [2.35, 48.855],
+  zoom: 15,
+});
+
 ```
 #### - Styliser
 
-On peut donc récupérer ce qu'on veut, ajouter ce qu'on veut et stylyser comme on le veut.
+On peut donc récupérer ce qu'on veut, ajouter ce qu'on veut et styliser comme on le veut.
 
 
 ```{.js .custom-js}
@@ -195,6 +205,8 @@ const map = new maplibregl.Map({
 
 
 ```{.js .custom-js}
+import * as maplibregl from "https://unpkg.com/maplibre-gl@^6.12.0/dist/maplibre-gl.mjs";
+
 const map = new maplibregl.Map({
   container: 'map',
   style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',

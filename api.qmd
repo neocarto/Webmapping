@@ -57,7 +57,7 @@ https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json?lon=1.48|1.
 
 La signification de tous les parametres sont précisés sur [cette page](https://geoservices.ign.fr/documentation/services/services-geoplateforme/altimetrie)
 
-En JavaSCript, on peut généralement utiliser une API avec les fonctions `fetch()` ou `d3.json()`.
+En JavaScript, on peut généralement utiliser une API avec les fonctions `fetch()` ou `d3.json()`.
 
 ⚠️ Ce sont des fonctions **asysnchrones**.
 
@@ -73,7 +73,7 @@ async function main() {
 main();
 ```
 
-On peut aussi utiliser le JavasCript pour construire l'url. Voici un exemple.
+On peut aussi utiliser le JavaScript pour construire l'url. Voici un exemple.
 
 ```{.js .custom-js}
 // Voici une liste de lieux
